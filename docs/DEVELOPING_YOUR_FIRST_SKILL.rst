@@ -193,7 +193,7 @@ CancelAndStopIntent Handler
 
 The CancelAndStopIntentHandler is similar to the HelpIntent handler, as it
 is also triggered by Built-In
-`AMAZON.CancelIntent or AMAZON.StopIntent Intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents)`_.
+`AMAZON.CancelIntent or AMAZON.StopIntent Intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
 The following example uses a single handler to respond to both Intents.
 Type or paste the following code into your ``hello_world.py`` file, after the
 previous handler.
@@ -393,7 +393,7 @@ CancelAndStopIntent Handler
 
 The CancelAndStopIntentHandler is similar to the HelpIntent handler, as it
 is also triggered by Built-In
-`AMAZON.CancelIntent or AMAZON.StopIntent Intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents)`_.
+`AMAZON.CancelIntent or AMAZON.StopIntent Intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
 The following example uses a single handler to respond to both Intents.
 Type or paste the following code into your ``hello_world.py`` file, after the
 previous handler.
@@ -482,7 +482,7 @@ Lambda. If you followed these instructions, zip the content of the
 folder (not the folder itself) where you created the ``hello_world.py`` file.
 Name the file ``skill.zip``. You can check the AWS Lambda docs to get more
 information on creating a
-`deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html`_.
+`deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>`_.
 Before uploading the code to AWS Lambda, we need to Create an AWS Lambda
 function and the skill on the Alexa Developer Portal.
 
