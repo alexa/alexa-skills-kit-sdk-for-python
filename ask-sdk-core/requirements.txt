@@ -1,0 +1,5 @@
+six
+typing
+requests
+python_dateutil
+ask-sdk-model
