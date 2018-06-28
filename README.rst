@@ -94,7 +94,7 @@ Got Feedback?
   `existing issues <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>`_
   before opening a new one. It would also be helpful if you follow the
   templates for issue and pull request creation.
-  Please follow the `contributing guidelines <CONTRIBUTING.rst>`_ for
+  Please follow the `contributing guidelines <CONTRIBUTING.md>`_ for
   pull requests!!
 - Request and vote for
   `Alexa features <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`_!
