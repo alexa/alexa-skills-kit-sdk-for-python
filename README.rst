@@ -1,8 +1,8 @@
-===================
-ASK SDK for Python
-===================
+=========================
+ASK SDK for Python (Beta)
+=========================
 
-The ASK SDK for Python makes it easier for you to build highly engaging skills,
+The **ASK SDK for Python (Beta)** makes it easier for you to build highly engaging skills,
 by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
 
