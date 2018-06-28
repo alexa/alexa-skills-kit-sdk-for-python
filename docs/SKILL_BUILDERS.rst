@@ -71,7 +71,7 @@ CustomSkillBuilder Class
 ``CustomSkillBuilder`` is available in both ``ask-sdk-core`` and
 ``ask-sdk`` package. In addition to the common helper function above,
 ``CustomSkillBuilder`` also provides functions that allows you to
-register custom ``AbstractPersistentAdapter`` and ``ApiClient``.
+register custom implementations of ``AbstractPersistentAdapter`` and ``ask_sdk_model.services.ApiClient`` classes.
 
 .. code:: python
 
@@ -91,9 +91,11 @@ StandardSkillBuilder Class
 --------------------------
 
 ``StandardSkillBuilder`` is available only in the ``ask-sdk`` package.
-It uses ``DynamoDbPersistenceAdapter`` and ``DefaultApiClient`` to
-provide Persistence and Service Client features. It also provides helper functions for
-configuring the Dynamo DB table options.
+It is a wrapper on CustomSKillBuilder with persistence_adapter as 
+``ask_sdk_dynamo.adapter.DynamoDbPersistenceAdapter`` and 
+api_client as ``ask_sdk_core.api_client.DefaultApiClient`` to
+provide Persistence and Service Client features. It also provides optional parameters for
+configuring the Dynamo DB table options. 
 
 .. code:: python
 
