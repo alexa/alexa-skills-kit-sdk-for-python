@@ -92,7 +92,7 @@ AttributesManager
 
 The ``AttributesManager`` exposes attributes that you can retrieve and
 update in your handlers. ``AttributesManager`` is available to handlers
-via the `Handler Input <#REQUEST_PROCESSING.handler-input>`_ object. The ``AttributesManager``
+via the `Handler Input <REQUEST_PROCESSING.rst#handler-input>`_ object. The ``AttributesManager``
 takes care of attributes retrieval and saving so that you can interact
 directly with attributes needed by your skill.
 
