@@ -79,30 +79,27 @@ The completed source code for both options is available in the
 Exception handlers
 ~~~~~~~~~~~~~~~~~~
 
-Sometimes things go wrong, and your skill code needs a way to handle the
-problem gracefully. The ASK SDK for Python supports exception handling in a
-similar way to handling requests. As with request handlers, you have a choice
-of using handler classes or decorators. The following implementation sections
-explore how to implement exception handling.
+Sometimes things go wrong, and your skill code needs a way to handle the problem 
+gracefully. The ASK SDK for Python supports exception handling in a similar way 
+to handling requests. You have a choice of using handler classes or decorators. 
+The following implementation sections explore how to implement exception handling.
 
 Implementation using handler classes
 ------------------------------------
 
-To use handler classes, each request handler will be written as a class that
+To use handler classes, each request handler is written as a class that
 implements two methods of the ``AbstractRequestHandler`` class; ``can_handle``
 and ``handle``.
 
-The ``can_handle`` method returns a boolean value indicating
+The ``can_handle`` method returns a Boolean value indicating
 if the request handler can create an appropriate response for the request.
 The ``can_handle`` method has access to the request type and additional
 attributes that the skill may have set in previous requests or even saved
-from a previous interaction. For our Hello World skill we only need to
+from a previous interaction. The Hello World skill only needs to
 reference the request information to decide if each handler can respond to
 an incoming request.
 
-The ``handle`` method returns a Response object
-
-LaunchRequest Handler
+LaunchRequest handler
 ~~~~~~~~~~~~~~~~~~~~~
 
 The following code example shows how to configure a handler to be invoked when
@@ -133,7 +130,7 @@ The can_handle function returns **True** if the incoming request is a
 LaunchRequest. The handle function generates and returns a basic greeting
 response.
 
-HelloWorldIntent Handler
+HelloWorldIntent handler
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following code example shows how to configure a handler to be invoked
@@ -161,11 +158,11 @@ The can_handle function detects if the incoming request is an
 and returns **True** if the intent name is HelloWorldIntent. The handle
 function generates and returns a basic “Hello World” response.
 
-HelpIntent Handler
+HelpIntent handler
 ~~~~~~~~~~~~~~~~~~
 
 The following code example shows how to configure a handler to be invoked
-when the skill receives the Built-In Intent
+when the skill receives the built-in intent
 `AMAZON.HelpIntent <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
 Type or paste the following code into your ``hello_world.py file``, after the
 previous handler.
@@ -185,16 +182,16 @@ previous handler.
             return handler_input.response_builder.response
 
 Similar to the previous handler, this handler matches an IntentRequest with
-the expected intent name. Basic help instructions are returned, and the
-user's microphone will open up for them to respond due to ``.ask(speech_text)``.
+the expected intent name. Basic help instructions are returned, and ``.ask(speech_text)`` 
+causes the user's microphone to open up for the user to respond.
 
-CancelAndStopIntent Handler
+CancelAndStopIntent handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The CancelAndStopIntentHandler is similar to the HelpIntent handler, as it
-is also triggered by Built-In
+is also triggered by the built-In
 `AMAZON.CancelIntent or AMAZON.StopIntent Intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
-The following example uses a single handler to respond to both Intents.
+The following example uses a single handler to respond to both intents.
 Type or paste the following code into your ``hello_world.py`` file, after the
 previous handler.
 
@@ -222,10 +219,10 @@ function.
 The response to both intents is the same, so having a single handler reduces
 repetitive code.
 
-SessionEndedRequest Handler
+SessionEndedRequest handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Although you can not return a response with any speech, card or directives
+Although you cannot return a response with any speech, card or directives
 after receiving a `SessionEndedRequest <https://developer.amazon.com/docs/custom-skills/request-types-reference.html#sessionendedrequest>`_,
 the SessionEndedRequestHandler is a good place to put your cleanup logic.
 Type or paste the following code into your ``hello_world.py`` file, after the
@@ -243,11 +240,11 @@ previous handler.
 
             return handler_input.response_builder.response
 
-Implementing Exception Handlers
+Implementing exception handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following sample adds a *catch all* exception handler to your skill, to
-ensure the skill returns a meaningful message in case of all exceptions.
+ensure the skill returns a meaningful message for all exceptions.
 Type or paste the following code into your ``hello_world.py`` file, after the
 previous handler.
 
@@ -268,13 +265,13 @@ previous handler.
             handler_input.response_builder.speak(speech).ask(speech)
             return handler_input.response_builder.response
 
-Creating the Lambda Handler
+Creating the Lambda handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `Lambda handler <https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model-handler-types.html>`_
 is the entry point for your AWS Lambda function. The following code example
-creates a Lambda Handler function to route all inbound requests to your skill.
-The Lambda Handler function creates an SDK Skill instance configured with the
+creates a Lambda handler function to route all inbound requests to your skill.
+The Lambda handler function creates an SDK skill instance configured with the
 request handlers that you just created. Type or paste the following code into
 your ``hello_world.py`` file, after the previous handler.
 
@@ -295,11 +292,11 @@ your ``hello_world.py`` file, after the previous handler.
 Implementation using decorators
 -------------------------------
 
-The following code implement the same functionality as above but uses function
-decorators. You can think of the decorators as a replacement to the
-``can_handle`` method implemented for each request handler above.
+The following code implements the same functionality as above but uses function
+decorators. You can think of the decorators as a replacement for the
+``can_handle`` method implemented in each request handler above.
 
-If you would like to try the skill using this code please make sure that
+To try the skill using this code, make sure that
 your ``hello_world.py`` file contains only the following before adding the
 handler functions:
 
@@ -309,7 +306,7 @@ handler functions:
 
     sb = SkillBuilder()
 
-LaunchRequest Handler
+LaunchRequest handler
 ~~~~~~~~~~~~~~~~~~~~~
 
 The following code example shows how to configure a handler to be invoked
@@ -336,13 +333,13 @@ previous code.
         return handler_input.response_builder.response
 
 
-Note: Similar to the ``can_handle`` function for the LaunchRequestHandler in
+Similar to the ``can_handle`` function for the LaunchRequestHandler in
 the Class pattern, the decorator returns **True** if the incoming request is
 a LaunchRequest. The ``handle`` function generates and returns a basic
 greeting response in the same way the handle function works for the Class
 pattern.
 
-HelloWorldIntent Handler
+HelloWorldIntent handler
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following code example shows how to configure a handler to be invoked
@@ -364,11 +361,11 @@ the previous handler.
         return handler_input.response_builder.response
 
 
-HelpIntent Handler
+HelpIntent handler
 ~~~~~~~~~~~~~~~~~~
 
 The following code example shows how to configure a handler to be invoked
-when the skill receives the Built-In Intent
+when the skill receives the built-in intent
 `AMAZON.HelpIntent <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
 Type or paste the following code into your ``hello_world.py file``, after the
 previous handler.
@@ -384,16 +381,16 @@ previous handler.
         return handler_input.response_builder.response
 
 Similar to the previous handler, this handler matches an IntentRequest with
-the expected intent name. Basic help instructions are returned, and the user's
-microphone will open up for them to respond due to ``.ask(speech_text)``.
+the expected intent name. Basic help instructions are returned, and ``.ask(speech_text)`` 
+causes the user's microphone to open up for the user to respond.
 
 
-CancelAndStopIntent Handler
+CancelAndStopIntent handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The CancelAndStopIntentHandler is similar to the HelpIntent handler, as it
-is also triggered by Built-In
-`AMAZON.CancelIntent or AMAZON.StopIntent Intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
+is also triggered by the built-in
+`AMAZON.CancelIntent or AMAZON.StopIntent intents <https://developer.amazon.com/docs/custom-skills/standard-built-in-intents.html#available-standard-built-in-intents>`_.
 The following example uses a single handler to respond to both Intents.
 Type or paste the following code into your ``hello_world.py`` file, after the
 previous handler.
@@ -420,10 +417,10 @@ function.
 The response to both intents is the same, so having a single handler reduces
 repetitive code.
 
-SessionEndedRequest Handler
+SessionEndedRequest handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Although you can not return a response with any speech, card or directives
+Although you cannot return a response with any speech, card or directives
 after receiving a `SessionEndedRequest <https://developer.amazon.com/docs/custom-skills/request-types-reference.html#sessionendedrequest>`_,
 the SessionEndedRequestHandler is a good place to put your cleanup logic.
 Type or paste the following code into your ``hello_world.py`` file, after the
@@ -438,7 +435,7 @@ previous handler.
         return handler_input.response_builder.response
 
 
-Implementing Exception Handlers
+Implementing exception handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following sample adds a *catch all* exception handler to your skill, to
@@ -458,13 +455,13 @@ previous handler.
         return handler_input.response_builder.response
 
 
-Creating the Lambda Handler
+Creating the Lambda handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The `Lambda handler <https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model-handler-types.html>`_
 is the entry point for your AWS Lambda function. The following code example
-creates a Lambda Handler function to route all inbound requests to your skill.
-The Lambda Handler function creates an SDK Skill instance configured with
+creates a Lambda handler function to route all inbound requests to your skill.
+The Lambda Handler function creates an SDK skill instance configured with
 the request handlers that you just created.
 
 Type or paste the following code into your ``hello_world.py`` file, after
@@ -473,18 +470,21 @@ the previous handler.
 .. code-block:: python
 
     handler = sb.lambda_handler()
+    
+When using decorators, your request handlers are automatically recognized by 
+the Skill Builder object instantiated at the top of the code.
 
 Preparing your code for AWS Lambda
 ----------------------------------
 
-Your code is now complete and we need to zip the files ready to upload to
-Lambda. If you followed these instructions, zip the content of the
+Your code is now complete and you need to create .zip files that contain the files ready to upload to
+Lambda. If you followed the instructions above, create a .zip file of the content of the
 folder (not the folder itself) where you created the ``hello_world.py`` file.
 Name the file ``skill.zip``. You can check the AWS Lambda docs to get more
 information on creating a
 `deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>`_.
-Before uploading the code to AWS Lambda, we need to Create an AWS Lambda
-function and the skill on the Alexa Developer Portal.
+Before uploading the code to AWS Lambda, you need to create an AWS Lambda
+function and create the skill on the Alexa Developer Portal.
 
 Creating an AWS Lambda function
 -------------------------------
@@ -501,7 +501,7 @@ type. Once this is done, upload the ``skill.zip`` file produced in the previous 
 and fill in the *handler* information with module_name.handler which is
 ``hello_world.handler`` for this example.
 
-Configuring and Testing Your Skill
+Configuring and testing Your skill
 ----------------------------------
 
 Now that the skill code has been uploaded to AWS Lambda, you can configure
@@ -522,8 +522,8 @@ the skill with Alexa.
   Intents section of the Interaction Model. Leave "**Create custom intent**"
   selected, enter "**HelloWorldIntent**" for the intent name, and create the
   intent. On the intent detail page, add some sample utterances that users can
-  say to invoke the intent. For this example, we’ve provided the following
-  sample utterances, but feel free to add others.
+  say to invoke the intent. For this example, consider the following
+  sample utterances, and feel free to add others.
 
   ::
 
@@ -539,7 +539,7 @@ the skill with Alexa.
 * Since ``AMAZON.CancelIntent``, ``AMAZON.HelpIntent``, and ``AMAZON.StopIntent`` are
   built-in Alexa intents, you do not need to provide sample utterances for them.
 
-* The Developer Console also allows you to edit the entire skill model in JSON
+* The Developer Console allows you to edit the entire skill model in JSON
   format. Select **JSON Editor** from the sidebar. For this sample, you can use
   the following JSON schema.
 
@@ -587,38 +587,36 @@ the skill with Alexa.
 
 * Next, configure the endpoint for the skill. To do this, follow these steps:
 
-  1. Under your skill, click **Endpoint** tab, select AWS Lambda ARN radiobutton
+  1. Under your skill, click the **Endpoint** tab, select AWS Lambda ARN, 
      and copy the **Skill ID** of the skill you just created.
-  2. Open the AWS Developer Console in a new tab
-  3. Navigate to the  lambda function created in the previous step.
-  4. Under the **Alexa Skills Kit** trigger, enable the
-     **Skill ID Verification** and provide the skill id copied previously.
-     Click on Add and save once done, so that Lambda function will be updated.
-  5. Copy the lambda function **ARN**. ARN is the unique resource number that
-     helps Alexa Service identifying the lambda function it needs to call
-     during skill invocation.
+  2. Open the AWS Developer Console in a new tab.
+  3. Navigate to the AWS Lambda function created in the previous step.
+  4. From the **Designer** menu, add the **Alexa Skills Kit** trigger menu, and 
+     scroll down to paste the skill ID into the **Skill ID Verification** configuration. 
+     Click **Add and save** once completed to update the AWS Lambda function.
+  5. Copy the AWS Lambda function **ARN** from the top right corner of the page. 
+     An ARN is a unique resource number that helps Alexa service identify the 
+     AWS Lambda function it needs to call during skill invocation.
   6. Navigate to the Alexa Skills Kit Developer Console, and click on your
      **HelloWorld** skill.
   7. Under your skill, click **Endpoint** tab, select **AWS Lambda ARN** and
-     paste in the ARN under 'Default Region' field.
+     paste in the ARN under **Default Region** field.
   8. The rest of the settings can be left at their default values.
      Click **Save Endpoints**.
   9. Click **Invocation** tab, save and build the model.
 
-* At this point you can test the skill. Click **Test** in the top navigation
-  to go to the Test page. Make sure that the **Test is enabled for this skill**
+* At this point you can test the skill. In the top navigation, click **Test**. 
+  Make sure that the **Test is enabled for this skill**
   option is enabled. You can use the Test page to simulate requests, in text
   and voice form.
 
-* Use the invocation name along with one of the sample utterances we just
-  configured as a guide. For example, *tell greeter to say hello* should result
+* Use the invocation name along with one of the sample utterances as a guide. 
+  For example, *tell greeter to say hello* should result
   in your skill responding with “Hello World” voice and "Hello World" card on
-  devices with display. You should also be able to go to the Alexa App (on
-  your phone or at https://alexa.amazon.com) and see your skill listed under
-  **Your Skills**. From here, you can enable the skill on your account for
-  testing from an Alexa enabled device.
+  devices with display. You can also open the Alexa app on your phone or at 
+  https://alexa.amazon.com) and see your skill listed under **Your Skills**.
 
-* At this point, feel free to start experimenting with your intents as well as
+* Feel free to start experimenting with your intents as well as
   the corresponding request handlers in your skill's code. Once you're finished
-  iterating, you can optionally choose to move on to the process of getting
-  your skill certified and published so it can be used by Alexa users worldwide.
+  iterating, optionally move on to getting your skill certified and published 
+  so it can be used by customers worldwide.
