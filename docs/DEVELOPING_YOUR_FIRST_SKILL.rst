@@ -65,10 +65,10 @@ response. The ASK SDK for Python provides two ways to create request handlers:
 1. Implement the ``AbstractRequestHandler`` class under
    ``ask_sdk_core.dispatch_components`` package. The class should contain
    implementations for ``can_handle`` and ``handle`` methods. This is described under
-   `Implementation using handler classes <option-1-implementation-using-handler-classes>`_ section.
+   `Implementation using handler classes <#option-1-implementation-using-handler-classes>`_ section.
 2. Use the request_handler decorator in instantiated skill builder object to
    tag functions that act as handlers for different incoming requests. This is described under
-   `Implementation using decorators <option-2-implementation-using-decorators>`_ section.
+   `Implementation using decorators <#option-2-implementation-using-decorators>`_ section.
 
 The implementation of the Hello World skill explores using handler classes
 first and then shows how to write the same skill using decorators.
@@ -83,7 +83,7 @@ Exception handlers
 
 Sometimes things go wrong, and your skill code needs a way to handle the problem 
 gracefully. The ASK SDK for Python supports exception handling in a similar way 
-to handling requests. You have a choice of using `handler classes <option-1-implementation-using-handler-classes>`_ or `decorators <option-2-implementation-using-decorators>`_. 
+to handling requests. You have a choice of using `handler classes <#option-1-implementation-using-handler-classes>`_ or `decorators <#option-2-implementation-using-decorators>`_. 
 The following implementation sections explore how to implement exception handling.
 
 Option 1: Implementation using handler classes
