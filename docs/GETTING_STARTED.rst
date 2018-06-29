@@ -36,15 +36,15 @@ Many Python developers prefer to work in a virtual environment, which is an
 isolated Python environment that helps manage project dependencies and package
 versions. The easiest way to get started is to install the SDK in a virtual
 environment. See the section
-`Set up the SDK in a virtual environment <#set-up-the-sdk-in-a-virtual-environment>`_.
+`Set up the SDK in a virtual environment <#option-1-set-up-the-sdk-in-a-virtual-environment>`_.
 
 Another option is to install the ASK SDK for Python to a specific folder. This
 ensures that you have the required dependencies and makes it easy to locate
 and deploy the required files for your finished skill. See the section
-`Set up the SDK in a specific folder <#set-up-the-sdk-in-a-specific-folder>`_.
+`Set up the SDK in a specific folder <#option-2-set-up-the-sdk-in-a-specific-folder>`_.
 
-Set up the SDK in a virtual environment
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 1: Set up the SDK in a virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Use the following command to create a virtual environment and change to the
 created folder:
@@ -88,8 +88,8 @@ folder is populated with directories including:
     boto3
     …
 
-Set up the SDK in a specific folder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 2: Set up the SDK in a specific folder
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To get started, from a command prompt create a new folder for your Alexa skill
 and navigate to the folder:
