@@ -16,6 +16,12 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import sys
+import os
+
+_ROOT_SOURCE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, _ROOT_SOURCE)
+
 
 # -- Project information -----------------------------------------------------
 
@@ -40,7 +46,7 @@ release = 'beta'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
+    'sphinx.ext.intersphinx'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -98,6 +104,12 @@ html_static_path = ['_static']
 # 'searchbox.html']``.
 #
 # html_sidebars = {}
+html_show_sourcelink = False
+html_sidebars = {
+    '**': ['logo-text.html',
+           'globaltoc.html',
+           'searchbox.html']
+}
 
 
 # -- Options for HTMLHelp output ---------------------------------------------

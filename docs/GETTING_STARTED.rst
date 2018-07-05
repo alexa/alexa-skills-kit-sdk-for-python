@@ -119,33 +119,32 @@ contain the folder ask-sdk, which is populated with directories including:
     boto3
     …
 
-Note
-++++
+.. note::
 
-If using Mac OS X and you have Python installed using
-`Homebrew <http://brew.sh/>`_, the preceding command will not work. A simple
-workaround is to add a ``setup.cfg`` file in your **ask-sdk** directory with
-the following content:
+    If using Mac OS X and you have Python installed using
+    `Homebrew <http://brew.sh/>`_, the preceding command will not work. A simple
+    workaround is to add a ``setup.cfg`` file in your **ask-sdk** directory with
+    the following content:
 
-.. code-block:: sh
+    .. code-block:: sh
 
-    [install]
-    prefix=
+        [install]
+        prefix=
 
-Navigate to the ask-sdk folder and run the pip install command:
+    Navigate to the ask-sdk folder and run the pip install command:
 
-.. code-block:: sh
+    .. code-block:: sh
 
-    >>> cd ask-sdk
-    >>> pip install ask-sdk -t .
+        >>> cd ask-sdk
+        >>> pip install ask-sdk -t .
 
-More on this can be checked on the
-`homebrew docs <https://github.com/Homebrew/brew/blob/master/docs/Homebrew-and-Python.md#setuptools-pip-etc>`_
+    More on this can be checked on the
+    `homebrew docs <https://github.com/Homebrew/brew/blob/master/docs/Homebrew-and-Python.md#setuptools-pip-etc>`_
 
 Next Steps
 ----------
 
 Now that you've added the SDK to your project, you're ready to begin
 developing your skill. Proceed to the next section
-`Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.rst>`_, for
+`Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.html>`_, for
 instructions on getting started with a basic skill.

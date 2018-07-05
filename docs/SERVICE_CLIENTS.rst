@@ -6,10 +6,10 @@ from within your skill logic.
 
 Service clients can be used in any request handler, exception handler,
 and request, response interceptors. The ``service_client_factory``
-contained inside the `Handler Input <REQUEST_PROCESSING.rst#handler-input>`_
+contained inside the `Handler Input <REQUEST_PROCESSING.html#handler-input>`_
 allows you to retrieve client instances for every supported Alexa service. The
 ``service_client_factory`` is only available for use, when you
-`configure the skill instance <SKILL_BUILDERS.rst#skill-builders>`_
+`configure the skill instance <SKILL_BUILDERS.html#skill-builders>`_
 with an ``ApiClient``.
 
 The following example shows the ``handle`` function for a request

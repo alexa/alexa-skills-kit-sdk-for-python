@@ -30,8 +30,8 @@ class AbstractPersistenceAdapter(object):
     """Abstract class for storing and retrieving persistent attributes
     from persistence tier given request envelope.
 
-    User needs to implement 'get_attributes' method to get attributes
-    from persistent tier and 'save_attributes' method to save
+    User needs to implement ``get_attributes`` method to get attributes
+    from persistent tier and ``save_attributes`` method to save
     attributes to persistent tier.
     """
     __metaclass__ = ABCMeta
@@ -41,10 +41,9 @@ class AbstractPersistenceAdapter(object):
         # type: (RequestEnvelope) -> Dict[str, object]
         """Get attributes from persistent tier.
 
-        :param request_envelope: request envelope.
-        :type request_envelope : :py:class:
-            `ask_sdk_model.RequestEnvelope`
-        :return A dictionary of attributes retrieved from persistent
+        :param request_envelope: Request Envelope from Alexa service
+        :type request_envelope: :py:class:`ask_sdk_model.RequestEnvelope`
+        :return: A dictionary of attributes retrieved from persistent
             tier
         :rtype: Dict[str, object]
         """
@@ -68,6 +67,12 @@ class AbstractPersistenceAdapter(object):
 class AttributesManager(object):
     """AttributesManager is a class that handles three level
     attributes: request, session and persistence.
+
+    :param request_envelope: request envelope.
+    :type request_envelope: :py:class:`ask_sdk_model.RequestEnvelope`
+    :param persistence_adapter: class used for storing and
+        retrieving persistent attributes from persistence tier
+    :type persistence_adapter: AbstractPersistenceAdapter
     """
 
     def __init__(self, request_envelope, persistence_adapter=None):
@@ -76,8 +81,7 @@ class AttributesManager(object):
         attributes: request, session and persistence.
 
         :param request_envelope: request envelope.
-        :type request_envelope: :py:class:
-            `ask_sdk_model.RequestEnvelope`
+        :type request_envelope: :py:class:`ask_sdk_model.RequestEnvelope`
         :param persistence_adapter: class used for storing and
             retrieving persistent attributes from persistence tier
         :type persistence_adapter: AbstractPersistenceAdapter
@@ -101,11 +105,10 @@ class AttributesManager(object):
     @property
     def request_attributes(self):
         # type: () -> Dict[str, object]
-        """
+        """Attributes stored at the Request level of the skill lifecycle.
 
-        :return request_attributes: attributes for the
-            request life cycle
-        :rtype  Dict[str, object]
+        :return: request attributes for the request life cycle
+        :rtype: Dict[str, object]
         """
         return self._request_attributes
 
@@ -122,10 +125,9 @@ class AttributesManager(object):
     @property
     def session_attributes(self):
         # type: () -> Dict[str, object]
-        """
+        """Attributes stored at the Session level of the skill lifecycle.
 
-        :return session_attributes: attributes extracted from
-            request envelope
+        :return: session attributes extracted from request envelope
         :rtype: Dict[str, object]
         """
         if not self._request_envelope.session:
@@ -140,7 +142,7 @@ class AttributesManager(object):
 
         :param session_attributes: attributes during the session
         :type session_attributes: Dict[str, object]
-        :raises AttributesManagerException if trying to set session
+        :raises: AttributesManagerException if trying to set session
             attributes to out of session request
         """
         if not self._request_envelope.session:
@@ -151,12 +153,11 @@ class AttributesManager(object):
     @property
     def persistent_attributes(self):
         # type: () -> Dict[str, object]
-        """
+        """Attributes stored at the Persistence level of the skill lifecycle.
 
-        :return persistent_attributes: attributes retrieved from
-            persistence adapter
+        :return: persistent_attributes retrieved from persistence adapter
         :rtype: Dict[str, object]
-        :raises AttributesManagerException if trying to get
+        :raises: AttributesManagerException if trying to get
             persistent attributes without persistence adapter
         """
         if not self._persistence_adapter:
@@ -180,7 +181,7 @@ class AttributesManager(object):
 
         :param persistent_attributes: attributes in persistence layer
         :type persistent_attributes: Dict[str, object]
-        :raises AttributesManagerException if trying to set
+        :raises: AttributesManagerException if trying to set
             persistent attributes without persistence adapter
         """
         if not self._persistence_adapter:
@@ -195,7 +196,7 @@ class AttributesManager(object):
         persistence adapter is provided.
 
         :rtype: None
-        :raises AttributesManagerException if trying to save
+        :raises: AttributesManagerException if trying to save
             persistence attributes without persistence adapter
         """
         if not self._persistence_adapter:

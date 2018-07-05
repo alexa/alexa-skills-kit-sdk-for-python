@@ -31,8 +31,9 @@ if typing.TYPE_CHECKING:
 
 
 class DefaultApiClient(ApiClient):
-    """Default ApiClient implementation of :py:class:`ApiClient` using
-    the `requests` library.
+    """Default ApiClient implementation of
+    :py:class:`ask_sdk_model.services.ApiClient` using the
+    `requests` library.
     """
 
     def invoke(self, request):
@@ -49,12 +50,10 @@ class DefaultApiClient(ApiClient):
         error lies with the caller.
 
         :param request: Request to dispatch to the ApiClient
-        :type request: :py:class:
-            `ask_sdk_model.services.api_client_request.ApiClientRequest`
+        :type request: :py:class:`ask_sdk_model.services.api_client_request.ApiClientRequest`
         :return: Response from the client call
-        :rtype: :py:class:
-            `ask_sdk_model.services.api_client_response.ApiClientResponse`
-        :raises ApiClientException
+        :rtype: :py:class:`ask_sdk_model.services.api_client_response.ApiClientResponse`
+        :raises: ApiClientException
         """
         try:
             http_method = self._resolve_method(request)

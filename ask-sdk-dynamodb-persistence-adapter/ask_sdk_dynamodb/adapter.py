@@ -30,7 +30,34 @@ if typing.TYPE_CHECKING:
 
 
 class DynamoDbAdapter(AbstractPersistenceAdapter):
-    """Persistence Adapter implementation using Amazon DynamoDb."""
+    """Persistence Adapter implementation using Amazon DynamoDb.
+
+    Amazon DynamoDb based persistence adapter implementation. This
+    internally uses the AWS Python SDK (`boto3`) to process the
+    dynamodb operations. The adapter tries to create the table if
+    ``create_table`` is set, during initialization.
+
+    :param table_name: Name of the table to be created or used
+    :type table_name: str
+    :param partition_key_name: Partition key name to be used.
+        Defaulted to 'id'
+    :type partition_key_name: str
+    :param attribute_name: Attribute name for storing and
+        retrieving attributes from dynamodb.
+        Defaulted to 'attributes'
+    :type attribute_name: str
+    :param create_table: Should the adapter try to create the table
+        if it doesn't exist. Defaulted to False
+    :type create_table: bool
+    :param partition_keygen: Callable function that takes a
+        request envelope and provides a unique partition key value.
+        Defaulted to user id keygen function
+    :type partition_keygen: Callable[[ask_sdk_model.RequestEnvelope], str]
+    :param dynamodb_resource: Resource to be used, to perform
+        dynamo operations. Defaulted to resource generated from
+        boto3
+    :type dynamodb_resource: boto3.resources.base.ServiceResource
+    """
 
     def __init__(
             self, table_name, partition_key_name="id",
@@ -79,18 +106,18 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
         """Get attributes from table in Dynamodb resource.
 
         Retrieves the attributes from Dynamodb table. If the table
-        doesn't exist, returns an empty attribute {} if the
-        create_table variable is set as True, else it raises
+        doesn't exist, returns an empty dict if the
+        ``create_table`` variable is set as True, else it raises
         PersistenceException. Raises PersistenceException if `get_item`
         fails on the table.
 
         :param request_envelope: Request Envelope passed during skill
             invocation
-        :type request_envelope: RequestEnvelope
+        :type request_envelope: ask_sdk_model.RequestEnvelope
         :return: Attributes stored under the partition keygen mapping
             in the table
         :rtype: Dict[str, object]
-        :raises PersistenceException
+        :raises: ask_sdk_core.exceptions.PersistenceException
         """
         try:
             table = self.dynamodb.Table(self.table_name)
@@ -117,17 +144,17 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
         """Saves attributes to table in Dynamodb resource.
 
         Saves the attributes into Dynamodb table. Raises
-        PersistenceException if table doesn't exist or `put_item` fails
+        PersistenceException if table doesn't exist or ``put_item`` fails
         on the table.
 
         :param request_envelope: Request Envelope passed during skill
             invocation
-        :type request_envelope: RequestEnvelope
+        :type request_envelope: ask_sdk_model.RequestEnvelope
         :param attributes: Attributes stored under the partition keygen
             mapping in the table
         :type attributes: Dict[str, object]
         :rtype: None
-        :raises PersistenceException
+        :raises: ask_sdk_core.exceptions.PersistenceException
         """
         try:
             table = self.dynamodb.Table(self.table_name)
@@ -152,7 +179,7 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
         create_table is set as True.
 
         :rtype: None
-        :raises PersistenceException: When `create_table` fails on
+        :raises: PersistenceException: When `create_table` fails on
             dynamodb resource.
         """
         if self.create_table:

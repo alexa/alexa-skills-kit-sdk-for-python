@@ -1,10 +1,11 @@
-ResponseBuilder
-===============
+Response Building
+=================
 
-The SDK includes helper functions for constructing responses. A
-``Response`` may contain multiple elements, and the helper functions aid
-in generating responses, reducing the need to initialize and set the
-elements of each response.
+The SDK includes a ``ResponseFactory`` class, that contains helper
+functions for constructing responses. A ``Response`` may contain
+multiple elements, and the helper functions aid in generating
+responses, reducing the need to initialize and set the elements of each
+response.
 
 Interface
 ~~~~~~~~~
@@ -35,8 +36,14 @@ Interface
             # type: (bool) -> 'ResponseFactory'
             ....
 
+``response_builder``, an instance of the ``ResponseFactory`` class, is
+provided to the skill developers through the
+`HandlerInput <REQUEST_PROCESSING.html#handler-input>`_ object, which
+is the standard argument passed to the skill components.
+
 The following example shows how to construct a response using
-``ResponseFactory`` helper functions.
+``ResponseFactory`` helper functions, through
+``handler_input.response_builder``.
 
 .. code:: python
 

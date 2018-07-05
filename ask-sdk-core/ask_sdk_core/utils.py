@@ -40,7 +40,7 @@ def user_agent_info(custom_user_agent):
         the developer.
     :type custom_user_agent: str
     :return: User Agent Info string
-    :rtype str
+    :rtype: str
     """
     python_version = ".".join(str(x) for x in sys.version_info[0:3])
     user_agent = "ask-python/{} Python/{}".format(

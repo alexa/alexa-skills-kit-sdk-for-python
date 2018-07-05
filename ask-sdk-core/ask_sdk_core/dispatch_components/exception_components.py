@@ -27,7 +27,7 @@ if typing.TYPE_CHECKING:
 
 
 class AbstractExceptionHandler(object):
-    """"Handles exception types and optionally produce a response.
+    """Handles exception types and optionally produce a response.
 
     The abstract class is similar to Request Handler, with methods
     can_handle and handle. The can_handle method checks if the handler

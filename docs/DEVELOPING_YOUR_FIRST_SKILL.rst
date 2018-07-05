@@ -2,7 +2,7 @@
 Developing Your First Skill
 ============================
 
-The `Getting Started <GETTING_STARTED.rst>`_ guide showed how to set up and
+The `Getting Started <GETTING_STARTED.html>`_ guide showed how to set up and
 install the ASK SDK for Python into a specific directory or into a virtual
 environment using virtualenv. This guide walks you through developing your
 first skill with the ASK SDK for Python.
@@ -75,7 +75,7 @@ first and then shows how to write the same skill using decorators.
 The functionality of these is identical and you can use either.
 
 The completed source code for both options is available in the
-`HelloWorld <../samples/HelloWorld>`_ sample folder.
+`HelloWorld <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>`_ sample folder.
 
 
 Exception handlers
@@ -85,6 +85,14 @@ Sometimes things go wrong, and your skill code needs a way to handle the problem
 gracefully. The ASK SDK for Python supports exception handling in a similar way 
 to handling requests. You have a choice of using `handler classes <#option-1-implementation-using-handler-classes>`_ or `decorators <#option-2-implementation-using-decorators>`_. 
 The following implementation sections explore how to implement exception handling.
+
+.. note::
+
+    You may use either `Implementation using handler classes <#option-1-implementation-using-handler-classes>`_
+    or `Implementation using decorators <#option-2-implementation-using-decorators>`_
+    options to write a skill. We strongly recommend you to **not** use
+    either of the option and stick with it through out your skill, for
+    better code structure.
 
 Option 1: Implementation using handler classes
 ----------------------------------------------
@@ -473,8 +481,9 @@ the previous handler.
 
     handler = sb.lambda_handler()
     
-When using decorators, your request handlers are automatically recognized by 
-the Skill Builder object instantiated at the top of the code.
+When using decorators, your request handlers and exception handlers are
+automatically recognized by the Skill Builder object instantiated at
+the top of the code.
 
 Preparing your code for AWS Lambda
 ----------------------------------

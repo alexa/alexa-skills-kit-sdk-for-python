@@ -25,7 +25,7 @@ if typing.TYPE_CHECKING:
 
 
 class HandlerInput(object):
-    """Input to Request Handler and Exception Handler.
+    """Input to Request Handler, Exception Handler and Interceptors.
 
     Handler Input instantiations are passed to
     :py:class:`RequestHandler` and :py:class:`ExceptionHandler`, during
@@ -35,25 +35,39 @@ class HandlerInput(object):
     :py:class:`ServiceClientFactory` instances, to utilize during the
     lifecycle of skill.
 
+    :param request_envelope: Request Envelope passed from Alexa
+            Service
     :type request_envelope: ask_sdk_model.RequestEnvelope
-    :type attributes_manager: ask_sdk_core.attributes_manager.
-        AttributesManager
+    :param attributes_manager: Attribute Manager instance for
+        managing attributes across skill lifecycle
+    :type attributes_manager:
+        ask_sdk_core.attributes_manager.AttributesManager
+    :param context: Context object passed from Lambda service
     :type context: object
-    :type service_client_factory: ask_sdk_model.services.
-        ServiceClientFactory
+    :param service_client_factory: Service Client Factory instance
+        for calling Alexa services
+    :type service_client_factory:
+        ask_sdk_model.services.ServiceClientFactory
     """
     def __init__(
             self, request_envelope, attributes_manager=None,
             context=None, service_client_factory=None):
         # type: (RequestEnvelope, AttributesManager, Context, ServiceClientFactory) -> None
-        """Input to Request Handler and Exception Handler.
+        """Input to Request Handler, Exception Handler and Interceptors.
 
+        :param request_envelope: Request Envelope passed from Alexa
+            Service.
         :type request_envelope: ask_sdk_model.RequestEnvelope
-        :type attributes_manager: ask_sdk_core.attributes_manager.
-            AttributesManager
+        :param attributes_manager: Attribute Manager instance for
+            managing attributes across skill lifecycle
+        :type attributes_manager:
+            ask_sdk_core.attributes_manager.AttributesManager
+        :param context: Context object passed from Lambda service
         :type context: object
-        :type service_client_factory: ask_sdk_model.services.
-            ServiceClientFactory
+        :param service_client_factory: Service Client Factory instance
+            for calling Alexa services
+        :type service_client_factory:
+            ask_sdk_model.services.ServiceClientFactory
         """
         self.request_envelope = request_envelope
         self.context = context
@@ -64,6 +78,11 @@ class HandlerInput(object):
     @property
     def service_client_factory(self):
         # type: () -> ServiceClientFactory
+        """Service Client Factory instance for calling Alexa services.
+
+        To use the Alexa services, one need to configure the API Client
+        in the skill builder object, before creating the skill.
+        """
         if self._service_client_factory is None:
             raise ValueError(
                 "Attempting to use service client factory with no "

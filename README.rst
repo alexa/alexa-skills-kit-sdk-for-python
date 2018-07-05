@@ -6,55 +6,15 @@ The **ASK SDK for Python (Beta)** makes it easier for you to build highly engagi
 by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
 
-To help you get started with the SDK we have included the following guides.
-In the future, we plan to include more documentation and samples too.
+The latest, most up to date, documentation can be found at
+`Read the Docs <>`_.
 
-Guides
-------
-
-`Setting Up The ASK SDK <docs/GETTING_STARTED.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This guide will show you how to include the SDK as a dependency in your
-Python project.
+`Guides <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/index.html#guides>`_
+------------------------------------------------------------------------------------------
 
 
-`Developing Your First Skill <docs/DEVELOPING_YOUR_FIRST_SKILL.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Walks you through step-by-step instructions for building the Hello World
-sample.
-
-
-SDK Features
-------------
-
-`Request Processing <docs/REQUEST_PROCESSING.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to build request handlers, exception handlers, and request and
-response interceptors.
-
-`Skill Attributes <docs/ATTRIBUTES.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use skill attributes to store and retrieve skill data.
-
-`Response Building <docs/RESPONSE_BUILDING.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use the ResponseBuilder to compose multiple elements like
-text, cards, and audio into a single response.
-
-`Alexa Service Clients <docs/SERVICE_CLIENTS.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use service clients in your skill to access Alexa APIs.
-
-`Skill Builders <docs/SKILL_BUILDERS.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to configure and construct a skill instance.
+`SDK Features <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/index.html#sdk-features>`_
+------------------------------------------------------------------------------------------------------
 
 Samples
 -------

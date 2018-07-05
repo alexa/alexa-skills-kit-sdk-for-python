@@ -55,7 +55,7 @@ class ResponseFactory(object):
 
         :param speech: the output speech sent back to the user.
         :type speech: str
-        :return response factory with partial response being built and
+        :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
         """
@@ -74,7 +74,7 @@ class ResponseFactory(object):
 
         :param reprompt: the output speech to reprompt.
         :type reprompt: str
-        :return response factory with partial response being built and
+        :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
         """
@@ -95,7 +95,7 @@ class ResponseFactory(object):
 
         :param card: card object in response sent back to user.
         :type card: :py:class:`ask_sdk_model.ui.card.Card`
-        :return response factory with partial response being built
+        :return: response factory with partial response being built
             and access from self.response.
         :rtype: ResponseFactory
         """
@@ -108,7 +108,7 @@ class ResponseFactory(object):
 
         :param directive: the directive sent back to Alexa device.
         :type directive: :py:class:`ask_sdk_model.Directive`
-        :return response factory with partial response being built and
+        :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
         """
@@ -128,7 +128,7 @@ class ResponseFactory(object):
         :param should_end_session: value to show if the session should
             be ended or not.
         :type should_end_session: bool
-        :return response factory with partial response being built and
+        :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
         """
@@ -143,7 +143,7 @@ class ResponseFactory(object):
 
         :param speech_output: the output speech sent back to user.
         :type speech_output: str
-        :return the trimmed output speech.
+        :return: the trimmed output speech.
         :rtype: Union[bool, None]
         """
         if speech_output is None:
@@ -157,7 +157,7 @@ class ResponseFactory(object):
         # type: () -> bool
         """Checks if the video app launch directive is present or not.
 
-        :return boolean to show if video app launch directive is
+        :return: boolean to show if video app launch directive is
             present or not.
         :rtype: bool
         """
@@ -180,10 +180,10 @@ def get_plain_text_content(primary_text=None, secondary_text=None, tertiary_text
     :type primary_text: (optional) str
     :type secondary_text: (optional) str
     :type tertiary_text: (optional) str
-    :return Text Content instance with primary, secondary and tertiary
+    :return: Text Content instance with primary, secondary and tertiary
         text set as Plain Text objects.
-    :rtype :py:class:`ask_sdk_model.interfaces.display.TextContent`
-    :raises ValueError
+    :rtype: :py:class:`ask_sdk_model.interfaces.display.TextContent`
+    :raises: ValueError
     """
     return get_text_content(
         primary_text=primary_text, primary_text_type=PLAIN_TEXT_TYPE,
@@ -200,10 +200,10 @@ def get_rich_text_content(primary_text=None, secondary_text=None, tertiary_text=
     :type primary_text: (optional) str
     :type secondary_text: (optional) str
     :type tertiary_text: (optional) str
-    :return Text Content instance with primary, secondary and tertiary
+    :return: Text Content instance with primary, secondary and tertiary
         text set as Plain Text objects.
-    :rtype :py:class:`ask_sdk_model.interfaces.display.TextContent`
-    :raises ValueError
+    :rtype: :py:class:`ask_sdk_model.interfaces.display.TextContent`
+    :raises: ValueError
     """
     return get_text_content(
         primary_text=primary_text, primary_text_type=RICH_TEXT_TYPE,
@@ -233,10 +233,10 @@ def get_text_content(
     :param tertiary_text_type: Type of the tertiary text field.
         Allowed values are `PlainText` and `RichText`.
         Defaulted to `PlainText`.
-    :return Text Content instance with primary, secondary and tertiary
+    :return: Text Content instance with primary, secondary and tertiary
         text set.
-    :rtype :py:class:`ask_sdk_model.interfaces.display.TextContent`
-    :raises ValueError
+    :rtype: :py:class:`ask_sdk_model.interfaces.display.TextContent`
+    :raises: ValueError
     """
     text_content = TextContent()
     if primary_text:
@@ -259,12 +259,12 @@ def __set_text_field(text, text_type):
     :param text_type: Type of the primary text field. Allowed values
         are `PlainText` and `RichText`.
     :type text_type: str
-    :return Object of type :py:class:
-        `ask_sdk_model.interfaces.display.PlainText` or
+    :return: Object of type
+        :py:class:`ask_sdk_model.interfaces.display.PlainText` or
         :py:class:`ask_sdk_model.interfaces.display.RichText` depending
         on text_type
-    :rtype object
-    :raises ValueError
+    :rtype: object
+    :raises: ValueError
     """
     if text:
         if text_type not in [PLAIN_TEXT_TYPE, RICH_TEXT_TYPE]:
