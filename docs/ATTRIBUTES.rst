@@ -163,6 +163,6 @@ attributes.
         def handle(handler_input):
             persistence_attr = handler_input.attributes_manager.persistent_attributes
             persistence_attr['foo'] = 'baz'
-            handler_input.attributes_manager.save_attributes()
+            handler_input.attributes_manager.save_persistent_attributes()
             return handler_input.response_builder.response
 
