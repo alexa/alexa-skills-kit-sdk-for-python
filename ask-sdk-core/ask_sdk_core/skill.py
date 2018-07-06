@@ -42,24 +42,21 @@ class SkillConfiguration(object):
     needed to build :py:class:`Skill`.
 
     :param request_mappers: List of request mapper instances.
-    :type request_mappers: list(:py:class:`RequestMapper`)
+    :type request_mappers: list(RequestMapper)
     :param handler_adapters: List of handler adapter instances.
-    :type handler_adapters: list(:py:class:`HandlerAdapter`)
+    :type handler_adapters: list(HandlerAdapter)
     :param request_interceptors: List of
         request interceptor instances.
-    :type request_interceptors: list(
-        :py:class:`AbstractRequestInterceptor`)
+    :type request_interceptors: list(AbstractRequestInterceptor)
     :param response_interceptors: List of
         response interceptor instances.
-    :type response_interceptors: list(
-        :py:class:`AbstractResponseInterceptor`)
+    :type response_interceptors: list(AbstractResponseInterceptor)
     :param exception_mapper: Exception mapper instance.
-    :type exception_mapper: :py:class:`ExceptionMapper`
+    :type exception_mapper: ExceptionMapper
     :param persistence_adapter: Persistence adapter instance.
-    :type persistence_adapter: :py:class:`PersistenceAdapter`
+    :type persistence_adapter: AbstractPersistenceAdapter
     :param api_client: Api Client instance.
-    :type api_client:
-        :py:class:`ask_sdk_model.services.api_client.ApiClient`
+    :type api_client: ask_sdk_model.services.api_client.ApiClient
     :param custom_user_agent: Custom User Agent string
     :type custom_user_agent: str
     :param skill_id: ID of the skill.
@@ -76,24 +73,21 @@ class SkillConfiguration(object):
         needed for building :py:class:`Skill`.
 
         :param request_mappers: List of request mapper instances.
-        :type request_mappers: list(:py:class:`RequestMapper`)
+        :type request_mappers: list(RequestMapper)
         :param handler_adapters: List of handler adapter instances.
-        :type handler_adapters: list(:py:class:`HandlerAdapter`)
+        :type handler_adapters: list(HandlerAdapter)
         :param request_interceptors: List of
             request interceptor instances.
-        :type request_interceptors: list(
-            :py:class:`AbstractRequestInterceptor`)
+        :type request_interceptors: list(AbstractRequestInterceptor)
         :param response_interceptors: List of
             response interceptor instances.
-        :type response_interceptors: list(
-            :py:class:`AbstractResponseInterceptor`)
+        :type response_interceptors: list(AbstractResponseInterceptor)
         :param exception_mapper: Exception mapper instance.
-        :type exception_mapper: :py:class:`ExceptionMapper`
+        :type exception_mapper: ExceptionMapper
         :param persistence_adapter: Persistence adapter instance.
-        :type persistence_adapter: :py:class:`PersistenceAdapter`
+        :type persistence_adapter: AbstractPersistenceAdapter
         :param api_client: Api Client instance.
-        :type api_client:
-            :py:class:`ask_sdk_model.services.api_client.ApiClient`
+        :type api_client: ask_sdk_model.services.api_client.ApiClient
         :param custom_user_agent: Custom User Agent string
         :type custom_user_agent: str
         :param skill_id: ID of the skill.

@@ -19,6 +19,9 @@
 import sys
 import os
 
+from codecs import open
+
+
 _ROOT_SOURCE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _ROOT_SOURCE)
 
@@ -30,7 +33,13 @@ copyright = '2018, Alexa Skills Kit'
 author = 'Alexa Skills Kit'
 
 # The short X.Y version
-version = '0.1'
+about = {}
+with open(
+        os.path.join(_ROOT_SOURCE, os.pardir, 'ask-sdk-core',
+                     'ask_sdk_core', '__version__.py'),
+        'r', 'utf-8') as f:
+    exec(f.read(), about)
+version = about['__version__']
 # The full version, including alpha/beta/rc tags
 release = 'beta'
 

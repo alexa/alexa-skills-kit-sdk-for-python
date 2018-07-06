@@ -3,4 +3,6 @@
   :titlesonly:
   :glob:
 
-  *
+  core
+  dynamodb_persistence
+  standard

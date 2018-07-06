@@ -4,6 +4,16 @@ ask\_sdk\_model.interfaces.amazonpay.v1 package
 Submodules
 ~~~~~~~~~~
 
+.. note::
+
+    Canonical imports have been added in the ``__init__.py`` of the package.
+    This helps in importing the class directly from the package, than
+    through the module.
+
+    For eg: if ``package a`` has ``module b`` with
+    ``class C``, you can do ``from a import C`` instead of
+    ``from a.b import C``.
+
 ask\_sdk\_model.interfaces.amazonpay.v1.amazon\_pay\_error\_response module
 ---------------------------------------------------------------------------
 

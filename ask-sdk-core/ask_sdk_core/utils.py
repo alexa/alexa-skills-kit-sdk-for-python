@@ -56,11 +56,14 @@ def is_intent_name(name):
     """A predicate function returning a boolean, when name matches the
     name in Intent Request.
 
-    The function can be applied on a :py:class:`HandlerInput`, to
-    check if the input is of :py:class:`IntentRequest` type and if the
+    The function can be applied on a
+    :py:class:`ask_sdk_core.handler_input.HandlerInput`, to
+    check if the input is of
+    :py:class:`ask_sdk_model.intent_request.IntentRequest` type and if the
     name of the request matches with the passed name.
 
     :param name: Name to be matched with the Intent Request Name
+    :type name: str
     :return: Predicate function that can be used to check name of the
         request
     :rtype: Callable[[HandlerInput], bool]
@@ -78,10 +81,12 @@ def is_request_type(request_type):
     """A predicate function returning a boolean, when request type is
     the passed-in type.
 
-    The function can be applied on a :py:class:`HandlerInput`, to check
+    The function can be applied on a
+    :py:class:`ask_sdk_core.handler_input.HandlerInput`, to check
     if the input request type is the passed in request type.
 
-    :param request_type: Class to be matched with the input's request
+    :param request_type: request type to be matched with the input's request
+    :type request_type: str
     :return: Predicate function that can be used to check the type of
         the request
     :rtype: Callable[[HandlerInput], bool]

@@ -32,7 +32,7 @@ if typing.TYPE_CHECKING:
 
 class DefaultApiClient(ApiClient):
     """Default ApiClient implementation of
-    :py:class:`ask_sdk_model.services.ApiClient` using the
+    :py:class:`ask_sdk_model.services.api_client.ApiClient` using the
     `requests` library.
     """
 
@@ -50,10 +50,10 @@ class DefaultApiClient(ApiClient):
         error lies with the caller.
 
         :param request: Request to dispatch to the ApiClient
-        :type request: :py:class:`ask_sdk_model.services.api_client_request.ApiClientRequest`
+        :type request: ApiClientRequest
         :return: Response from the client call
-        :rtype: :py:class:`ask_sdk_model.services.api_client_response.ApiClientResponse`
-        :raises: ApiClientException
+        :rtype: ApiClientResponse
+        :raises: :py:class:`ask_sdk_core.exceptions.ApiClientException`
         """
         try:
             http_method = self._resolve_method(request)
@@ -83,12 +83,11 @@ class DefaultApiClient(ApiClient):
         call.
 
         :param request: Request to dispatch to the ApiClient
-        :type request: :py:class:
-            `ask_sdk_model.services.api_client_request.ApiClientRequest`
+        :type request: ApiClientRequest
         :return: The HTTP method that maps to the request call.
         :rtype: Callable
-        :raises ApiClientException if invalid http request method is
-            being called
+        :raises :py:class:`ask_sdk_core.exceptions.ApiClientException`
+            if invalid http request method is being called
         """
         try:
             return getattr(requests, request.method.lower())

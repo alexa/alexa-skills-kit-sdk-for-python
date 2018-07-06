@@ -61,13 +61,13 @@ class DefaultSerializer(Serializer):
 
         If obj is None, return None.
         If obj is str, int, long, float, bool, return directly.
-        If obj is datetime.datetime, datetime.date
-            convert to string in iso8601 format.
+        If obj is datetime.datetime, datetime.date convert to
+        string in iso8601 format.
         If obj is list, serialize each element in the list.
         If obj is dict, return the dict with serialized values.
         If obj is ask sdk model, return the dict with keys resolved
-            from model's 'attribute_map' and values serialized
-            based on 'deserialized_types'.
+        from model's ``attribute_map`` and values serialized
+        based on ``deserialized_types``.
 
         :param obj: The data to serialize.
         :type obj: object
@@ -114,10 +114,11 @@ class DefaultSerializer(Serializer):
 
         :param payload: data to be deserialized.
         :type payload: str
-        :param obj_type: 'resolved class name for deserialized object'
+        :param obj_type: resolved class name for deserialized object
         :type obj_type: Union[str, object]
         :return: deserialized object
         :rtype: object
+        :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
         if payload is None:
             return None

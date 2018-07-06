@@ -37,7 +37,8 @@ class AbstractRequestDispatcher(object):
     processing of the incoming request in the handler input. A response
     may be expected out of the dispatch method. User also has the
     flexibility of processing invalid requests by raising custom
-    exceptions wrapped under :py:class:`DispatchException`.
+    exceptions wrapped under
+    :py:class:`ask_sdk_core.exceptions.DispatchException`.
     """
     __metaclass__ = ABCMeta
 
@@ -49,24 +50,39 @@ class AbstractRequestDispatcher(object):
 
         :param handler_input: input to the dispatcher containing
             incoming request and other context
-        :type handler_input: :py:class:
-            `ask_sdk_core.handler_input.HandlerInput`
+        :type handler_input: HandlerInput
         :return: output optionally containing a response
-        :rtype: Union[None, :py:class:`ask_sdk_model.response.Response`]
-        :raises :py:class:`ask_sdk_core.exceptions.DispatchException`
+        :rtype: Union[None, Response]
+        :raises: :py:class:`ask_sdk_core.exceptions.DispatchException`
         """
         pass
 
 
 class RequestDispatcher(AbstractRequestDispatcher):
-    """Default implementation of :py:class:`RequestDispatcher`.
+    """Default implementation of :py:class:`AbstractRequestDispatcher`.
 
     When the dispatch method is invoked, using a list of
-    :py:class:`RequestMapper`, the Dispatcher finds a handler for the
-    request and delegates the invocation to the supported
-    :py:class:`HandlerAdapter`. If the handler raises any exception,
-    it is delegated to :py:class:`ExceptionMapper` to handle or raise
-    it to the upper stack.
+    :py:class:`ask_sdk_core.dispatch_components.request_components.RequestMapper`
+    , the Dispatcher finds a handler for the request and delegates the
+    invocation to the supported
+    :py:class:`ask_sdk_core.dispatch_components.request_components.HandlerAdapter`
+    . If the handler raises any exception, it is delegated to
+    :py:class:`ask_sdk_core.dispatch_components.exception_components.ExceptionMapper`
+    to handle or raise it to the upper stack.
+
+    :param handler_adapters: List of handler adapters that are
+            supported by the dispatcher.
+    :type handler_adapters: list[HandlerAdapter]
+    :param request_mappers: List of Request Mappers containing
+        user defined handlers.
+    :type request_mappers: list[RequestMapper]
+    :param exception_mapper: Exception mapper containing custom
+        exception handlers.
+    :type exception_mapper: ExceptionMapper
+    :param request_interceptors: List of Request Interceptors
+    :type request_interceptors: list[AbstractRequestInterceptor]
+    :param response_interceptors: List of Response Interceptors
+    :type response_interceptors: list[AbstractResponseInterceptor]
     """
 
     def __init__(
@@ -78,24 +94,17 @@ class RequestDispatcher(AbstractRequestDispatcher):
 
         :param handler_adapters: List of handler adapters that are
             supported by the dispatcher.
-        :type handler_adapters: List[:py:class:
-            `ask_sdk_core.dispatch_components.HandlerAdapter`]
+        :type handler_adapters: list[HandlerAdapter]
         :param request_mappers: List of Request Mappers containing
             user defined handlers.
-        :type request_mappers: List[:py:class:
-            `ask_sdk_core.dispatch_components.RequestMapper`]
+        :type request_mappers: list[RequestMapper]
         :param exception_mapper: Exception mapper containing custom
             exception handlers.
-        :type exception_mapper: :py:class:
-            `ask_sdk_core.dispatch_components.ExceptionMapper`
+        :type exception_mapper: ExceptionMapper
         :param request_interceptors: List of Request Interceptors
-        :type request_interceptors: List[:py:class:
-            `ask_sdk_core.dispatch_components.
-            AbstractRequestInterceptors`]
+        :type request_interceptors: list[AbstractRequestInterceptor]
         :param response_interceptors: List of Response Interceptors
-        :type response_interceptors: List[:py:class:
-            `ask_sdk_core.dispatch_components.
-            AbstractResponseInterceptors`]
+        :type response_interceptors: list[AbstractResponseInterceptor]
         """
         if handler_adapters is None:
             handler_adapters = []
@@ -128,10 +137,10 @@ class RequestDispatcher(AbstractRequestDispatcher):
 
         :param handler_input: input to the dispatcher containing
             incoming request and other context
-        :type handler_input: ask_sdk_core.handler_input.HandlerInput
+        :type handler_input: HandlerInput
         :return: output optionally containing a response
-        :rtype: Union[None, ask_sdk_model.response.Response]
-        :raises ask_sdk_core.exceptions.DispatchException
+        :rtype: Union[None, Response]
+        :raises: :py:class:`ask_sdk_core.exceptions.DispatchException`
         """
         try:
             for request_interceptor in self.request_interceptors:
@@ -169,7 +178,7 @@ class RequestDispatcher(AbstractRequestDispatcher):
 
         :param handler_input: input to the dispatcher containing
             incoming request and other context.
-        :type handler_input: ask_sdk_core.handler_input.HandlerInput
+        :type handler_input: HandlerInput
         :return: Output from the 'handle' method execution of the
             supporting handler.
         :rtype: Union[None, Response]

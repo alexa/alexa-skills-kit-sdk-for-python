@@ -7,7 +7,7 @@ by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
 
 The latest, most up to date, documentation can be found at
-`Read the Docs <>`_.
+`Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/`_.
 
 `Guides <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/index.html#guides>`_
 ------------------------------------------------------------------------------------------

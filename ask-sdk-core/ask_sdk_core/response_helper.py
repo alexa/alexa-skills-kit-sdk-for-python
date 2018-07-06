@@ -94,7 +94,7 @@ class ResponseFactory(object):
         https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#card-object.
 
         :param card: card object in response sent back to user.
-        :type card: :py:class:`ask_sdk_model.ui.card.Card`
+        :type card: ask_sdk_model.ui.card.Card
         :return: response factory with partial response being built
             and access from self.response.
         :rtype: ResponseFactory
@@ -107,7 +107,7 @@ class ResponseFactory(object):
         """Adds directive to response.
 
         :param directive: the directive sent back to Alexa device.
-        :type directive: :py:class:`ask_sdk_model.Directive`
+        :type directive: ask_sdk_model.directive.Directive
         :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
@@ -177,12 +177,15 @@ def get_plain_text_content(primary_text=None, secondary_text=None, tertiary_text
     ask-sdk-model in Alexa skills kit display interface.
     https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#textcontent-object-specifications.
 
+    :param primary_text: Text for primary_text field
     :type primary_text: (optional) str
+    :param secondary_text: Text for secondary_text field
     :type secondary_text: (optional) str
+    :param tertiary_text: Text for tertiary_text field
     :type tertiary_text: (optional) str
     :return: Text Content instance with primary, secondary and tertiary
         text set as Plain Text objects.
-    :rtype: :py:class:`ask_sdk_model.interfaces.display.TextContent`
+    :rtype: TextContent
     :raises: ValueError
     """
     return get_text_content(
@@ -197,12 +200,15 @@ def get_rich_text_content(primary_text=None, secondary_text=None, tertiary_text=
     ask-sdk-model in Alexa skills kit display interface.
     https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#textcontent-object-specifications.
 
+    :param primary_text: Text for primary_text field
     :type primary_text: (optional) str
+    :param secondary_text: Text for secondary_text field
     :type secondary_text: (optional) str
+    :param tertiary_text: Text for tertiary_text field
     :type tertiary_text: (optional) str
     :return: Text Content instance with primary, secondary and tertiary
-        text set as Plain Text objects.
-    :rtype: :py:class:`ask_sdk_model.interfaces.display.TextContent`
+        text set as Rich Text objects.
+    :rtype: TextContent
     :raises: ValueError
     """
     return get_text_content(
@@ -220,22 +226,25 @@ def get_text_content(
     in Alexa skills kit display interface.
     https://developer.amazon.com/docs/custom-skills/display-interface-reference.html#textcontent-object-specifications.
 
+    :param primary_text: Text for primary_text field
     :type primary_text: (optional) str
     :param primary_text_type: Type of the primary text field. Allowed
         values are `PlainText` and `RichText`.
         Defaulted to `PlainText`.
+    :param secondary_text: Text for secondary_text field
     :type primary_text_type: (optional) str
     :type secondary_text: (optional) str
     :param secondary_text_type: Type of the secondary text field.
         Allowed values are `PlainText` and `RichText`.
         Defaulted to `PlainText`.
+    :param tertiary_text: Text for tertiary_text field
     :type tertiary_text: (optional) str
     :param tertiary_text_type: Type of the tertiary text field.
         Allowed values are `PlainText` and `RichText`.
         Defaulted to `PlainText`.
     :return: Text Content instance with primary, secondary and tertiary
         text set.
-    :rtype: :py:class:`ask_sdk_model.interfaces.display.TextContent`
+    :rtype: TextContent
     :raises: ValueError
     """
     text_content = TextContent()

@@ -32,7 +32,7 @@ def user_id_partition_keygen(request_envelope):
     :type request_envelope: ask_sdk_model.RequestEnvelope
     :return: User Id retrieved from request envelope
     :rtype: str
-    :raises: ask_sdk_core.exceptions.PersistenceException
+    :raises: :py:class:`ask_sdk_core.exceptions.PersistenceException`
     """
     try:
         user_id = request_envelope.context.system.user.user_id
@@ -51,7 +51,7 @@ def device_id_partition_keygen(request_envelope):
     :type request_envelope: ask_sdk_model.RequestEnvelope
     :return: Device Id retrieved from request envelope
     :rtype: str
-    :raises: ask_sdk_core.exceptions.PersistenceException
+    :raises: :py:class:`ask_sdk_core.exceptions.PersistenceException`
     """
     try:
         device_id = request_envelope.context.system.device.device_id

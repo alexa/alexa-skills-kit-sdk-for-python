@@ -107,14 +107,14 @@ the user’s device settings.
 
 .. toctree::
    :maxdepth: 1
-   :caption: API Reference
+   :caption: SDK API Reference
 
    api/index
 
 
 .. toctree::
    :maxdepth: 1
-   :caption: Skill Models
+   :caption: SDK Models
 
    models/index
 
@@ -155,4 +155,3 @@ Indices and tables
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

@@ -43,7 +43,7 @@ class StandardSkillBuilder(SkillBuilder):
     :type auto_create_table: bool
     :param partition_keygen: Callable function that takes a request
         envelope and provides a unique partition key value.
-    :type partition_keygen: Callable[[ask_sdk_model.RequestEnvelope], str]
+    :type partition_keygen: Callable[[RequestEnvelope], str]
     :param dynamodb_client: Resource to be used, to perform dynamo
         operations.
     :type dynamodb_client: boto3.resources.base.ServiceResource

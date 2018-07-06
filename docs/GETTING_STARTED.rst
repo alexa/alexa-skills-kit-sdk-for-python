@@ -17,7 +17,7 @@ To show the version, from a command prompt run the following command:
 
 .. code-block:: sh
 
-    >>> python --version
+    $ python --version
     Python 3.6.5
 
 You can download the latest version of Python
@@ -51,20 +51,20 @@ created folder:
 
 .. code-block:: sh
 
-    >>> virtualenv skill
+    $ virtualenv skill
 
 Next, activate your virtual environment. If you are using MacOS or Linux,
 use the following command:
 
 .. code-block:: sh
 
-    >>> source skill/bin/activate
+    $ source skill/bin/activate
 
 Windows users need to use the following command:
 
 .. code-block:: bat
 
-    >>> skill\Script\activate
+    $ skill\Scripts\activate
 
 The command prompt should now be prefixed with (skill) indicating that you
 are working inside the virtual environment. Use the following command to
@@ -72,7 +72,7 @@ install the ASK SDK for Python:
 
 .. code-block:: sh
 
-    >>> pip install ask-sdk
+    $ pip install ask-sdk
 
 On MacOS and Linux, depending on the version of Python you are using, the
 SDK will be installed into the ``skill/lib/Python3.6/site-packages`` folder.
@@ -96,15 +96,15 @@ and navigate to the folder:
 
 .. code-block:: sh
 
-    >>> mkdir skill
-    >>> cd skill
+    $ mkdir skill
+    $ cd skill
 
 Next, install the ASK SDK for Python using pip. The ``-t`` option targets a
 specific folder for installation:
 
 .. code-block:: sh
 
-    >>> pip install ask-sdk -t ask-sdk
+    $ pip install ask-sdk -t ask-sdk
 
 This creates a folder named ask-sdk inside your skill folder and installs
 the ASK SDK for Python and its dependencies. Your skill directory should now
@@ -135,8 +135,8 @@ contain the folder ask-sdk, which is populated with directories including:
 
     .. code-block:: sh
 
-        >>> cd ask-sdk
-        >>> pip install ask-sdk -t .
+        $ cd ask-sdk
+        $ pip install ask-sdk -t .
 
     More on this can be checked on the
     `homebrew docs <https://github.com/Homebrew/brew/blob/master/docs/Homebrew-and-Python.md#setuptools-pip-etc>`_

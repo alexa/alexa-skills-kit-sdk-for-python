@@ -52,7 +52,7 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
     :param partition_keygen: Callable function that takes a
         request envelope and provides a unique partition key value.
         Defaulted to user id keygen function
-    :type partition_keygen: Callable[[ask_sdk_model.RequestEnvelope], str]
+    :type partition_keygen: Callable[[RequestEnvelope], str]
     :param dynamodb_resource: Resource to be used, to perform
         dynamo operations. Defaulted to resource generated from
         boto3
@@ -91,7 +91,7 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
         :param dynamodb_resource: Resource to be used, to perform
             dynamo operations. Defaulted to resource generated from
             boto3
-        :type dynamodb_resource: ServiceResource
+        :type dynamodb_resource: boto3.resources.base.ServiceResource
         """
         self.table_name = table_name
         self.partition_key_name = partition_key_name
@@ -117,7 +117,7 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
         :return: Attributes stored under the partition keygen mapping
             in the table
         :rtype: Dict[str, object]
-        :raises: ask_sdk_core.exceptions.PersistenceException
+        :raises: :py:class:`ask_sdk_core.exceptions.PersistenceException`
         """
         try:
             table = self.dynamodb.Table(self.table_name)
@@ -154,7 +154,7 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
             mapping in the table
         :type attributes: Dict[str, object]
         :rtype: None
-        :raises: ask_sdk_core.exceptions.PersistenceException
+        :raises: :py:class:`ask_sdk_core.exceptions.PersistenceException`
         """
         try:
             table = self.dynamodb.Table(self.table_name)

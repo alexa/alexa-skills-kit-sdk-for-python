@@ -27,17 +27,16 @@ if typing.TYPE_CHECKING:
 class HandlerInput(object):
     """Input to Request Handler, Exception Handler and Interceptors.
 
-    Handler Input instantiations are passed to
-    :py:class:`RequestHandler` and :py:class:`ExceptionHandler`, during
-    skill invocation. The class provides a
-    :py:class:`AttributesManager` and a :py:class:`ResponseBuilder`
-    instance, apart from :py:class:`RequestEnvelope`, Context and
-    :py:class:`ServiceClientFactory` instances, to utilize during the
-    lifecycle of skill.
+    Handler Input instantiations are passed to the registered instances
+    of `AbstractRequestHandler` and `AbstractExceptionHandler`
+    , during skill invocation. The class provides a `AttributesManager`
+    and a `ResponseFactory` instance, apart from `RequestEnvelope`,
+    `Context` and `ServiceClientFactory` instances, to utilize during
+    the lifecycle of skill.
 
     :param request_envelope: Request Envelope passed from Alexa
             Service
-    :type request_envelope: ask_sdk_model.RequestEnvelope
+    :type request_envelope: ask_sdk_model.request_envelope.RequestEnvelope
     :param attributes_manager: Attribute Manager instance for
         managing attributes across skill lifecycle
     :type attributes_manager:
@@ -47,7 +46,7 @@ class HandlerInput(object):
     :param service_client_factory: Service Client Factory instance
         for calling Alexa services
     :type service_client_factory:
-        ask_sdk_model.services.ServiceClientFactory
+        ask_sdk_model.services.service_client_factory.ServiceClientFactory
     """
     def __init__(
             self, request_envelope, attributes_manager=None,
@@ -57,7 +56,7 @@ class HandlerInput(object):
 
         :param request_envelope: Request Envelope passed from Alexa
             Service.
-        :type request_envelope: ask_sdk_model.RequestEnvelope
+        :type request_envelope: ask_sdk_model.request_envelope.RequestEnvelope
         :param attributes_manager: Attribute Manager instance for
             managing attributes across skill lifecycle
         :type attributes_manager:
@@ -67,7 +66,7 @@ class HandlerInput(object):
         :param service_client_factory: Service Client Factory instance
             for calling Alexa services
         :type service_client_factory:
-            ask_sdk_model.services.ServiceClientFactory
+            ask_sdk_model.services.service_client_factory.ServiceClientFactory
         """
         self.request_envelope = request_envelope
         self.context = context
