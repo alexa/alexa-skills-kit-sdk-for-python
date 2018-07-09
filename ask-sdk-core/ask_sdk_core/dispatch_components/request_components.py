@@ -30,9 +30,9 @@ class AbstractRequestHandler(object):
     """Request Handlers are responsible for processing Request inside
     the Handler Input and generating Response.
 
-    Custom request handlers needs to implement 'can_handle' and
-    'handle' methods. 'can_handle' returns True if the handler can
-    handle the current request. 'handle' processes the Request and
+    Custom request handlers needs to implement ``can_handle`` and
+    ``handle`` methods. ``can_handle`` returns True if the handler can
+    handle the current request. ``handle`` processes the Request and
     may return a Response.
     """
     __metaclass__ = ABCMeta
@@ -45,7 +45,7 @@ class AbstractRequestHandler(object):
 
         :param handler_input: Handler Input instance with
             Request Envelope containing Request.
-        :type handler_input: :py:class:'HandlerInput'
+        :type handler_input: HandlerInput
         :return: Boolean value that tells the dispatcher if the
             current request can be handled by this handler.
         :rtype: bool
@@ -60,9 +60,9 @@ class AbstractRequestHandler(object):
 
         :param handler_input: Handler Input instance with
             Request Envelope containing Request.
-        :type handler_input: :py:class:'HandlerInput'
+        :type handler_input: HandlerInput
         :return: Response for the dispatcher to return or None
-        :rtype: Union[:py:class:'ask_sdk_model.Response', None]
+        :rtype: Union[Response, None]
         """
         pass
 
@@ -70,7 +70,7 @@ class AbstractRequestHandler(object):
 class AbstractRequestInterceptor(object):
     """Interceptor that runs before the handler is called.
 
-    The process method has to be implemented, to run custom logic on
+    The ``process`` method has to be implemented, to run custom logic on
     the input, before it is handled by the Handler.
     """
     __metaclass__ = ABCMeta
@@ -90,7 +90,7 @@ class AbstractRequestInterceptor(object):
 class AbstractResponseInterceptor(object):
     """Interceptor that runs after the handler is called.
 
-    The process method has to be implemented, to run custom logic on
+    The ``process`` method has to be implemented, to run custom logic on
     the input and the response generated after the handler is executed
     on the input.
     """
@@ -105,7 +105,7 @@ class AbstractResponseInterceptor(object):
         :type handler_input: HandlerInput
         :param response: Execution result of the Handler on
             handler input.
-        :type response: Union[None, Response]
+        :type response: Union[None, :py:class:`ask_sdk_model.Response`]
         :rtype: None
         """
         pass
@@ -132,7 +132,7 @@ class AbstractRequestHandlerChain(object):
         # type: () -> List[AbstractRequestInterceptor]
         """
         :return: List of registered Request Interceptors.
-        :rtype: list(RequestInterceptor)
+        :rtype: list(AbstractRequestInterceptor)
         """
         pass
 
@@ -142,7 +142,7 @@ class AbstractRequestHandlerChain(object):
         """
 
         :return: List of registered Response Interceptors.
-        :rtype: list(ResponseInterceptor)
+        :rtype: list(AbstractResponseInterceptor)
         """
         pass
 
@@ -153,7 +153,17 @@ class GenericRequestHandlerChain(AbstractRequestHandlerChain):
 
     Generic Request Handler Chain accepts request handler of any type.
     This class can be used to register request handler of type other
-    than :py:class:`RequestHandler`.
+    than :py:class:`AbstractRequestHandler`.
+
+    :param request_handler: Registered Request Handler instance of
+        generic type.
+    :type request_handler: AbstractRequestHandler
+    :param request_interceptors:  List of registered Request
+        Interceptors.
+    :type request_interceptors: list(AbstractRequestInterceptor)
+    :param response_interceptors: List of registered Response
+        Interceptors.
+    :type response_interceptors: list(AbstractResponseInterceptor)
     """
     def __init__(
             self, request_handler, request_interceptors=None,
@@ -167,10 +177,10 @@ class GenericRequestHandlerChain(AbstractRequestHandlerChain):
         :type request_handler: AbstractRequestHandler
         :param request_interceptors:  List of registered Request
             Interceptors.
-        :type request_interceptors: list(RequestInterceptor)
+        :type request_interceptors: list(AbstractRequestInterceptor)
         :param response_interceptors: List of registered Response
             Interceptors.
-        :type response_interceptors: list(ResponseInterceptor)
+        :type response_interceptors: list(AbstractResponseInterceptor)
         """
         self.request_handler = request_handler
         self.request_interceptors = request_interceptors
@@ -217,7 +227,7 @@ class GenericRequestHandlerChain(AbstractRequestHandlerChain):
         """Add interceptor to Request Interceptors list.
 
         :param interceptor: Request Interceptor instance.
-        :type interceptor: :py:class:`RequestInterceptor`
+        :type interceptor: AbstractRequestInterceptor
         """
         self.request_interceptors.append(interceptor)
 
@@ -226,14 +236,25 @@ class GenericRequestHandlerChain(AbstractRequestHandlerChain):
         """Add interceptor to Response Interceptors list.
 
         :param interceptor: Response Interceptor instance.
-        :type interceptor: :py:class:`ResponseInterceptor`
+        :type interceptor: AbstractResponseInterceptor
         """
         self.response_interceptors.append(interceptor)
 
 
 class RequestHandlerChain(GenericRequestHandlerChain):
     """Implementation of :py:class:`AbstractRequestHandlerChain` which
-    handles :py:class:`RequestHandler`.
+    handles :py:class:`AbstractRequestHandler`.
+
+    :param request_handler: Registered Request Handler instance.
+    :type request_handler: AbstractRequestHandler
+    :param request_interceptors:  List of registered Request
+        Interceptors.
+    :type request_interceptors: list(AbstractRequestInterceptor)
+    :param response_interceptors: List of registered Response
+        Interceptors.
+    :type response_interceptors: list(AbstractResponseInterceptor)
+    :raises: :py:class:`ask_sdk_core.exceptions.DispatchException`
+        when invalid request handler is provided.
     """
 
     def __init__(
@@ -241,18 +262,18 @@ class RequestHandlerChain(GenericRequestHandlerChain):
             response_interceptors=None):
         # type: (AbstractRequestHandler, List[AbstractRequestInterceptor], List[AbstractResponseInterceptor]) -> None
         """Implementation of :py:class:`AbstractRequestHandlerChain`
-        which handles :py:class:`RequestHandler`.
+        which handles :py:class:`AbstractRequestHandler`.
 
         :param request_handler: Registered Request Handler instance.
-        :type request_handler: RequestHandler
+        :type request_handler: AbstractRequestHandler
         :param request_interceptors:  List of registered Request
             Interceptors.
-        :type request_interceptors: list(RequestInterceptor)
+        :type request_interceptors: list(AbstractRequestInterceptor)
         :param response_interceptors: List of registered Response
             Interceptors.
-        :type response_interceptors: list(ResponseInterceptor)
-        :raises DispatchException when invalid request handler is
-            provided.
+        :type response_interceptors: list(AbstractResponseInterceptor)
+        :raises: :py:class:`ask_sdk_core.exceptions.DispatchException`
+            when invalid request handler is provided.
         """
         if request_handler is None or not isinstance(
                 request_handler, AbstractRequestHandler):
@@ -281,7 +302,7 @@ class RequestHandlerChain(GenericRequestHandlerChain):
 class AbstractRequestMapper(object):
     """Class for request routing to the appropriate handler chain.
 
-    User needs to implement 'get_request_handler_chain' method, to
+    User needs to implement ``get_request_handler_chain`` method, to
     provide a routing mechanism of the input to the appropriate request
     handler chain containing the handler and the interceptors.
     """
@@ -296,7 +317,7 @@ class AbstractRequestMapper(object):
         :type handler_input: HandlerInput
         :return: Handler Chain that can handle the request under
             handler input.
-        :rtype: RequestHandlerChain
+        :rtype: AbstractRequestHandlerChain
         """
         pass
 
@@ -307,9 +328,13 @@ class RequestMapper(AbstractRequestMapper):
 
     The class accepts request handler chains of type
     :py:class:`RequestHandlerChain` only. The
-    'get_request_handler_chain' method returns the
+    ``get_request_handler_chain`` method returns the
     :py:class:`RequestHandlerChain` instance that can
     handle the request in the handler input.
+
+    :param request_handler_chains: List of
+            :py:class:`RequestHandlerChain` instances.
+    :type request_handler_chains: list(RequestHandlerChain)
     """
 
     def __init__(self, request_handler_chains):
@@ -343,10 +368,9 @@ class RequestMapper(AbstractRequestMapper):
 
         :param request_handler_chains: List of
             :py:class:`RequestHandlerChain` instances.
-        :type request_handler_chains: list(
-            :py:class:`RequestHandlerChain`)
-        :raises DispatchException when any object inside the input
-            list is of invalid type
+        :type request_handler_chains: list(RequestHandlerChain)
+        :raises: :py:class:`ask_sdk_core.exceptions.DispatchException`
+            when any object inside the input list is of invalid type
         """
         self._request_handler_chains = []
         if request_handler_chains is not None:
@@ -360,8 +384,8 @@ class RequestMapper(AbstractRequestMapper):
 
         :param request_handler_chain:  Request Handler Chain instance.
         :type request_handler_chain: RequestHandlerChain
-        :raises DispatchException if a null input is provided or if
-            the input is of invalid type
+        :raises: :py:class:`ask_sdk_core.exceptions.DispatchException`
+            if a null input is provided or if the input is of invalid type
         """
         if request_handler_chain is None or not isinstance(
                 request_handler_chain, RequestHandlerChain):
@@ -416,7 +440,7 @@ class AbstractHandlerAdapter(object):
         :param handler: Request Handler instance.
         :type handler: object
         :return: Result executed by passing handler_input to handler.
-        :rtype: Union[None, ask_sdk_model.response.Response]
+        :rtype: Union[None, Response]
         """
         pass
 
@@ -449,6 +473,6 @@ class HandlerAdapter(AbstractHandlerAdapter):
         :param handler: Request Handler instance.
         :type handler: object
         :return: Result executed by passing handler_input to handler.
-        :rtype: Union[None, ask_sdk_model.response.Response]
+        :rtype: Union[None, Response]
         """
         return handler.handle(handler_input)

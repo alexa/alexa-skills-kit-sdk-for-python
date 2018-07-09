@@ -57,7 +57,7 @@ or device ID), TTL, and storage layer depends on the configuration of
 the skill.
 
 Persistent attributes are only available when you `configure the skill
-instance <SKILL_BUILDERS.rst#skill-builders>`_ with a ``PersistenceAdapter``. Calls to the
+instance <SKILL_BUILDERS.html#skill-builders>`_ with a ``PersistenceAdapter``. Calls to the
 ``AttributesManager`` to retrieve and save persistent attributes throw
 an error if a ``PersistenceAdapter`` has not been configured.
 
@@ -92,9 +92,9 @@ AttributesManager
 
 The ``AttributesManager`` exposes attributes that you can retrieve and
 update in your handlers. ``AttributesManager`` is available to handlers
-via the `Handler Input <REQUEST_PROCESSING.rst#handler-input>`_ object. The ``AttributesManager``
-takes care of attributes retrieval and saving so that you can interact
-directly with attributes needed by your skill.
+via the `Handler Input <REQUEST_PROCESSING.html#handler-input>`_ object.
+The ``AttributesManager`` takes care of attributes retrieval and saving
+so that you can interact directly with attributes needed by your skill.
 
 Interface
 ~~~~~~~~~
@@ -163,6 +163,6 @@ attributes.
         def handle(handler_input):
             persistence_attr = handler_input.attributes_manager.persistent_attributes
             persistence_attr['foo'] = 'baz'
-            handler_input.attributes_manager.save_attributes()
+            handler_input.attributes_manager.save_persistent_attributes()
             return handler_input.response_builder.response
 

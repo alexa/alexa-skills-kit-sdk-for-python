@@ -19,26 +19,28 @@ as follows:
 
 .. code-block:: sh
 
-    >>> virtualenv venv
-    >>> . venv/bin/activate
-    >>> pip install ask-sdk
+    $ virtualenv venv
+    $ . venv/bin/activate
+    $ pip install ask-sdk
 
 
 You can also install the whole standard package locally by following these steps:
 
 .. code-block:: sh
 
-    >>> git clone https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python.git
-    >>> cd alexa-skills-kit-sdk-for-python/ask-sdk
-    >>> virtualenv venv
+    $ git clone https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python.git
+    $ cd alexa-skills-kit-sdk-for-python/ask-sdk
+    $ virtualenv venv
     ...
-    >>> . venv/bin/activate
-    >>> python setup.py install
+    $ . venv/bin/activate
+    $ python setup.py install
 
 
 Usage and Getting Started
 -------------------------
-A Getting Started guide can be found `here <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/docs/GETTING_STARTED.rst>`_
+
+Getting started guides, SDK Features, API references, samples etc. can
+be found at `Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_
 
 
 Got Feedback?

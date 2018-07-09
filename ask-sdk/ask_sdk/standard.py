@@ -29,7 +29,25 @@ if typing.TYPE_CHECKING:
 
 
 class StandardSkillBuilder(SkillBuilder):
-    """Skill Builder with api client and db adapter coupling to Skill."""
+    """Skill Builder with api client and db adapter coupling to Skill.
+
+    Standard Skill Builder is an implementation of
+    :py:class:`ask_sdk_core.skill_builder.SkillBuilder`
+    with coupling of DynamoDb Persistence Adapter settings and a Default
+    Api Client added to the :py:class:`ask_sdk_core.skill.Skill`.
+
+    :param table_name: Name of the table to be created or used
+    :type table_name: str
+    :param auto_create_table: Should the adapter try to create the table if
+        it doesn't exist.
+    :type auto_create_table: bool
+    :param partition_keygen: Callable function that takes a request
+        envelope and provides a unique partition key value.
+    :type partition_keygen: Callable[[RequestEnvelope], str]
+    :param dynamodb_client: Resource to be used, to perform dynamo
+        operations.
+    :type dynamodb_client: boto3.resources.base.ServiceResource
+    """
 
     def __init__(
             self, table_name=None, auto_create_table=None,
@@ -37,9 +55,10 @@ class StandardSkillBuilder(SkillBuilder):
         # type: (str, bool, Callable[[RequestEnvelope], str], ServiceResource) -> None
         """Skill Builder with api client and db adapter coupling to Skill.
 
-        Standard Skill Builder is an implementation of :py:class:`SkillBuilder`
+        Standard Skill Builder is an implementation of
+        :py:class:`ask_sdk_core.skill_builder.SkillBuilder`
         with coupling of DynamoDb Persistence Adapter settings and a Default
-        Api Client added to the :py:class:`Skill`.
+        Api Client added to the :py:class:`ask_sdk_core.skill.Skill`.
 
         :param table_name: Name of the table to be created or used
         :type table_name: str
@@ -48,10 +67,10 @@ class StandardSkillBuilder(SkillBuilder):
         :type auto_create_table: bool
         :param partition_keygen: Callable function that takes a request
             envelope and provides a unique partition key value.
-        :type partition_keygen: Callable[[RequestEnvelope], str]
+        :type partition_keygen: Callable[[ask_sdk_model.RequestEnvelope], str]
         :param dynamodb_client: Resource to be used, to perform dynamo
             operations.
-        :type dynamodb_client: ServiceResource
+        :type dynamodb_client: boto3.resources.base.ServiceResource
         """
         super(StandardSkillBuilder, self).__init__()
         self.table_name = table_name

@@ -5,10 +5,10 @@ Request Processing
 This guide provides information on the following request processing components
 available in the SDK, for skill development:
 
-- `Request Handlers <#request-handlers>`_
-- `Exception Handlers <#exception-handlers>`_
-- `Request and Response Interceptors <#request-and-response-interceptors>`_
-- `Handler Input <#handler-input>`_
+- Handler Input
+- Request Handlers
+- Exception Handlers
+- Request and Response Interceptors
 
 Handler Input
 =============
@@ -18,7 +18,7 @@ are all passed a global ``HandlerInput`` object during invocation. This object
 exposes various entities useful in request processing, including:
 
 -  **request_envelope**: Contains the entire `request
-   body <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-body-syntax>`__
+   body <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-body-syntax>`_
    sent to skill.
 -  **attributes_manager**: Provides access to request, session, and
    persistent attributes.
@@ -28,7 +28,7 @@ exposes various entities useful in request processing, including:
 -  **context**: Provides an optional, context object passed in by the
    host container. For example, for skills running on AWS Lambda, this
    is the `context
-   object <https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html>`__
+   object <https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html>`_
    for the AWS Lambda function.
 
 
@@ -41,7 +41,7 @@ handlers:
 
 - By implementing the ``AbstractRequestHandler`` class.
 - By decorating a custom handle function using the
-  `Skill Builder <SKILL_BUILDERS.rst#skill-builder>`__ ``request_handler``
+  `Skill Builder <SKILL_BUILDERS.html#skill-builder>`__ ``request_handler``
   decorator.
 
 Interface
@@ -206,14 +206,14 @@ Keep this in mind when designing and registering request handlers.
 
 
 Exception Handlers
-==============
+==================
 
 Exception handlers are similar to request handlers, but are instead
 responsible for handling one or more types of exceptions. They are invoked
 by the SDK when an unhandled exception is thrown during the course of
 request processing.
 
-In addition to the `Handler Input <#handler-input>`_ object, the handler
+In addition to the `Handler Input <#handler-input>`__ object, the handler
 also has access to the exception raised during handling the input
 request, thus making it easier for the handler to figure out how to
 handle the corresponding exception.
@@ -223,14 +223,14 @@ request interceptors can be implemented in two ways:
 
 - By implementing the ``AbstractExceptionHandler`` class.
 - By decorating a custom exception handling function using the
-  `Skill Builder <SKILL_BUILDERS.rst##skill-builders>`__
+  `Skill Builder <SKILL_BUILDERS.html##skill-builders>`__
   ``exception_handler`` decorator.
 
 Interface
 ---------
 
 AbstractExceptionHandler Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you plan on using the ``AbstractExceptionHandler`` class, you will
 need to implement the following methods :
@@ -276,7 +276,7 @@ has a name that starts with “AskSdk”. The ``handle`` method returns a
 graceful exception response to the user.
 
 exception_handler decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``exception_handler`` decorator from SkillBuilder class is a custom wrapper
 on top of the ``AbstractExceptionHandler`` class and provides the same
@@ -361,14 +361,14 @@ The SDK supports Global Request and Response Interceptors that execute
 Request Interceptors
 --------------------
 
-The Global Request Interceptor accepts a `Handler Input <handler-input>`_
+The Global Request Interceptor accepts a `Handler Input <handler-input>`__
 object and processes it, before processing any of the registered request
 handlers. Similar to `Request Handlers <#request-handlers>`_, custom
 request interceptors can be implemented in two ways:
 
 - By implementing the ``AbstractRequestInterceptor`` class.
 - By decorating a custom process function using the
-  `Skill Builder <SKILL_BUILDERS.rst##skill-builder>`__
+  `Skill Builder <SKILL_BUILDERS.html##skill-builder>`__
   ``global_request_interceptor`` decorator.
 
 Interface
@@ -379,7 +379,7 @@ AbstractRequestInterceptor Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``AbstractRequestInterceptor`` class usage needs you to implement the
-``process`` method. This method takes a `Handler Input <#handler-input>`_
+``process`` method. This method takes a `Handler Input <#handler-input>`__
 instance and doesn't return anything.
 
 .. code:: python
@@ -402,9 +402,9 @@ request received by Alexa service, in AWS CloudWatch logs, before handling it.
           print("Request received: {}".format(handler_input.request_envelope.request))
 
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 global_request_interceptor decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``global_request_interceptor`` decorator from SkillBuilder class is a custom
 wrapper on top of the ``AbstractRequestInterceptor`` class and provides the same
@@ -445,7 +445,7 @@ Registering and Processing the Request Interceptors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Request interceptors are invoked immediately before execution of the request handler
-for an incoming request. Request attributes in `Handler Input <#handler-input>`_'s
+for an incoming request. Request attributes in `Handler Input <#handler-input>`__'s
 ``Attribute Manager`` provide a way for request interceptors to pass data and entities
 on to other request interceptors and request handlers.
 
@@ -486,25 +486,25 @@ In the above example, the SDK executes all request interceptors in the following
 Response Interceptors
 ---------------------
 
-The Global Response Interceptor accepts a `Handler Input <#handler-input>`_
+The Global Response Interceptor accepts a `Handler Input <#handler-input>`__
 object, a `Response` and processes them, after executing the supported request
 handler. Similar to `Request Interceptors <#request-interceptors>`_, custom
 response interceptors can be implemented in two ways:
 
 - By implementing the ``AbstractResponseInterceptor`` class.
 - By decorating a custom process function using the
-  `Skill Builder <SKILL_BUILDERS.rst##skill-builders>`__
+  `Skill Builder <SKILL_BUILDERS.html#skill-builders>`__
   ``global_response_interceptor`` decorator.
 
 Interface
 ~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 AbstractResponseInterceptor Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``AbstractResponseInterceptor`` class usage needs you to implement the
-``process`` method. This method takes a `Handler Input <#handler-input>`_
+``process`` method. This method takes a `Handler Input <#handler-input>`__
 instance, a ``Response`` object that is returned from the previously executed
 request handler. The method doesn't return anything.
 
@@ -529,9 +529,9 @@ before returning it to the Alexa Service.
           print("Response generated: {}".format(response))
 
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 global_response_interceptor decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``global_response_interceptor`` decorator from SkillBuilder class is a custom
 wrapper on top of the ``AbstractResponseInterceptor`` class and provides the same
@@ -569,7 +569,7 @@ The following example shows a logging function that can be used as response inte
 
 
 Registering and Processing the Response Interceptors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Response interceptors are invoked immediately after execution of the request handler
 for an incoming request.
