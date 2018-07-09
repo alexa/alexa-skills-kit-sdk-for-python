@@ -94,6 +94,7 @@ The following implementation sections explore how to implement exception handlin
     either of the option and stick with it through out your skill, for
     better code structure.
 
+
 Option 1: Implementation using handler classes
 ----------------------------------------------
 
