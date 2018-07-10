@@ -2,9 +2,41 @@
 ASK SDK for Python (Beta)
 =========================
 
+|Build Status| |Docs| |License|
+
 The **ASK SDK for Python (Beta)** makes it easier for you to build highly engaging skills,
 by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
+
+
+.. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
+    :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
+    :alt: Build Status
+.. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
+    :target: https://alexa-skills-kit-python-sdk.readthedocs.io
+    :alt: Read the docs
+.. |Core Version| image:: http://img.shields.io/pypi/v/ask-sdk-core.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-core/
+    :alt: Version
+.. |DynamoDb Version| image:: http://img.shields.io/pypi/v/ask-sdk-dynamodb-persistence-adapter.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-dynamodb-persistence-adapter/
+    :alt: Version
+.. |Standard Version| image:: http://img.shields.io/pypi/v/ask-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk/
+    :alt: Version
+.. |License| image:: http://img.shields.io/pypi/l/boto3.svg?style=flat
+    :target: https://github.com/boto/boto3/blob/develop/LICENSE
+    :alt: License
+    
+====================================   =======
+Package                                Version
+------------------------------------   -------
+ask-sdk-core                           |Core Version|
+ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version|
+ask-sdk                                |Standard Version|
+====================================   =======
+
+
 
 The latest, most up to date, documentation can be found at
 `Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_.
