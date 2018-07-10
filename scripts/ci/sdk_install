@@ -15,6 +15,8 @@ def run(command):
 sdk_packages = [
     "ask-sdk-core", "ask-sdk-dynamodb-persistence-adapter", "ask-sdk"]
 
+run("pip install coverage")
+
 for pkg in sdk_packages:
     os.chdir(os.path.join(REPO_ROOT, pkg))
     run("pip install -r requirements.txt")
