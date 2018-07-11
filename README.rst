@@ -2,59 +2,51 @@
 ASK SDK for Python (Beta)
 =========================
 
+|Build Status| |Docs| |License|
+
 The **ASK SDK for Python (Beta)** makes it easier for you to build highly engaging skills,
 by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
 
-To help you get started with the SDK we have included the following guides.
-In the future, we plan to include more documentation and samples too.
 
-Guides
-------
+.. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
+    :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
+    :alt: Build Status
+.. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
+    :target: https://alexa-skills-kit-python-sdk.readthedocs.io
+    :alt: Read the docs
+.. |Core Version| image:: http://img.shields.io/pypi/v/ask-sdk-core.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-core/
+    :alt: Version
+.. |DynamoDb Version| image:: http://img.shields.io/pypi/v/ask-sdk-dynamodb-persistence-adapter.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-dynamodb-persistence-adapter/
+    :alt: Version
+.. |Standard Version| image:: http://img.shields.io/pypi/v/ask-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk/
+    :alt: Version
+.. |License| image:: http://img.shields.io/pypi/l/boto3.svg?style=flat
+    :target: https://github.com/boto/boto3/blob/develop/LICENSE
+    :alt: License
+    
+====================================   =======
+Package                                Version
+------------------------------------   -------
+ask-sdk-core                           |Core Version|
+ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version|
+ask-sdk                                |Standard Version|
+====================================   =======
 
-`Setting Up The ASK SDK <docs/GETTING_STARTED.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This guide will show you how to include the SDK as a dependency in your
-Python project.
 
 
-`Developing Your First Skill <docs/DEVELOPING_YOUR_FIRST_SKILL.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The latest, most up to date, documentation can be found at
+`Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_.
 
-Walks you through step-by-step instructions for building the Hello World
-sample.
+`Guides <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/index.html#guides>`_
+------------------------------------------------------------------------------------------
 
 
-SDK Features
-------------
-
-`Request Processing <docs/REQUEST_PROCESSING.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to build request handlers, exception handlers, and request and
-response interceptors.
-
-`Skill Attributes <docs/ATTRIBUTES.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use skill attributes to store and retrieve skill data.
-
-`Response Building <docs/RESPONSE_BUILDING.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use the ResponseBuilder to compose multiple elements like
-text, cards, and audio into a single response.
-
-`Alexa Service Clients <docs/SERVICE_CLIENTS.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use service clients in your skill to access Alexa APIs.
-
-`Skill Builders <docs/SKILL_BUILDERS.rst>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to configure and construct a skill instance.
+`SDK Features <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/index.html#sdk-features>`_
+------------------------------------------------------------------------------------------------------
 
 Samples
 -------

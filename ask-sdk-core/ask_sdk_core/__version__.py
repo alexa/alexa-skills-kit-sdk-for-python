@@ -19,7 +19,7 @@ __pip_package_name__ = 'ask-sdk-core'
 __description__ = ('The ASK SDK Core package provides core Alexa Skills Kit '
                    'functionality, for building Alexa Skills.')
 __url__ = 'http://developer.amazon.com/ask'
-__version__ = '0.1'
+__version__ = '0.1.1'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
