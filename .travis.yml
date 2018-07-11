@@ -6,3 +6,6 @@ sudo: false
 install:
   - python scripts/ci/sdk_install
 script: python scripts/ci/run_tests
+after_success:
+- pip install codecov
+- codecov
