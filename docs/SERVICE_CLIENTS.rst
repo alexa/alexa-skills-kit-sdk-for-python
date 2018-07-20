@@ -13,7 +13,7 @@ allows you to retrieve client instances for every supported Alexa service. The
 with an ``ApiClient``. 
 
 A default ApiClient implementation using the ``requests`` 
-library is provided in the :py:class:`ask_sdk_core.api_client` module.
+library is provided in the ``ask_sdk_core.api_client`` module.
 The DefaultApiClient class has the ``http_client`` attribute, which provides
 flexibility to users, to call any API from the skill directly.
 
