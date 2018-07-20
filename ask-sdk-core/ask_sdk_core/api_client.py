@@ -34,7 +34,13 @@ class DefaultApiClient(ApiClient):
     """Default ApiClient implementation of
     :py:class:`ask_sdk_model.services.api_client.ApiClient` using the
     `requests` library.
+
+    Requests library is used as a default http client, to make Alexa API
+    calls. You can override it by setting the ``http_client`` attribute.
     """
+    def __init__(self):
+        # type: () -> None
+        self.http_client = requests
 
     def invoke(self, request):
         # type: (ApiClientRequest) -> ApiClientResponse
@@ -90,7 +96,7 @@ class DefaultApiClient(ApiClient):
             if invalid http request method is being called
         """
         try:
-            return getattr(requests, request.method.lower())
+            return getattr(self.http_client, request.method.lower())
         except AttributeError:
             raise ApiClientException(
                 "Invalid request method: {}".format(request.method))
