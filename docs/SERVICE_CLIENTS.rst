@@ -10,7 +10,12 @@ contained inside the `Handler Input <REQUEST_PROCESSING.html#handler-input>`_
 allows you to retrieve client instances for every supported Alexa service. The
 ``service_client_factory`` is only available for use, when you
 `configure the skill instance <SKILL_BUILDERS.html#skill-builders>`_
-with an ``ApiClient``.
+with an ``ApiClient``. 
+
+A default ApiClient implementation using the ``requests`` 
+library is provided in the ``ask_sdk_core.api_client`` module.
+The DefaultApiClient class has the ``http_client`` attribute, which provides
+flexibility to users, to call any API from the skill directly.
 
 The following example shows the ``handle`` function for a request
 handler that creates an instance of the device address service client.
