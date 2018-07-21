@@ -16,17 +16,16 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from boto3.exceptions import ResourceNotExistsError
 from ask_sdk_model import RequestEnvelope
 from ask_sdk_core.exceptions import PersistenceException
 from ask_sdk_dynamodb.adapter import DynamoDbAdapter
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class ResourceInUseException(Exception):
