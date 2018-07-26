@@ -32,10 +32,12 @@ from ask_sdk_model.services import Serializer
 
 from .exceptions import SerializationException
 
-if PY3:
-    unicode_type = str
-else:
-    unicode_type = unicode
+unicode_type = text_type
+
+try:
+    long        # Python 2
+except NameError:
+    long = int  # Python 3
 
 if typing.TYPE_CHECKING:
     from typing import TypeVar, Dict, List, Tuple, Union, Any
@@ -46,7 +48,7 @@ class DefaultSerializer(Serializer):
     PRIMITIVE_TYPES = (float, bool, bytes, text_type) + integer_types
     NATIVE_TYPES_MAPPING = {
         'int': int,
-        'long': int if PY3 else long,
+        'long': long,
         'float': float,
         'str': str,
         'bool': bool,
