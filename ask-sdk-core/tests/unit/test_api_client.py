@@ -16,6 +16,7 @@
 # License.
 #
 import unittest
+import json
 
 from ask_sdk_model.services import ApiClientRequest
 from ask_sdk_core.api_client import DefaultApiClient
@@ -182,3 +183,17 @@ class TestDefaultApiClient(unittest.TestCase):
                 self.test_api_client.invoke(test_invalid_url_scheme_request)
 
             assert "Requests against non-HTTPS endpoints are not allowed." in str(exc.exception)
+
+    def test_api_client_send_request_with_raw_data(self):
+        test_data = "test\nstring"
+        self.valid_request.body = "test\nstring"
+        self.valid_request.method = "POST"
+
+        with mock.patch(
+                "requests.post",
+                side_effect=lambda *args, **kwargs: self.valid_mock_response
+        ) as mock_put:
+            actual_response = self.test_api_client.invoke(self.valid_request)
+            mock_put.assert_called_once_with(
+                data=json.dumps(test_data), headers={},
+                url=self.valid_request.url)
