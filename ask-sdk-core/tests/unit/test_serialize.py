@@ -19,7 +19,7 @@ import unittest
 import datetime
 import decimal
 
-from six import PY3
+from six import text_type
 from mock import patch
 
 from ask_sdk_core.serialize import DefaultSerializer
@@ -27,14 +27,17 @@ from ask_sdk_core.exceptions import SerializationException
 
 from . import data
 
-if PY3:
-    from unittest import mock
-    unicode_type = str
-    long_type = int
-else:
+try:
     import mock
-    unicode_type = unicode
+except ImportError:
+    from unittest import mock
+
+try:
     long_type = long
+except NameError:
+    long_type = int
+
+unicode_type = text_type
 
 
 class TestSerialization(unittest.TestCase):

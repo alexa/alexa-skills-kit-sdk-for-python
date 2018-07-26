@@ -23,7 +23,6 @@ import decimal
 from datetime import date, datetime
 
 from six import iteritems
-from six import PY3
 from six import text_type
 from six import integer_types
 from enum import Enum
@@ -32,10 +31,12 @@ from ask_sdk_model.services import Serializer
 
 from .exceptions import SerializationException
 
-if PY3:
-    unicode_type = str
-else:
-    unicode_type = unicode
+unicode_type = text_type
+
+try:
+    long
+except NameError:
+    long = int
 
 if typing.TYPE_CHECKING:
     from typing import TypeVar, Dict, List, Tuple, Union, Any
@@ -46,7 +47,7 @@ class DefaultSerializer(Serializer):
     PRIMITIVE_TYPES = (float, bool, bytes, text_type) + integer_types
     NATIVE_TYPES_MAPPING = {
         'int': int,
-        'long': int if PY3 else long,
+        'long': long,
         'float': float,
         'str': str,
         'bool': bool,

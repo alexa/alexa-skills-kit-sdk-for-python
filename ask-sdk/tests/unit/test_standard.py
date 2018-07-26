@@ -16,16 +16,15 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from ask_sdk.standard import StandardSkillBuilder
 from ask_sdk_core.api_client import DefaultApiClient
 from ask_sdk_dynamodb.adapter import DynamoDbAdapter
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class TestStandardSkillBuilder(unittest.TestCase):

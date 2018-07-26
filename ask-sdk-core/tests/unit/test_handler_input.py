@@ -16,14 +16,13 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from ask_sdk_core.handler_input import HandlerInput
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class TestHandlerInput(unittest.TestCase):
