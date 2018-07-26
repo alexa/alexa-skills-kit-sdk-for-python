@@ -16,7 +16,6 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from ask_sdk_model import (
     RequestEnvelope, Context, Application, Response, Session)
@@ -27,10 +26,10 @@ from ask_sdk_core.dispatch_components import (
     HandlerAdapter, RequestMapper, RequestHandlerChain)
 from ask_sdk_core.exceptions import AskSdkException
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class TestSkillConfiguration(unittest.TestCase):

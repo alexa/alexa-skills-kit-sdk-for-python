@@ -23,7 +23,6 @@ import decimal
 from datetime import date, datetime
 
 from six import iteritems
-from six import PY3
 from six import text_type
 from six import integer_types
 from enum import Enum
@@ -35,9 +34,9 @@ from .exceptions import SerializationException
 unicode_type = text_type
 
 try:
-    long        # Python 2
+    long
 except NameError:
-    long = int  # Python 3
+    long = int
 
 if typing.TYPE_CHECKING:
     from typing import TypeVar, Dict, List, Tuple, Union, Any

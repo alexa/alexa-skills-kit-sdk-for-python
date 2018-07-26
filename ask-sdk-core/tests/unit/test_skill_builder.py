@@ -17,7 +17,6 @@
 #
 import unittest
 import inspect
-from six import PY3
 
 from ask_sdk_model import Response
 
@@ -30,10 +29,10 @@ from ask_sdk_core.dispatch_components import (
 from ask_sdk_core.exceptions import SkillBuilderException
 from ask_sdk_core.utils import RESPONSE_FORMAT_VERSION, user_agent_info
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class TestSkillBuilder(unittest.TestCase):

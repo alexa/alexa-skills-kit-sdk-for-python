@@ -16,7 +16,6 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from ask_sdk_model.request_envelope import RequestEnvelope
 from ask_sdk_model.intent_request import IntentRequest
@@ -30,10 +29,10 @@ from ask_sdk_core.dispatch_components import (
     AbstractResponseInterceptor, AbstractExceptionHandler, ExceptionMapper)
 from ask_sdk_core.exceptions import DispatchException
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class TestRequestDispatcher(unittest.TestCase):

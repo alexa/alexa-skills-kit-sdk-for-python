@@ -23,18 +23,18 @@ from ask_sdk_model.ui import SimpleCard
 # You can create your own simple cards for each response, if this is not
 # what you want to use.
 
-from six import PY3
-if PY3:
-    from html.parser import HTMLParser
-else:
+from six import PY2
+try:
     from HTMLParser import HTMLParser
+except ImportError:
+    from html.parser import HTMLParser
 
 
 class SSMLStripper(HTMLParser):
     def __init__(self):
         self.reset()
         self.full_str_list = []
-        if PY3:
+        if not PY2:
             self.strict = False
             self.convert_charrefs = True
 

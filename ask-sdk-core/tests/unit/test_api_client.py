@@ -16,7 +16,6 @@
 # License.
 #
 import unittest
-from six import PY3
 
 from ask_sdk_model.services import ApiClientRequest
 from ask_sdk_core.api_client import DefaultApiClient
@@ -24,10 +23,10 @@ from ask_sdk_core.exceptions import ApiClientException
 
 from .data.mock_response_object import MockResponse
 
-if PY3:
-    from unittest import mock
-else:
+try:
     import mock
+except ImportError:
+    from unittest import mock
 
 
 class TestDefaultApiClient(unittest.TestCase):
