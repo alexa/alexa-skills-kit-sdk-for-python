@@ -18,6 +18,7 @@
 import typing
 import requests
 import six
+import json
 
 from urllib3.util import parse_url
 
@@ -65,8 +66,9 @@ class DefaultApiClient(ApiClient):
                 raise ApiClientException(
                     "Requests against non-HTTPS endpoints are not allowed.")
 
+            raw_data = json.dumps(request.body)
             http_response = http_method(
-                url=request.url, headers=http_headers, data=request.body)
+                url=request.url, headers=http_headers, data=raw_data)
 
             return ApiClientResponse(
                 headers=self._convert_dict_to_list_tuples(
