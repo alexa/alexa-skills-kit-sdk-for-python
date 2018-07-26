@@ -11,3 +11,10 @@ CHANGELOG
 ~~~~~
 
 * Docstring changes for generated docs.
+
+0.1.2
+~~~~~
+
+* unicode_type = six.text_type and define long in Python 3 (#1)
+* Use feature detection instead of version detection (#10)
+* Send stringified raw data to Alexa APIs (#12)

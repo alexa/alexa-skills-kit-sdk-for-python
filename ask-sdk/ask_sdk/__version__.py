@@ -20,7 +20,7 @@ __description__ = (
     'The ASK SDK Standard package provides a full distribution of the SDK, '
     'all batteries included, for building Alexa Skills')
 __url__ = 'http://developer.amazon.com/ask'
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
