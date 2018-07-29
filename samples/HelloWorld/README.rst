@@ -30,7 +30,7 @@ This sample skills shows two ways of developing skills:
   folder.
 
 For detailed instructions, please refer to
-`Developing Your First Skill <../../docs/DEVELOPING_YOUR_FIRST_SKILL.rst>`__
+`Developing Your First Skill <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/GETTING_STARTED.html>`__
 
 Additional Resources
 --------------------
