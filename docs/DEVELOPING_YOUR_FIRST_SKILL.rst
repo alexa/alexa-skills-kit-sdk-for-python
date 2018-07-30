@@ -221,11 +221,6 @@ previous handler.
                 SimpleCard("Hello World", speech_text))
             return handler_input.response_builder.response
 
-In the above example, ``can_handle`` needs a function to be passed.
-``is_intent_name`` returns a function, but we need to check if the request is
-either *AMAZON.CancelIntent* or *AMAZON.StopIntent*. We achieve this by
-creating an anonymous function on the fly using Python's in-built ``lambda``
-function.
 
 The response to both intents is the same, so having a single handler reduces
 repetitive code.
