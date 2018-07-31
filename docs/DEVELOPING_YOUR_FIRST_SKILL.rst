@@ -90,8 +90,8 @@ The following implementation sections explore how to implement exception handlin
 
     You may use either `Implementation using handler classes <#option-1-implementation-using-handler-classes>`_
     or `Implementation using decorators <#option-2-implementation-using-decorators>`_
-    options to write a skill. We strongly recommend you to **not** use
-    either of the option and stick with it through out your skill, for
+    options to write a skill. We strongly recommend you to choose
+    **one** of the options and use it consistently throughout your skill, for
     better code structure.
 
 
