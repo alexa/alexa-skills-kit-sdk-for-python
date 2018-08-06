@@ -2,7 +2,7 @@ ASK SDK for Python（ベータ版）
 ===============================
 `English <README.rst>`_ |  `日本語 <README.ja.rst>`_
 
-|Build Status| |Docs| |License|
+|Build Status| |Japanese Docs| |License|
 
 **ASK SDK for
 Python（ベータ版）**\ を使うと、ボイラープレートコード（毎回書かなければならないお決まりのコード）を書く手間が不要になります。これにより空いた時間をさまざまな機能の実装に充てることができ、人気のスキルをより簡単に作成できるようになります。
