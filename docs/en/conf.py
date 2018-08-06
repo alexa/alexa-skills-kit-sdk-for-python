@@ -28,14 +28,14 @@ sys.path.insert(0, _ROOT_SOURCE)
 
 # -- Project information -----------------------------------------------------
 
-project = 'Alexa SKills Kit SDK for Python'
+project = 'Alexa Skills Kit SDK for Python'
 copyright = '2018, Alexa Skills Kit'
 author = 'Alexa Skills Kit'
 
 # The short X.Y version
 about = {}
 with open(
-        os.path.join(_ROOT_SOURCE, os.pardir, 'ask-sdk-core',
+        os.path.join(_ROOT_SOURCE, os.pardir, os.pardir, 'ask-sdk-core',
                      'ask_sdk_core', '__version__.py'),
         'r', 'utf-8') as f:
     exec(f.read(), about)
@@ -59,7 +59,7 @@ extensions = [
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = [os.path.join(os.pardir, '_templates')]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
