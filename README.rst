@@ -39,7 +39,8 @@ ask-sdk                                |Standard Version|
 
 To help you get started more quickly with the SDK, see the following resources.
 
-## Technical Documentation
+Technical Documentation
+-----------------------
 
 * `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_ - |English Docs|
 * `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_ - |Japanese Docs|
