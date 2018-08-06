@@ -1,6 +1,7 @@
 =========================
 ASK SDK for Python (Beta)
 =========================
+`English <README.rst>`_ |  `日本語 <README.ja.rst>`_
 
 |Build Status| |Docs| |License|
 
@@ -42,8 +43,12 @@ To help you get started more quickly with the SDK, see the following resources.
 Technical Documentation
 -----------------------
 
-* `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_ - |English Docs|
-* `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_ - |Japanese Docs|
+========================================================================== ======
+Language                                                                   Docs
+========================================================================== ======
+`English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_ |English Docs|
+`日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_   |Japanese Docs|
+========================================================================== ======
 
 .. |English Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk/badge/?version=latest
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/?badge=latest
@@ -51,7 +56,7 @@ Technical Documentation
     
 .. |Japanese Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk-japanese/badge/?version=latest
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/?badge=latest
-    :alt: Read the docs english
+    :alt: Read the docs japanese
 
 Samples
 -------
