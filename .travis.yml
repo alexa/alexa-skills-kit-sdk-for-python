@@ -1,8 +1,13 @@
 language: python
-python:
-  - "2.7"
-  - "3.6"
-sudo: false
+matrix:
+  include:
+    - python: 2.7
+    - python: 3.6
+    - python: 3.7
+      dist: xenial    # required for Python 3.7 (travis-ci/travis-ci#9069)
+      sudo: required  # required for Python 3.7 (travis-ci/travis-ci#9069)
 install:
   - python scripts/ci/sdk_install
+  - pip install flake8
+before_script: flake8 .
 script: python scripts/ci/run_tests
