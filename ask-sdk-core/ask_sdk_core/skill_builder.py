@@ -16,7 +16,6 @@
 # License.
 #
 import json
-import inspect
 import typing
 
 from ask_sdk_model import RequestEnvelope
@@ -215,22 +214,6 @@ class SkillBuilder(object):
                     "Request Handler can_handle_func and handle_func "
                     "input parameters should be callable")
 
-            can_handle_arg_spec = inspect.getargspec(can_handle_func)
-            if (len(can_handle_arg_spec.args) != 1 or
-                    can_handle_arg_spec.varargs is not None or
-                    can_handle_arg_spec.keywords is not None):
-                raise SkillBuilderException(
-                    "Request Handler can_handle_func should only accept a "
-                    "single input arg, handler input")
-
-            handle_arg_spec = inspect.getargspec(handle_func)
-            if (len(handle_arg_spec.args) != 1 or
-                    handle_arg_spec.varargs is not None or
-                    handle_arg_spec.keywords is not None):
-                raise SkillBuilderException(
-                    "Request Handler handle_func should only accept a single "
-                    "input arg, handler input")
-
             class_attributes = {
                 "can_handle": lambda self, handler_input: can_handle_func(
                     handler_input),
@@ -273,22 +256,6 @@ class SkillBuilder(object):
                     "Exception Handler can_handle_func and handle_func input "
                     "parameters should be callable")
 
-            can_handle_arg_spec = inspect.getargspec(can_handle_func)
-            if (len(can_handle_arg_spec.args) != 2 or
-                    can_handle_arg_spec.varargs is not None or
-                    can_handle_arg_spec.keywords is not None):
-                raise SkillBuilderException(
-                    "Exception Handler can_handle_func should only accept "
-                    "two input args, handler input and exception")
-
-            handle_arg_spec = inspect.getargspec(handle_func)
-            if (len(handle_arg_spec.args) != 2 or
-                    handle_arg_spec.varargs is not None or
-                    handle_arg_spec.keywords is not None):
-                raise SkillBuilderException(
-                    "Exception Handler handle_func should only accept two "
-                    "input args, handler input and exception")
-
             class_attributes = {
                 "can_handle": (
                     lambda self, handler_input, exception: can_handle_func(
@@ -326,14 +293,6 @@ class SkillBuilder(object):
                     "Global Request Interceptor process_func input parameter "
                     "should be callable")
 
-            process_arg_spec = inspect.getargspec(process_func)
-            if (len(process_arg_spec.args) != 1 or
-                    process_arg_spec.varargs is not None or
-                    process_arg_spec.keywords is not None):
-                raise SkillBuilderException(
-                    "Global Request Interceptor process_func should only "
-                    "accept a single input arg, handler input")
-
             class_attributes = {
                 "process": lambda self, handler_input: process_func(
                     handler_input)
@@ -368,14 +327,6 @@ class SkillBuilder(object):
                 raise SkillBuilderException(
                     "Global Response Interceptor process_func input "
                     "parameter should be callable")
-
-            process_arg_spec = inspect.getargspec(process_func)
-            if (len(process_arg_spec.args) != 2 or
-                    process_arg_spec.varargs is not None or
-                    process_arg_spec.keywords is not None):
-                raise SkillBuilderException(
-                    "Global Response Interceptor process_func should only "
-                    "accept two input args, handler input and response")
 
             class_attributes = {
                 "process": (
