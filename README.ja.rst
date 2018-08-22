@@ -22,8 +22,8 @@ Python（ベータ版）**\ を使うと、ボイラープレートコード（�
 .. |Standard Version| image:: http://img.shields.io/pypi/v/ask-sdk.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk/
     :alt: Version
-.. |License| image:: http://img.shields.io/pypi/l/boto3.svg?style=flat
-    :target: https://github.com/boto/boto3/blob/develop/LICENSE
+.. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
+    :target: https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
 
 ====================================   =======
