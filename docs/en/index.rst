@@ -78,15 +78,6 @@ Covers how to configure and construct a skill instance.
 Samples
 -------
 
-..  toctree::
-    :caption: Samples
-    :hidden:
-
-    Hello World <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>
-    Color Picker <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/ColorPicker>
-    High Low Game <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HighLowGame>
-    Device Address API <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/GetDeviceAddress>
-
 `Hello World Skill Sample <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -150,7 +141,7 @@ Additional Resources
 
 .. toctree::
    :maxdepth: 1
-   :caption: Other language SDKs
+   :caption: Other language ASK SDKs
    :hidden:
 
    NodeJS SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs>
