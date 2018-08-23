@@ -78,15 +78,6 @@ Covers how to configure and construct a skill instance.
 Samples
 -------
 
-..  toctree::
-    :caption: Samples
-    :hidden:
-
-    Hello World <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>
-    Color Picker <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/ColorPicker>
-    High Low Game <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HighLowGame>
-    Device Address API <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/GetDeviceAddress>
-
 `Hello World Skill Sample <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -146,25 +137,31 @@ Additional Resources
 --------------------
 
 .. toctree::
+   :maxdepth: 2
+   :caption: Additional Resources
+   :hidden:
+
+   .. toctree::
    :maxdepth: 1
    :caption: Translations
 
-   Japanese <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/>
+       Japanese <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/>
+
+   .. toctree::
+   :maxdepth: 1
+   :caption: Issues, Feature Requests
+
+       SDK Issues and feature requests <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>
+       Alexa feature requests <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>
+       Alexa Developer Forums <https://forums.developer.amazon.com/spaces/165/index.html>
 
 .. toctree::
    :maxdepth: 1
    :caption: Other language ASK SDKs
+   :hidden:
 
    NodeJS SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs>
    Java SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-java>
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Issues, Feature Requests
-
-   SDK Issues and feature requests <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>
-   Alexa feature requests <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>
-   Alexa Developer Forums <https://forums.developer.amazon.com/spaces/165/index.html>
 
 Community
 ~~~~~~~~~
