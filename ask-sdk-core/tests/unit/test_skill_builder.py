@@ -370,36 +370,6 @@ class TestSkillBuilder(unittest.TestCase):
             "Request Handler decorator created Request Handler with incorrect "
             "handle function")
 
-    def test_request_handler_decorator_on_can_handle_func_with_incorrect_params(self):
-        def test_can_handle():
-            return True
-
-        def test_handle(input):
-            return "something"
-
-        with self.assertRaises(SkillBuilderException) as exc:
-            self.sb.request_handler(can_handle_func=test_can_handle)(
-                handle_func=test_handle)
-
-        assert "can_handle_func should only accept a single input arg, handler input" in str(exc.exception), (
-            "Request Handler Decorator accepted invalid can_handle_func "
-            "parameter")
-
-    def test_request_handler_decorator_on_handle_func_with_incorrect_params(self):
-        def test_can_handle(input):
-            return True
-
-        def test_handle(*args, **kwargs):
-            return "something"
-
-        with self.assertRaises(SkillBuilderException) as exc:
-            self.sb.request_handler(can_handle_func=test_can_handle)(
-                handle_func=test_handle)
-
-        assert "handle_func should only accept a single input arg, handler input" in str(exc.exception), (
-            "Request Handler Decorator was decorated with invalid "
-            "handle_func which takes more than one input args")
-
     def test_exception_handler_decorator_creation(self):
         exception_handler_wrapper = self.sb.exception_handler(
             can_handle_func=None)
@@ -457,36 +427,6 @@ class TestSkillBuilder(unittest.TestCase):
             "Exception Handler decorator created Exception Handler with "
             "incorrect handle function")
 
-    def test_exception_handler_decorator_on_can_handle_func_with_incorrect_params(self):
-        def test_can_handle(*args):
-            return True
-
-        def test_handle(input, exc):
-            return "something"
-
-        with self.assertRaises(SkillBuilderException) as exc:
-            self.sb.exception_handler(can_handle_func=test_can_handle)(
-                handle_func=test_handle)
-
-        assert "can_handle_func should only accept two input args, handler input and exception" in str(exc.exception), (
-            "Exception Handler Decorator accepted invalid can_handle_func "
-            "parameter")
-
-    def test_exception_handler_decorator_on_handle_func_with_incorrect_params(self):
-        def test_can_handle(input, exc):
-            return True
-
-        def test_handle(exc, **kwargs):
-            return "something"
-
-        with self.assertRaises(SkillBuilderException) as exc:
-            self.sb.exception_handler(can_handle_func=test_can_handle)(
-                handle_func=test_handle)
-
-        assert "handle_func should only accept two input args, handler input and exception" in str(exc.exception), (
-            "Exception Handler Decorator was decorated with invalid "
-            "handle_func which takes more than two input args")
-
     def test_global_request_interceptor_decorator_creation(self):
         request_interceptor_wrapper = self.sb.global_request_interceptor()
         assert callable(request_interceptor_wrapper), (
@@ -521,18 +461,6 @@ class TestSkillBuilder(unittest.TestCase):
 
         assert actual_global_request_interceptor.__class__.__name__ == "RequestInterceptorTestProcess"
         assert actual_global_request_interceptor.process(None) == "something"
-
-    def test_global_request_interceptor_on_process_func_with_incorrect_params(self):
-        def test_process(**kwargs):
-            return "something"
-
-        with self.assertRaises(SkillBuilderException) as exc:
-            self.sb.global_request_interceptor()(process_func=test_process)
-
-        assert "process_func should only accept a single input arg, handler input" in str(exc.exception), (
-            "Global Request Interceptor Decorator was decorated with invalid "
-            "process_func which takes more than "
-            "one input args")
 
     def test_global_response_interceptor_decorator_creation(self):
         response_interceptor_wrapper = self.sb.global_response_interceptor()
@@ -571,18 +499,6 @@ class TestSkillBuilder(unittest.TestCase):
 
         assert actual_global_response_interceptor.__class__.__name__ == "ResponseInterceptorTestProcess"
         assert actual_global_response_interceptor.process(None, None) == "something"
-
-    def test_global_response_interceptor_on_process_func_with_incorrect_params(self):
-        def test_process(**kwargs):
-            return "something"
-
-        with self.assertRaises(SkillBuilderException) as exc:
-            self.sb.global_response_interceptor()(process_func=test_process)
-
-        assert "process_func should only accept two input args, handler input and response" in str(exc.exception), (
-            "Global Response Interceptor Decorator was decorated with invalid "
-            "process_func which takes more than "
-            "one input args")
 
 
 class TestCustomSkillBuilder(unittest.TestCase):
