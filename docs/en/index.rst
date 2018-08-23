@@ -119,12 +119,6 @@ the user’s device settings.
    :caption: SDK API Reference
 
    api/index
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: SDK Models
-
    models/index
 
 
@@ -146,25 +140,21 @@ Additional Resources
 --------------------
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Translations
-
-   Japanese <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/>
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Other language ASK SDKs
-
-   NodeJS SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs>
-   Java SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-java>
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Issues, Feature Requests
+   :maxdepth: 2
+   :caption: Additional Resources
+   :hidden:
 
    SDK Issues and feature requests <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>
    Alexa feature requests <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>
    Alexa Developer Forums <https://forums.developer.amazon.com/spaces/165/index.html>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Other language SDKs
+   :hidden:
+
+   NodeJS SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs>
+   Java SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-java>
 
 Community
 ~~~~~~~~~
