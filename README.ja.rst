@@ -37,8 +37,8 @@ ask-sdk                                |Standard Version|
 
 SDKの使用をより迅速に開始するには、次のリソースを参照してください。
 
-Technical Documentation
------------------------
+技術文書
+-------
 
 ========================================================================== ======
 Language                                                                   Docs
@@ -54,6 +54,13 @@ Language                                                                   Docs
 .. |Japanese Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk-japanese/badge/?version=latest
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/?badge=latest
     :alt: Read the docs japanese
+
+モデル
+------
+
+SDKはネイティブのAlexa JSONリクエストおよびレスポンスではなく、モデルクラスで動作します。これらのモデルクラスは、 `開発者向けドキュメント <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>` __のRequest、Response JSONスキーマを使用して生成されます。モデルクラスのソースコードは `ここに <https://github.com/alexa-labs/alexa-apis-for-python>` __にあります。
+
+モデルクラスのドキュメントは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>` __にあります。
 
 サンプル
 ----

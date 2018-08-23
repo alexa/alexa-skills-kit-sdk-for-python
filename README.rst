@@ -58,6 +58,16 @@ Language                                                                   Docs
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/?badge=latest
     :alt: Read the docs japanese
 
+Models
+------
+
+The SDK works on model classes rather than native Alexa JSON requests and
+responses. These model classes are generated using the Request, Response JSON
+schemas from the `developer docs <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>`__. The source code for the model classes can be
+found `here <https://github.com/alexa-labs/alexa-apis-for-python>`__.
+
+The documentation for the model classes can be found `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>`__.
+
 Samples
 -------
 
