@@ -25,7 +25,7 @@ SDKには、 ``ResponseFactory`` クラスが含まれています。このク�
             # type: (Card) -> 'ResponseFactory'
             ....
 
-        def set_directive(self, directive):
+        def add_directive(self, directive):
             # type: (Directive) -> 'ResponseFactory'
             ....
 
@@ -38,14 +38,63 @@ SDKには、 ``ResponseFactory`` クラスが含まれています。このク�
 `HandlerInput <REQUEST_PROCESSING.html#id2>`_ オブジェクトを返します。
 スキルコンポーネントに渡される標準引数です。
 
+.. note::
+
+    - 異なるディレクティブを使用して追加するには、`directive <models/ask_sdk_model.html＃ask_sdk_model.directive.Directive>`__ モデル定義。
+    - カードを使用して設定するには、`Card <models/ask_sdk_model.ui.html＃ask_sdk_model.ui.card.Card>`__ モデル定義。
+
 以下は、``ResponseFactory`` ヘルパー関数を使用して応答を作成する方法の例です。
 
 .. code:: python
 
-    def handle(handler_input):
-        handler_input.response_builder.speak('foo').ask('bar').set_card(
-            SimpleCard('title', 'content'))
-        return handler_input.response_builder.response
+    from ask_sdk_core.dispatch_components import AbstractRequestHandler
+    from ask_sdk_core.handler_input import HandlerInput
+    from ask_sdk_core.utils import is_intent_name
+    from ask_sdk_core.response_helper import get_plain_text_content
+
+    from ask_sdk_model.response import Response
+    from ask_sdk_model.interfaces.display import (
+        ImageInstance, Image, RenderTemplateDirective,
+        BackButtonBehavior, BodyTemplate2)
+    from ask_sdk_model import ui
+
+    class HelloIntentHandler(AbstractRequestHandler):
+        def can_handle(self, handler_input):
+            # type: (HandlerInput) -> bool
+            return is_intent_name("HelloIntent")(handler_input)
+
+        def handle(self, handler_input):
+            # type: (HandlerInput) -> Response
+            response_builder = handler_input.response_builder
+
+            speech = "This is a sample response"
+
+            response_builder.set_card(
+                ui.StandardCard(
+                    title="Card Title",
+                    text="Hey this is a sample card",
+                    image=ui.Image(
+                        small_image_url="<Small Image URL>",
+                        large_image_url="<Large Image URL>"
+                    )
+                )
+            )
+
+            if supports_display(handler_input):
+                img = Image(
+                    sources=[ImageInstance(url="<Large Image URL>")])
+                title = "Template Title"
+                primary_text = get_plain_text_content(
+                    primary_text="some text")
+
+                response_builder.add_directive(
+                    RenderTemplateDirective(
+                        BodyTemplate2(
+                            back_button=BackButtonBehavior.VISIBLE,
+                            image=img, title=title,
+                            text_content=primary_text)))
+
+            return response_builder.speak(speech).response
 
 テキストヘルパー
 ~~~~~~~~~~~~~~
