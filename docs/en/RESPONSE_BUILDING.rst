@@ -25,11 +25,11 @@ Interface
             ....
 
         def set_card(self, card):
-            # type: (Card) -> 'ResponseFactory'
+            # type: (ask_sdk_model.ui.card.Card) -> 'ResponseFactory'
             ....
 
         def add_directive(self, directive):
-            # type: (Directive) -> 'ResponseFactory'
+            # type: (ask_sdk_model.directive.Directive) -> 'ResponseFactory'
             ....
 
         def set_should_end_session(self, end_session):
@@ -51,9 +51,11 @@ is the standard argument passed to the skill components.
       `Card <models/ask_sdk_model.ui.html#ask_sdk_model.ui.card.Card>`__
       model definition.
 
-The following example shows how to construct a render template directive
-response using ``ResponseFactory`` helper functions, through
-``handler_input.response_builder``.
+Sample Code
+~~~~~~~~~~~
+
+The following example shows how to construct a response containing a ``StandardCard`` 
+and a ``RenderTemplateDirective`` through ``handler_input.response_builder``.
 
 .. code:: python
 
