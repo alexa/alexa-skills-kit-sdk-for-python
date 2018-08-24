@@ -28,7 +28,7 @@ Interface
             # type: (Card) -> 'ResponseFactory'
             ....
 
-        def set_directive(self, directive):
+        def add_directive(self, directive):
             # type: (Directive) -> 'ResponseFactory'
             ....
 
@@ -41,16 +41,70 @@ provided to the skill developers through the
 `HandlerInput <REQUEST_PROCESSING.html#handler-input>`_ object, which
 is the standard argument passed to the skill components.
 
-The following example shows how to construct a response using
-``ResponseFactory`` helper functions, through
+.. note::
+
+    - For using and adding different directives, look at the
+      `Directive <models/ask_sdk_model.html#ask_sdk_model.directive.Directive>`__
+      model definition.
+
+    - For using and setting a card, look at the
+      `Card <models/ask_sdk_model.ui.html#ask_sdk_model.ui.card.Card>`__
+      model definition.
+
+The following example shows how to construct a render template directive
+response using ``ResponseFactory`` helper functions, through
 ``handler_input.response_builder``.
 
 .. code:: python
 
-    def handle(handler_input):
-        handler_input.response_builder.speak('foo').ask('bar').set_card(
-            SimpleCard('title', 'content'))
-        return handler_input.response_builder.response
+    from ask_sdk_core.dispatch_components import AbstractRequestHandler
+    from ask_sdk_core.handler_input import HandlerInput
+    from ask_sdk_core.utils import is_intent_name
+    from ask_sdk_core.response_helper import get_plain_text_content
+
+    from ask_sdk_model.response import Response
+    from ask_sdk_model.interfaces.display import (
+        ImageInstance, Image, RenderTemplateDirective,
+        BackButtonBehavior, BodyTemplate2)
+    from ask_sdk_model import ui
+
+    class HelloIntentHandler(AbstractRequestHandler):
+        def can_handle(self, handler_input):
+            # type: (HandlerInput) -> bool
+            return is_intent_name("HelloIntent")(handler_input)
+
+        def handle(self, handler_input):
+            # type: (HandlerInput) -> Response
+            response_builder = handler_input.response_builder
+
+            speech = "This is a sample response"
+
+            response_builder.set_card(
+                ui.StandardCard(
+                    title="Card Title",
+                    text="Hey this is a sample card",
+                    image=ui.Image(
+                        small_image_url="<Small Image URL>",
+                        large_image_url="<Large Image URL>"
+                    )
+                )
+            )
+
+            if supports_display(handler_input):
+                img = Image(
+                    sources=[ImageInstance(url="<Large Image URL>")])
+                title = "Template Title"
+                primary_text = get_plain_text_content(
+                    primary_text="some text")
+
+                response_builder.add_directive(
+                    RenderTemplateDirective(
+                        BodyTemplate2(
+                            back_button=BackButtonBehavior.VISIBLE,
+                            image=img, title=title,
+                            text_content=primary_text)))
+
+            return response_builder.speak(speech).response
 
 Text Helpers
 ~~~~~~~~~~~~
