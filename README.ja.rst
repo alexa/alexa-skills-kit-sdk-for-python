@@ -1,5 +1,18 @@
-ASK SDK for Python（ベータ版）
-===============================
+.. raw:: html
+
+    <embed>
+        <p align="center">
+          <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/docs/ux/branding/mark1._TTH_.png">
+          <br/>
+          <h1 align="center">Alexa Skills Kit SDK for Python (ベータ版)</h1>
+          <p align="center">
+            <a href="https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
+            <a href="https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/?badge=latest"><img src="https://readthedocs.org/projects/alexa-skills-kit-python-sdk-japanese/badge/?version=latest"></a>
+            <a href="https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat"></a>
+          </p>
+        </p>
+    </embed>
+    
 `English <README.rst>`_ |  `日本語 <README.ja.rst>`_
 
 |Build Status| |Japanese Docs| |License|
@@ -58,9 +71,9 @@ Language                                                                   Docs
 モデル
 ------
 
-SDKはネイティブのAlexa JSONリクエストおよびレスポンスではなく、モデルクラスで動作します。これらのモデルクラスは、 `開発者向けドキュメント <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>` __のRequest、Response JSONスキーマを使用して生成されます。モデルクラスのソースコードは `ここに <https://github.com/alexa-labs/alexa-apis-for-python>` __にあります。
+SDKはネイティブのAlexa JSONリクエストおよびレスポンスではなく、モデルクラスで動作します。これらのモデルクラスは、 `開発者向けドキュメント <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>`__ のRequest、Response JSONスキーマを使用して生成されます。モデルクラスのソースコードは `ここに <https://github.com/alexa-labs/alexa-apis-for-python>`__ にあります。
 
-モデルクラスのドキュメントは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>` __にあります。
+モデルクラスのドキュメントは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>`__ にあります。
 
 サンプル
 ----
