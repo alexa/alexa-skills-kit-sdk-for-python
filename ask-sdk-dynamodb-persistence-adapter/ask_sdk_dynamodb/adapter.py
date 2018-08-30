@@ -123,7 +123,8 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
             table = self.dynamodb.Table(self.table_name)
             partition_key_val = self.partition_keygen(request_envelope)
             response = table.get_item(
-                Key={self.partition_key_name: partition_key_val})
+                Key={self.partition_key_name: partition_key_val},
+                ConsistentRead=True)
             if "Item" in response:
                 return response["Item"][self.attribute_name]
             else:
