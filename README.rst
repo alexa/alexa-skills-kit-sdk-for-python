@@ -1,9 +1,19 @@
-=========================
-ASK SDK for Python (Beta)
-=========================
-`English <README.rst>`_ |  `日本語 <README.ja.rst>`_
+.. raw:: html
 
-|Build Status| |Docs| |License|
+    <embed>
+        <p align="center">
+          <img src="https://m.media-amazon.com/images/G/01/mobile-apps/dex/avs/docs/ux/branding/mark1._TTH_.png">
+          <br/>
+          <h1 align="center">Alexa Skills Kit SDK for Python (Beta)</h1>
+          <p align="center">
+            <a href="https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
+            <a href="https://alexa-skills-kit-python-sdk.readthedocs.io"><img src="https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat"></a>
+            <a href="https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat"></a>
+          </p>
+        </p>
+    </embed>
+
+`English <README.rst>`_ |  `Japanese <README.ja.rst>`_
 
 The **ASK SDK for Python (Beta)** makes it easier for you to build highly engaging skills,
 by allowing you to spend more time on implementing features and less on writing
@@ -28,7 +38,9 @@ boiler-plate code.
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
-    
+
+Package Versions
+----------------
 ====================================   =======
 Package                                Version
 ------------------------------------   -------
@@ -38,17 +50,15 @@ ask-sdk                                |Standard Version|
 ====================================   =======
 
 
-To help you get started more quickly with the SDK, see the following resources.
-
 Technical Documentation
 -----------------------
 
-========================================================================== ======
-Language                                                                   Docs
-========================================================================== ======
-`English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_ |English Docs|
-`日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_   |Japanese Docs|
-========================================================================== ======
+===========================================================================  ======
+Language                                                                     Docs
+===========================================================================  ======
+`English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_   |English Docs|
+`Japanese <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_  |Japanese Docs|
+===========================================================================  ======
 
 .. |English Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk/badge/?version=latest
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/?badge=latest
