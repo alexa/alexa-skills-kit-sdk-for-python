@@ -125,6 +125,18 @@ Got Feedback?
 Additional Resources
 --------------------
 
+Other Language Alexa Skills Kit SDKs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. raw:: html
+    
+    <embed>
+        <div>
+            <p><a href="https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs"><img src="https://github.com/konpa/devicon/blob/master/icons/nodejs/nodejs-original.svg?sanitize=true" width="25px" /> Alexa Skills Kit SDK for NodeJS</a></p>
+            <p><a href="https://github.com/amzn/alexa-skills-kit-java"><img src="https://github.com/konpa/devicon/raw/master/icons/java/java-original.svg?sanitize=true" width="25px" /> Alexa Skills Kit SDK for Java</a></p>
+        </div>
+    </embed>
+
 Community
 ~~~~~~~~~
 
