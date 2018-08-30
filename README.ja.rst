@@ -100,6 +100,7 @@ Worldから機能を一歩進めて、ユーザーからの入力をキャプチ
 
 ユーザーのデバイス設定で設定したアドレスをリクエストし、設定されたアドレスにアクセスするサンプルスキルです。
 
+
 ------------
 
 フィードバック
@@ -111,6 +112,18 @@ Worldから機能を一歩進めて、ユーザーからの入力をキャプチ
 
 その他のリソース
 --------------
+
+その他の言語AlexaスキルキットSDK
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. raw:: html
+    
+    <embed>
+        <div>
+            <p><a href="https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs"><img src="https://github.com/konpa/devicon/blob/master/icons/nodejs/nodejs-original.svg?sanitize=true" width="25px" /> NodeJS用のAlexaスキルキットSDK</a></p>
+            <p><a href="https://github.com/amzn/alexa-skills-kit-java"><img src="https://github.com/konpa/devicon/raw/master/icons/java/java-original.svg?sanitize=true" width="25px" /> AlexaスキルキットSDK for Java</a></p>
+        </div>
+    </embed>
 
 コミュニティ
 ~~~~~~
