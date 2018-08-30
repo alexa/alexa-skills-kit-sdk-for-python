@@ -13,7 +13,7 @@
         </p>
     </embed>
 
-`English <README.rst>`_ |  `Japanese <README.ja.rst>`_
+`English <README.rst>`_ |  `日本語 <README.ja.rst>`_
 
 The **ASK SDK for Python (Beta)** makes it easier for you to build highly engaging skills,
 by allowing you to spend more time on implementing features and less on writing
@@ -57,7 +57,7 @@ Technical Documentation
 Language                                                                     Docs
 ===========================================================================  ======
 `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_   |English Docs|
-`Japanese <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_  |Japanese Docs|
+`日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_     |Japanese Docs|
 ===========================================================================  ======
 
 .. |English Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk/badge/?version=latest
