@@ -8,7 +8,10 @@
           <p align="center">
             <a href="https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
             <a href="https://alexa-skills-kit-python-sdk.readthedocs.io"><img src="https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat"></a>
-            <a href="https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat"></a>
+            <a href="https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
+            <a href="https://pypi.python.org/pypi/ask-sdk/"><img src="http://img.shields.io/pypi/v/ask-sdk.svg?style=flat"></a>
+            <a href="https://pepy.tech/badge/ask-sdk"><img src="https://pepy.tech/badge/ask-sdk"></a>
+            <a hreg=""><img src="https://img.shields.io/pypi/pyversions/ask-sdk.svg?style=flat"></a>
           </p>
         </p>
     </embed>
@@ -29,25 +32,34 @@ boiler-plate code.
 .. |Core Version| image:: http://img.shields.io/pypi/v/ask-sdk-core.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-core/
     :alt: Version
+.. |Core Downloads| image:: https://pepy.tech/badge/ask-sdk-core
+    :target: https://pepy.tech/project/ask-sdk-core
+    :alt: Downloads
 .. |DynamoDb Version| image:: http://img.shields.io/pypi/v/ask-sdk-dynamodb-persistence-adapter.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-dynamodb-persistence-adapter/
     :alt: Version
+.. |DynamoDb Downloads| image:: https://pepy.tech/badge/ask-sdk-dynamodb-persistence-adapter
+    :target: https://pepy.tech/project/ask-sdk-dynamodb-persistence-adapter
+    :alt: Downloads
 .. |Standard Version| image:: http://img.shields.io/pypi/v/ask-sdk.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk/
     :alt: Version
+.. |Standard Downloads| image:: https://pepy.tech/badge/ask-sdk
+    :target: https://pepy.tech/project/ask-sdk
+    :alt: Downloads
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
 
 Package Versions
 ----------------
-====================================   =======
-Package                                Version
-------------------------------------   -------
-ask-sdk-core                           |Core Version|
-ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version|
-ask-sdk                                |Standard Version|
-====================================   =======
+====================================   ==================
+Package                                Version           
+------------------------------------   ------------------
+ask-sdk-core                           |Core Version| |Core Downloads|
+ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
+ask-sdk                                |Standard Version| |Standard Downloads|
+====================================   ==================
 
 
 Technical Documentation
