@@ -67,7 +67,7 @@ This option requires you to install the ``virtualenv`` package. ``virtualenv``
 is a tool to create isolated Python environments. To get started, from a
 command prompt, use the following command to install the package:
 
-.. code-block::sh
+.. code-block:: sh
 
     $ pip install virtualenv
 
