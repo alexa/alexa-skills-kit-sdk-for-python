@@ -21,34 +21,11 @@ Creating Hello World
 --------------------
 
 You'll write your Hello World in a single python file named ``hello_world.py``.
-When you upload your code to AWS Lambda, you must include your skill code and
-its dependencies inside a zip file as a flat file structure, so you'll place
-your code in the same folder as the ASK SDK for Python.
-
-If you set up the SDK in a specific folder, the SDK is installed into
-the ask-sdk folder within your skill folder. If you are using a virtual
-environment, on Windows the SDK is installed into the ``site-packages`` folder
-located inside the ``Lib`` folder. For MacOS/Linux the location depends on
-the version of Python you are using, for instance *Python 3.6* users will
-find site-packages inside the ``lib/Python3.6`` folder.
-
-Now, in the same folder where the ASK SDK for Python is installed, use your
-favorite text editor or IDE to create a file named ``hello_world.py``.
+In the ``skill`` folder that you have created earlier, use your favorite text
+editor or IDE to create a file named ``hello_world.py``.
 
 Implementing Hello World
 ------------------------
-
-Start by creating a skill builder object. The skill builder object helps in
-adding components responsible for handling input requests and generating
-custom responses for your skill.
-
-Type or paste the following code into your ``hello_world.py`` file.
-
-.. code-block:: python
-
-    from ask_sdk_core.skill_builder import SkillBuilder
-
-    sb = SkillBuilder()
 
 Request handlers
 ~~~~~~~~~~~~~~~~
@@ -65,38 +42,50 @@ response. The ASK SDK for Python provides two ways to create request handlers:
 1. Implement the ``AbstractRequestHandler`` class under
    ``ask_sdk_core.dispatch_components`` package. The class should contain
    implementations for ``can_handle`` and ``handle`` methods. This is described under
-   `Implementation using handler classes <#option-1-implementation-using-handler-classes>`_ section.
-2. Use the request_handler decorator in instantiated skill builder object to
+   `Implementation using classes <#option-1-implementation-using-classes>`_ section.
+2. Use the ``request_handler`` decorator in instantiated skill builder object to
    tag functions that act as handlers for different incoming requests. This is described under
    `Implementation using decorators <#option-2-implementation-using-decorators>`_ section.
 
 The implementation of the Hello World skill explores using handler classes
 first and then shows how to write the same skill using decorators.
-The functionality of these is identical and you can use either.
-
-The completed source code for both options is available in the
-`HelloWorld <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>`_ sample folder.
-
+The functionality of these is identical and you can use **either**.
 
 Exception handlers
 ~~~~~~~~~~~~~~~~~~
 
 Sometimes things go wrong, and your skill code needs a way to handle the problem 
 gracefully. The ASK SDK for Python supports exception handling in a similar way 
-to handling requests. You have a choice of using `handler classes <#option-1-implementation-using-handler-classes>`_ or `decorators <#option-2-implementation-using-decorators>`_. 
+to handling requests. You have a choice of using `classes <#option-1-implementation-using-classes>`_ or `decorators <#option-2-implementation-using-decorators>`_.
 The following implementation sections explore how to implement exception handling.
 
-.. note::
+.. tip::
 
-    You may use either `Implementation using handler classes <#option-1-implementation-using-handler-classes>`_
+    You may use either `Implementation using classes <#option-1-implementation-using-classes>`_
     or `Implementation using decorators <#option-2-implementation-using-decorators>`_
-    options to write a skill. We strongly recommend you to choose
+    options to write a skill.
+
+.. warning::
+
+    We strongly recommend you to choose
     **one** of the options and use it consistently throughout your skill, for
     better code structure.
 
 
 Option 1: Implementation using handler classes
 ----------------------------------------------
+
+Start by creating a skill builder object. The skill builder object helps in
+adding components responsible for handling input requests and generating
+custom responses for your skill.
+
+Type or paste the following code into your ``hello_world.py`` file.
+
+.. code-block:: python
+
+        from ask_sdk_core.skill_builder import SkillBuilder
+
+        sb = SkillBuilder()
 
 To use handler classes, each request handler is written as a class that
 implements two methods of the ``AbstractRequestHandler`` class; ``can_handle``
@@ -123,13 +112,18 @@ previous code.
 .. code-block:: python
 
     from ask_sdk_core.dispatch_components import AbstractRequestHandler
+    from ask_sdk_core.utils import is_request_type, is_intent_name
+    from ask_sdk_core.handler_input import HandlerInput
+    from ask_sdk_model import Response
     from ask_sdk_model.ui import SimpleCard
 
     class LaunchRequestHandler(AbstractRequestHandler):
          def can_handle(self, handler_input):
-             return handler_input.request_envelope.request.object_type == "LaunchRequest"
+             # type: (HandlerInput) -> bool
+             return is_request_type("LaunchRequest")(handler_input)
 
          def handle(self, handler_input):
+             # type: (HandlerInput) -> Response
              speech_text = "Welcome to the Alexa Skills Kit, you can say hello!"
 
              handler_input.response_builder.speak(speech_text).set_card(
@@ -153,10 +147,11 @@ the previous handler.
 
     class HelloWorldIntentHandler(AbstractRequestHandler):
         def can_handle(self, handler_input):
-            return (handler_input.request_envelope.request.object_type == "IntentRequest"
-                    and handler_input.request_envelope.request.intent.name == "HelloWorldIntent")
+            # type: (HandlerInput) -> bool
+            return is_intent_name("HelloWorldIntent")(handler_input)
 
         def handle(self, handler_input):
+            # type: (HandlerInput) -> Response
             speech_text = "Hello World"
 
             handler_input.response_builder.speak(speech_text).set_card(
@@ -182,10 +177,11 @@ previous handler.
 
     class HelpIntentHandler(AbstractRequestHandler):
         def can_handle(self, handler_input):
-            return (handler_input.request_envelope.request.object_type == "IntentRequest"
-                    and handler_input.request_envelope.request.intent.name == "AMAZON.HelpIntent")
+            # type: (HandlerInput) -> bool
+            return is_intent_name("AMAZON.HelpIntent")(handler_input)
 
         def handle(self, handler_input):
+            # type: (HandlerInput) -> Response
             speech_text = "You can say hello to me!"
 
             handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -210,11 +206,12 @@ previous handler.
 
     class CancelAndStopIntentHandler(AbstractRequestHandler):
         def can_handle(self, handler_input):
-            return (handler_input.request_envelope.request.object_type == "IntentRequest"
-                and (handler_input.request_envelope.request.intent.name == "AMAZON.CancelIntent"
-                     or handler_input.request_envelope.request.intent.name == "AMAZON.StopIntent"))
+            # type: (HandlerInput) -> bool
+            return is_intent_name("AMAZON.CancelIntent")(handler_input)
+                     or is_intent_name("AMAZON.StopIntent")(handler_input)
 
         def handle(self, handler_input):
+            # type: (HandlerInput) -> Response
             speech_text = "Goodbye!"
 
             handler_input.response_builder.speak(speech_text).set_card(
@@ -237,12 +234,13 @@ previous handler.
 .. code-block:: python
 
     class SessionEndedRequestHandler(AbstractRequestHandler):
-
         def can_handle(self, handler_input):
-            return handler_input.request_envelope.request.object_type == "SessionEndedRequest"
+            # type: (HandlerInput) -> bool
+            return is_request_type("SessionEndedRequest")(handler_input)
 
         def handle(self, handler_input):
-            #any cleanup logic goes here
+            # type: (HandlerInput) -> Response
+            # any cleanup logic goes here
 
             return handler_input.response_builder.response
 
@@ -261,9 +259,11 @@ previous handler.
     class AllExceptionHandler(AbstractExceptionHandler):
 
         def can_handle(self, handler_input, exception):
+            # type: (HandlerInput, Exception) -> bool
             return True
 
         def handle(self, handler_input, exception):
+            # type: (HandlerInput, Exception) -> Response
             # Log the exception in CloudWatch Logs
             print(exception)
 
@@ -283,12 +283,11 @@ your ``hello_world.py`` file, after the previous handler.
 
 .. code-block:: python
 
-    sb.request_handlers.extend([
-        LaunchRequestHandler(),
-        HelloWorldIntentHandler(),
-        HelpIntentHandler(),
-        CancelAndStopIntentHandler(),
-        SessionEndedRequestHandler()])
+    sb.add_request_handler(LaunchRequestHandler())
+    sb.add_request_handler(HelloWorldIntentHandler())
+    sb.add_request_handler(HelpIntentHandler())
+    sb.add_request_handler(CancelAndStopIntentHandler())
+    sb.add_request_handler(SessionEndedRequestHandler())
 
     sb.add_exception_handler(AllExceptionHandler())
 
@@ -300,17 +299,19 @@ Option 2: Implementation using decorators
 
 The following code implements the same functionality as above but uses function
 decorators. You can think of the decorators as a replacement for the
-``can_handle`` method implemented in each request handler above.
+``can_handle`` method implemented in each handler class above.
 
-To try the skill using this code, make sure that
-your ``hello_world.py`` file contains only the following before adding the
-handler functions:
+Start by creating a skill builder object. The skill builder object helps in
+adding components responsible for handling input requests and generating
+custom responses for your skill.
+
+Type or paste the following code into your ``hello_world.py`` file.
 
 .. code-block:: python
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        from ask_sdk_core.skill_builder import SkillBuilder
 
-    sb = SkillBuilder()
+        sb = SkillBuilder()
 
 LaunchRequest handler
 ~~~~~~~~~~~~~~~~~~~~~
@@ -326,11 +327,14 @@ previous code.
 
 .. code-block:: python
 
-    from ask_sdk_core.utils import is_request_type
+    from ask_sdk_core.utils import is_request_type, is_intent_name
+    from ask_sdk_core.handler_input import HandlerInput
+    from ask_sdk_model import Response
     from ask_sdk_model.ui import SimpleCard
 
     @sb.request_handler(can_handle_func=is_request_type("LaunchRequest"))
     def launch_request_handler(handler_input):
+        # type: (HandlerInput) -> Response
         speech_text = "Welcome to the Alexa Skills Kit, you can say hello!"
 
         handler_input.response_builder.speak(speech_text).set_card(
@@ -355,10 +359,9 @@ the previous handler.
 
 .. code-block:: python
 
-    from ask_sdk_core.utils import is_intent_name
-
     @sb.request_handler(can_handle_func=is_intent_name("HelloWorldIntent"))
     def hello_world_intent_handler(handler_input):
+        # type: (HandlerInput) -> Response
         speech_text = "Hello World!"
 
         handler_input.response_builder.speak(speech_text).set_card(
@@ -380,6 +383,7 @@ previous handler.
 
     @sb.request_handler(can_handle_func=is_intent_name("AMAZON.HelpIntent"))
     def help_intent_handler(handler_input):
+        # type: (HandlerInput) -> Response
         speech_text = "You can say hello to me!"
 
         handler_input.response_builder.speak(speech_text).ask(speech_text).set_card(
@@ -404,10 +408,11 @@ previous handler.
 .. code-block:: python
 
     @sb.request_handler(
-        can_handle_func=lambda input :
-            is_intent_name("AMAZON.CancelIntent")(input) or
-            is_intent_name("AMAZON.StopIntent")(input))
+        can_handle_func=lambda handler_input :
+            is_intent_name("AMAZON.CancelIntent")(handler_input) or
+            is_intent_name("AMAZON.StopIntent")(handler_input))
     def cancel_and_stop_intent_handler(handler_input):
+        # type: (HandlerInput) -> Response
         speech_text = "Goodbye!"
 
         handler_input.response_builder.speak(speech_text).set_card(
@@ -436,7 +441,8 @@ previous handler.
 
     @sb.request_handler(can_handle_func=is_request_type("SessionEndedRequest"))
     def session_ended_request_handler(handler_input):
-        #any cleanup logic goes here
+        # type: (HandlerInput) -> Response
+        # any cleanup logic goes here
 
         return handler_input.response_builder.response
 
@@ -453,6 +459,7 @@ previous handler.
 
     @sb.exception_handler(can_handle_func=lambda i, e: True)
     def all_exception_handler(handler_input, exception):
+        # type: (HandlerInput, Exception) -> Response
         # Log the exception in CloudWatch Logs
         print(exception)
 
@@ -481,15 +488,59 @@ When using decorators, your request handlers and exception handlers are
 automatically recognized by the Skill Builder object instantiated at
 the top of the code.
 
+Full source code
+----------------
+
+The full source code for ``hello_world.py`` can be found `here <HELLO_WORLD_CODE.html>`_.
+
 Preparing your code for AWS Lambda
 ----------------------------------
 
 Your code is now complete and you need to create .zip files that contain the files ready to upload to
-Lambda. If you followed the instructions above, create a .zip file of the content of the
-folder (not the folder itself) where you created the ``hello_world.py`` file.
-Name the file ``skill.zip``. You can check the AWS Lambda docs to get more
-information on creating a
-`deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>`_.
+Lambda.
+
+When you upload your code to AWS Lambda, you must include your skill code and
+its dependencies inside a zip file as a flat file structure, so you'll place
+your code in the same folder as the ASK SDK for Python, before zipping it.
+
+.. tabs::
+
+   .. tab:: SDK Setup in Virtual Environment
+
+      If you set up the SDK using a virtual environment, the dependencies
+      are installed in the ``site-packages`` folder in your virtual environment.
+      So, navigate to the ``site-packages`` folder in ``skill_env``.
+
+      .. note::
+
+         On **Windows** the ``site-packages`` folder is located inside the
+         ``skill_env\Lib`` folder.
+
+      .. note::
+
+         For **MacOS/Linux** the ``site-packages`` folder location depends on
+         the version of Python you are using. For instance *Python 3.6* users
+         will find ``site-packages`` inside the ``skill_env/lib/Python3.6``
+         folder.
+
+      Copy the ``hello_world.py`` file into the ``site-packages`` folder and
+      create a .zip file of the contents of the folder (**not** the folder itself).
+      Name the file ``skill.zip``. You can check the AWS Lambda docs to get more
+      information on creating a
+      `deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>`_.
+
+   .. tab:: SDK Setup in specific folder
+
+      If you set up the SDK in a specific folder, the dependencies
+      are installed in that specific folder. That would be ``skill_env`` folder
+      if you followed the steps mentioned in the getting started guide.
+
+      Copy the ``hello_world.py`` file into the ``skill_env`` folder and
+      create a .zip file of the contents of the folder (**not** the folder itself).
+      Name the file ``skill.zip``. You can check the AWS Lambda docs to get more
+      information on creating a
+      `deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>`_.
+
 Before uploading the code to AWS Lambda, you need to create an AWS Lambda
 function and create the skill on the Alexa Developer Portal.
 
@@ -508,7 +559,7 @@ type. Once this is done, upload the ``skill.zip`` file produced in the previous 
 and fill in the *handler* information with module_name.handler which is
 ``hello_world.handler`` for this example.
 
-Configuring and testing Your skill
+Configuring and testing your skill
 ----------------------------------
 
 Now that the skill code has been uploaded to AWS Lambda, you can configure
