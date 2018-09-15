@@ -43,6 +43,11 @@ version = about['__version__']
 # The full version, including alpha/beta/rc tags
 release = 'beta'
 
+# Add AWS Region for boto imports
+on_rtd = os.environ.get('READTHEDOCS') == 'True'
+if on_rtd:
+    os.environ['AWS_DEFAULT_REGION'] = "us-west-2"
+
 
 # -- General configuration ---------------------------------------------------
 
@@ -55,7 +60,8 @@ release = 'beta'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx'
+    'sphinx.ext.intersphinx',
+    'sphinx_tabs.tabs'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
