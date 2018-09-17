@@ -28,8 +28,6 @@ default choice will be "none". In this case, you can use cards to prompt
 the user to provide consent using the Alexa app. The skill sample shows this
 usecase with ``AskForPermissionsConsentCard`` in the response.
 
-**NOTE**: This sample is subject to change during the beta period.
-
 
 Concepts
 --------
@@ -68,16 +66,14 @@ correct role for your skill. When creating the function, select the
 "Author from scratch" option, and select Python 2.7 or Python 3.6 runtime.
 
 To prepare the skill for upload to AWS Lambda, create a zip file that
-contains `device_address_api.py <device_address_api.py>`_, the SDK and it's dependencies. Make sure to
+contains `lambda_function.py <lambda/py/lambda_function.py>`_, the SDK and it's dependencies. Make sure to
 compress all files directly, **NOT** the project folder. You can check the
 AWS Lambda docs to get more information on
 `creating a deployment package <https://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html>`_.
 
 Once you’ve created your AWS Lambda function and configured "Alexa
 Skills Kit" as a trigger, upload the ZIP file produced in the previous
-step and set the handler to the fully qualified class name of your
-handler function.  In this example, it would be ``device_address_api.handler``.
-Finally, copy the ARN for your AWS Lambda function
+step. Finally, copy the ARN for your AWS Lambda function
 because you’ll need it when configuring your skill in the Amazon
 Developer console.
 
@@ -96,7 +92,7 @@ Now we’re ready to define the interaction model for the skill. Under
 be ``device address``.
 
 Now it’s time to add the required intents to the skill. Copy the
-interactionSchema JSON provided in the `speech_assets <speech_assets/>`_ folder
+interactionSchema JSON provided in the `models <models/>`_ folder
 and paste it under the "JSON Editor" tab. Alternatively, you can also upload
 the JSON to the JSON Editor.
 
@@ -188,5 +184,5 @@ Tutorials & Guides
 Documentation
 ~~~~~~~~~~~~~
 
--  `Official Alexa Skills Kit Python SDK Docs <../../README.rst>`_
+-  `Official Alexa Skills Kit Python SDK Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_
 -  `Official Alexa Skills Kit Docs <https://developer.amazon.com/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html>`_

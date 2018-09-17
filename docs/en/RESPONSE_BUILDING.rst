@@ -1,5 +1,30 @@
 Response Building
+******************
+
+Standard Response
 =================
+
+If you are using the AWS lambda as your skill endpoint, you are only responsible
+for providing the response body in order for Alexa to respond to a customer
+request. The documentation on the JSON structure of the response body can be
+found `here <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#response-format>`_.
+
+A response body may contain the following properties:
+
+* version
+* sessionAttributes
+* response
+
+ASK SDK for Python helps filling the version and sessionAttributes so
+you can focus on building the response instead of writing boilerplate code.
+
+Similar to `standard requests <REQUEST_PROCESSING.html#standard-request>`_,
+the SDK creates response objects as deserialized model objects
+(``ask-sdk-model`` package) and internally handles serializing them to
+response JSON before sending to Alexa Service.
+
+Response Factory
+================
 
 The SDK includes a ``ResponseFactory`` class, that contains helper
 functions for constructing responses. A ``Response`` may contain
@@ -41,6 +66,13 @@ provided to the skill developers through the
 `HandlerInput <REQUEST_PROCESSING.html#handler-input>`_ object, which
 is the standard argument passed to the skill components.
 
+.. tip::
+
+    The contents of the speak and reprompt values get wrapped in
+    `SSML <https://developer.amazon.com/docs/custom-skills/speech-synthesis-markup-language-ssml-reference.html>`_
+    tags. Build engaging conversations using `supported SSML tags <https://developer.amazon.com/docs/custom-skills/speech-synthesis-markup-language-ssml-reference.html#ssml-supported>`_
+    directly in your speech text.
+
 .. note::
 
     - For using and adding different directives, look at the
@@ -55,7 +87,7 @@ Sample Code
 ~~~~~~~~~~~
 
 The following example shows how to construct a response containing a ``StandardCard`` 
-and a ``RenderTemplateDirective`` through ``handler_input.response_builder``.
+and a ``BodyTemplate2`` display object through ``handler_input.response_builder``.
 
 .. code:: python
 

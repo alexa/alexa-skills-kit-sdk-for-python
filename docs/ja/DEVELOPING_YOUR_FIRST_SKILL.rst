@@ -60,7 +60,6 @@ Pythonでは、次のいずれかの方法でリクエストハンドラーを�
 
 Hello Worldスキルの実装を通じて、まずハンドラークラスの使用方法、次に同じスキルをデコレーターを使用して作成する方法を説明します。機能は同じです。どちらを使用してもかまいません。
 
-どちらのオプションでも完成したソースコードは\ `HelloWorld <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/samples/HelloWorld>`__\ サンプルフォルダーにあります。
 
 例外ハンドラー
 ~~~~~~~~~~~~
@@ -363,6 +362,11 @@ Lambdaハンドラーの作成
     handler = sb.lambda_handler()
 
 デコレーターを使用する場合、リクエストハンドラーはコードの最初にインスタンス化されたスキルビルダーオブジェクトによって自動的に識別されます。
+
+完全なソースコード
+----------------
+
+`` hello_world.py``の完全なソースコードは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/HELLO_WORLD_CODE.html>` _にあります。
 
 AWS Lambda用にコードを準備する
 ---------------------------

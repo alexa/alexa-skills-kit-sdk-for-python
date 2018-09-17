@@ -41,7 +41,7 @@ with open(
     exec(f.read(), about)
 version = about['__version__']
 # The full version, including alpha/beta/rc tags
-release = 'beta'
+release = about['__version__']
 
 # Add AWS Region for boto imports
 on_rtd = os.environ.get('READTHEDOCS') == 'True'

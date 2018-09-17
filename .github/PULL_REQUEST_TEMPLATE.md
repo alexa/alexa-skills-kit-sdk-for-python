@@ -36,6 +36,6 @@
 <!--- Put an `x` in the below box if you confirm that this request can be released under the Apache 2 license -->
 - [ ] By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.
 
-[issues]: https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues
+[issues]: https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues
 [license]: http://aws.amazon.com/apache2.0/
 [cla]: http://en.wikipedia.org/wiki/Contributor_License_Agreement

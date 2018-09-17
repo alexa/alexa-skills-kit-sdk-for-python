@@ -28,7 +28,7 @@ You can also install the whole standard package locally by following these steps
 
 .. code-block:: sh
 
-    $ git clone https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python.git
+    $ git clone https://github.com/alexa/alexa-skills-kit-sdk-for-python.git
     $ cd alexa-skills-kit-sdk-for-python/ask-sdk-core
     $ virtualenv venv
     ...
@@ -47,6 +47,6 @@ Got Feedback?
 -------------
 
 - We would like to hear about your bugs, feature requests, questions or quick feedback.
-  Please search for the `existing issues <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>`_ before opening a new one. It would also be helpful
-  if you follow the templates for issue and pull request creation. Please follow the `contributing guidelines <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_!!
+  Please search for the `existing issues <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>`_ before opening a new one. It would also be helpful
+  if you follow the templates for issue and pull request creation. Please follow the `contributing guidelines <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_!!
 - Request and vote for `Alexa features <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`_!

@@ -1,8 +1,8 @@
-Alexa Skills Kit SDK for Python (Beta)
+Alexa Skills Kit SDK for Python
 ======================================
 
 
-The **ASK SDK for Python (Beta)** makes it easier for you to build
+The **ASK SDK for Python** makes it easier for you to build
 highly engaging skills, by allowing you to spend more time on
 implementing features and less on writing boiler-plate code.
 
@@ -20,6 +20,7 @@ Guides
 
     GETTING_STARTED
     DEVELOPING_YOUR_FIRST_SKILL
+    SAMPLE_SKILLS
 
 `Setting Up The ASK SDK <GETTING_STARTED.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,6 +35,11 @@ Python project.
 Walks you through step-by-step instructions for building the Hello World
 sample.
 
+`Sample Skills <SAMPLE_SKILLS.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Provides a comprehensive list of skill samples using the SDK.
+
 
 SDK Features
 ------------
@@ -43,8 +49,8 @@ SDK Features
     :hidden:
 
     REQUEST_PROCESSING
-    ATTRIBUTES
     RESPONSE_BUILDING
+    ATTRIBUTES
     SERVICE_CLIENTS
     SKILL_BUILDERS
 
@@ -54,16 +60,16 @@ SDK Features
 Covers how to build request handlers, exception handlers, and request and
 response interceptors.
 
-`Skill Attributes <ATTRIBUTES.html>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use skill attributes to store and retrieve skill data.
-
 `Response Building <RESPONSE_BUILDING.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to use the ResponseBuilder to compose multiple elements like
 text, cards, and audio into a single response.
+
+`Skill Attributes <ATTRIBUTES.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Covers how to use skill attributes to store and retrieve skill data.
 
 `Alexa Service Clients <SERVICE_CLIENTS.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -74,35 +80,6 @@ Covers how to use service clients in your skill to access Alexa APIs.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to configure and construct a skill instance.
-
-Samples
--------
-
-`Hello World Skill Sample <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HelloWorld>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This code sample will allow you to hear a response from Alexa when you
-trigger it. It is a minimal sample to get you familiarized with the
-Alexa Skills Kit and AWS Lambda.
-
-`Color Picker Skill Sample <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/ColorPicker>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is a step-up in functionality from Hello World. It allows you to
-capture input from your user and demonstrates the use of Slots. It also
-demonstrates use of session attributes and request, response interceptors.
-
-`High Low Game Skill Sample <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/HighLowGame>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Template for a basic high-low game skill. When the user guesses a number,
-Alexa tells the user whether the number she has in mind is higher or lower.
-
-`Device Address API Skill Sample <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/tree/master/samples/GetDeviceAddress>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sample skill that shows how to request and access the configured address in
-the user’s device settings.
 
 
 .. toctree::
@@ -118,10 +95,10 @@ Got Feedback?
 
 - We would like to hear about your bugs, feature requests, questions or quick feedback.
   Please search for
-  `existing issues <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>`_
+  `existing issues <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>`_
   before opening a new one. It would also be helpful if you follow the
   templates for issue and pull request creation.
-  Please follow the `contributing guidelines <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_ for
+  Please follow the `contributing guidelines <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_ for
   pull requests!!
 - Request and vote for
   `Alexa features <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`_!
@@ -135,7 +112,7 @@ Additional Resources
    :caption: Additional Resources
    :hidden:
 
-   SDK Issues and feature requests <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>
+   SDK Issues and feature requests <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>
    Alexa feature requests <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>
    Alexa Developer Forums <https://forums.developer.amazon.com/spaces/165/index.html>
 

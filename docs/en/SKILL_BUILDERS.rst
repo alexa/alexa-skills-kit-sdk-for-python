@@ -1,8 +1,29 @@
+**************************
+Configuring Skill Instance
+**************************
+
+Skill
+=====
+
+The ``Skill`` object is the integration of all your skill logic. It is
+responsible for initializing SDK utilities such as the ``AttributesManager``
+and ``ServiceClientFactory`` and also kick off the request handling process.
+
+Available Methods
+-----------------
+
+.. code-block:: python
+
+    def invoke(self, request_envelope, context):
+    # type: (RequestEnvelope, Any) -> ResponseEnvelope
+
+
 Skill Builders
 ==============
 
 The SDK includes a ``SkillBuilder`` that provides utility methods, to
-construct the ``Skill`` instance. It has the following structure:
+construct the ``Skill`` instance, setting custom user agent and creating
+lambda integration handler. It has the following structure:
 
 .. code:: python
 

@@ -56,36 +56,14 @@ session. How these attributes are stored, including key scope (user ID
 or device ID), TTL, and storage layer depends on the configuration of
 the skill.
 
-Persistent attributes are only available when you `configure the skill
-instance <SKILL_BUILDERS.html#skill-builders>`_ with a ``PersistenceAdapter``. Calls to the
-``AttributesManager`` to retrieve and save persistent attributes throw
-an error if a ``PersistenceAdapter`` has not been configured.
+.. note::
 
-PersistenceAdapter
-==================
+    Persistent attributes are only available when you
+    `configure the skill instance <SKILL_BUILDERS.html#skill-builders>`_
+    with a ``PersistenceAdapter``. Calls to the ``AttributesManager`` to
+    retrieve and save persistent attributes raise an exception if a
+    ``PersistenceAdapter`` has not been configured.
 
-The ``AbstractPersistenceAdapter`` is used by ``AttributesManager`` when
-retrieving and saving attributes to persistence layer (i.e. database or
-local file system). The ``ask-sdk-dynamodb-persistence-adapter`` package
-provides an implementation of ``AbstractPersistenceAdapter`` using `AWS
-DynamoDB <https://aws.amazon.com/dynamodb/>`_.
-
-All implementations of ``AbstractPersistenceAdapter`` needs to follow
-the following interface.
-
-Interface
-~~~~~~~~~
-
-.. code:: python
-
-    class AbstractPersistenceAdapter(object):
-        def get_attributes(self, request_envelope):
-            # type: (RequestEnvelope) -> Dict[str, Any]
-            pass
-
-        def save_attributes(self, request_envelope, attributes):
-            # type: (RequestEnvelope, Dict[str, Any]) -> None
-            pass
 
 AttributesManager
 =================
@@ -166,3 +144,72 @@ attributes.
             handler_input.attributes_manager.save_persistent_attributes()
             return handler_input.response_builder.response
 
+
+.. note::
+
+    To improve skill performance, ``AttributesManager`` caches the persistent
+    attributes locally. ``persistent_attributes`` setter will only update the
+    locally cached persistent attributes. You need to call
+    ``save_persistent_attributes()`` to save persistent attributes to the
+    persistence layer.
+
+
+PersistenceAdapter
+==================
+
+The ``AbstractPersistenceAdapter`` is used by ``AttributesManager`` when
+retrieving and saving attributes to persistence layer (i.e. database or
+local file system). You can register any customized ``PersistenceAdapter``
+that conforms to the ``AbstractPersistenceAdapter`` interface with the SDK.
+
+All implementations of ``AbstractPersistenceAdapter`` needs to follow
+the following interface.
+
+Interface
+~~~~~~~~~
+
+.. code:: python
+
+    class AbstractPersistenceAdapter(object):
+        def get_attributes(self, request_envelope):
+            # type: (RequestEnvelope) -> Dict[str, Any]
+            pass
+
+        def save_attributes(self, request_envelope, attributes):
+            # type: (RequestEnvelope, Dict[str, Any]) -> None
+            pass
+
+
+DynamoDbPersistenceAdapter
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``ask-sdk-dynamodb-persistence-adapter`` package
+provides an implementation of ``AbstractPersistenceAdapter`` using `AWS
+DynamoDB <https://aws.amazon.com/dynamodb/>`_.
+
+Interface
+---------
+
+.. code:: python
+
+    from ask_sdk_dynamodb.adapter import DynamoDbAdapter
+
+    adapter = DynamoDbAdapter(table_name, partition_key_name="id",
+                attribute_name="attributes", create_table=False,
+                partition_keygen=user_id_partition_keygen,
+                dynamodb_resource=boto3.resource("dynamodb")
+
+Configuration Options
+---------------------
+
+    * **table_name** (string) - The name of the DynamoDB table used.
+
+    * **partition_key_name** (string) - Optional. The name of the partition key column. Default to ``"id"`` if not provided.
+
+    * **attributes_name** (string) - Optional. The name of the attributes column. Default to ``"attributes"`` if not provided.
+
+    * **create_table** (boolean) - Optional. Set to ``True`` to have ``DynamoDbAdapter`` automatically create the table if it does not exist. Default to ``False`` if not provided.
+
+    * **partition_keygen** (callable) - Optional. The function used to generate partition key using ``RequestEnvelope``. Default to generate the partition key using the ``user_id``.
+
+    * **dynamodb_resource** (`AWS.DynamoDB ServiceResource <https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/dynamodb.html#DynamoDB.ServiceResource>`_ ) - Optional. The ``DynamoDBClient`` used to query AWS DynamoDB table. You can inject your ``DynamoDBClient`` with custom configuration here. Default to use ``boto3.resource("dynamodb")``.

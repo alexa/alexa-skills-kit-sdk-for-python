@@ -18,9 +18,9 @@
 __pip_package_name__ = 'ask-sdk'
 __description__ = (
     'The ASK SDK Standard package provides a full distribution of the SDK, '
-    'all batteries included, for building Alexa Skills')
-__url__ = 'http://developer.amazon.com/ask'
-__version__ = '0.1.3'
+    'all batteries included, for building Alexa Skills.')
+__url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
+__version__ = '1.0.0'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'

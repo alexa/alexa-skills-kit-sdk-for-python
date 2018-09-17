@@ -16,6 +16,7 @@ SDKの使用に役立つ以下のガイドをご用意しました。今後も�
 
     GETTING_STARTED
     DEVELOPING_YOUR_FIRST_SKILL
+    <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/SAMPLE_SKILLS.html>
 
 `ASK SDKのセットアップ <GETTING_STARTED.html>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -89,7 +90,7 @@ Worldから機能を一歩進めて、ユーザーからの入力をキャプチ
 
 基本的なハイ＆ローゲームスキルのテンプレートです。ユーザーが数字を推測し、Alexaがその数字が正解より大きいか小さいかを答えます。
 
-`デバイスアドレスAPIスキルサンプル <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/samples/GetDeviceAddress>`__
+`デバイスアドレスAPIスキルサンプル <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/samples/GetDeviceAddress>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ユーザーのデバイス設定で設定したアドレスをリクエストし、設定されたアドレスにアクセスするサンプルスキルです。
@@ -112,12 +113,29 @@ SDK APIおよびSDKモデルのリファレンス
 フィードバック
 -------
 
--  バグ、機能のリクエスト、ご質問、簡単なフィードバックがあればぜひお聞かせください。新しく問題を提起する前に\ `既存の問題 <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/issues>`__\ を検索してください。また、問題やプルリクエストはテンプレートに従って作成してください。プルリクエストの場合は\ `投稿のガイドライン <https://github.com/alexa-labs/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`__\ に従ってください。
+-  バグ、機能のリクエスト、ご質問、簡単なフィードバックがあればぜひお聞かせください。新しく問題を提起する前に\ `既存の問題 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>`__\ を検索してください。また、問題やプルリクエストはテンプレートに従って作成してください。プルリクエストの場合は\ `投稿のガイドライン <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`__\ に従ってください。
 
 -  Alexaの機能に関するリクエストや投票は、\ `こちら <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`__\ をご覧ください。
 
 その他のリソース
 --------------
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Additional Resources
+   :hidden:
+
+   SDK Issues and feature requests <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>
+   Alexa feature requests <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>
+   Alexa Developer Forums <https://forums.developer.amazon.com/spaces/165/index.html>
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Other language ASK SDKs
+   :hidden:
+
+   NodeJS SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-nodejs>
+   Java SDK <https://github.com/alexa/alexa-skills-kit-sdk-for-java>
 
 コミュニティ
 ~~~~~~

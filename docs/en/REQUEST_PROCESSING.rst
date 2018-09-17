@@ -1,14 +1,20 @@
-==================
 Request Processing
-==================
+******************
 
-This guide provides information on the following request processing components
-available in the SDK, for skill development:
+Standard Request
+================
 
-- Handler Input
-- Request Handlers
-- Exception Handlers
-- Request and Response Interceptors
+Alexa communicates with the skill service via a request-response mechanism
+using HTTP over SSL/TLS. When a user interacts with an Alexa skill, your
+service receives a POST request containing a JSON body. The request body
+contains the parameters necessary for the service to perform its logic and
+generate a JSON-formatted response. The documentation on JSON structure of
+the request body can be found `here <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-format>`_.
+
+Though Python can handle JSON natively as ``dict`` objects, for providing type
+support, they are deserialized into model objects (``ask-sdk-model`` package)
+for skill consumption.
+
 
 Handler Input
 =============
@@ -17,20 +23,19 @@ Request Handlers, Request and Response Interceptors, and Exception Handlers
 are all passed a global ``HandlerInput`` object during invocation. This object
 exposes various entities useful in request processing, including:
 
--  **request_envelope**: Contains the entire `request
-   body <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-body-syntax>`_
-   sent to skill.
--  **attributes_manager**: Provides access to request, session, and
-   persistent attributes.
--  **service_client_factory**: Constructs service clients capable of
-   calling Alexa APIs.
--  **response_builder**: Contains helper function to build responses.
--  **context**: Provides an optional, context object passed in by the
-   host container. For example, for skills running on AWS Lambda, this
-   is the `context
-   object <https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html>`_
-   for the AWS Lambda function.
-
+    -  **request_envelope**: Contains the entire `request
+       body <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-body-syntax>`_
+       sent to skill.
+    -  **attributes_manager**: Provides access to request, session, and
+       persistent attributes.
+    -  **service_client_factory**: Constructs service clients capable of
+       calling Alexa APIs.
+    -  **response_builder**: Contains helper function to build responses.
+    -  **context**: Provides an optional, context object passed in by the
+       host container. For example, for skills running on AWS Lambda, this
+       is the `context
+       object <https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html>`_
+       for the AWS Lambda function.
 
 Request Handlers
 ================
@@ -44,165 +49,187 @@ handlers:
   `Skill Builder <SKILL_BUILDERS.html#skill-builder>`__ ``request_handler``
   decorator.
 
+.. warning::
+
+    You may use either implementation using **classes**
+    or **decorators** to write a skill.
+
+    We strongly recommend you to choose
+    **one** of the options and use it consistently throughout your skill, for
+    better code structure.
+
 Interface
 ---------
 
-AbstractRequestHandler Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. tabs::
 
-If you plan on using the ``AbstractRequestHandler`` class, you will
-need to implement the following methods :
+    .. tab:: AbstractRequestHandler Class
 
--  **can_handle**:  ``can_handle`` method is called by the SDK to
-   determine if the given handler is capable of processing the incoming
-   request. This function accepts a `Handler Input <#handler-input>`__
-   object and expects a boolean to be returned. If the method returns
-   **True**, then the handler is supposed to handle the request
-   successfully. If it returns **False**, the handler is not supposed
-   to handle the input request and hence not executed to completion.
-   Because of the various attributes in ``HandlerInput`` object, you
-   can write any condition to let SDK know whether the request can be
-   handled gracefully or not.
--  **handle**: ``handle`` method is called by the SDK when invoking the
-   request handler. This function contains the handler’s request
-   processing logic, accepts `Handler Input <#handler-input>`__ and
-   returns a ``Response`` object.
+        If you plan on using the ``AbstractRequestHandler`` class, you will
+        need to implement the following methods :
 
-.. code:: python
+        -  **can_handle**:  ``can_handle`` method is called by the SDK to
+           determine if the given handler is capable of processing the incoming
+           request. This function accepts a `Handler Input <#handler-input>`__
+           object and expects a boolean to be returned. If the method returns
+           **True**, then the handler is supposed to handle the request
+           successfully. If it returns **False**, the handler is not supposed
+           to handle the input request and hence not executed to completion.
+           Because of the various attributes in ``HandlerInput`` object, you
+           can write any condition to let SDK know whether the request can be
+           handled gracefully or not.
+        -  **handle**: ``handle`` method is called by the SDK when invoking the
+           request handler. This function contains the handler’s request
+           processing logic, accepts `Handler Input <#handler-input>`__ and
+           returns a ``Response`` object.
 
-    class AbstractRequestHandler(object):
-        @abstractmethod
-        def can_handle(self, handler_input):
-            # type: (HandlerInput) -> bool
-            pass
+        .. code:: python
 
-        @abstractmethod
-        def handle(self, handler_input):
-            # type: (HandlerInput) -> Response
-            pass
+            class AbstractRequestHandler(object):
+                @abstractmethod
+                def can_handle(self, handler_input):
+                    # type: (HandlerInput) -> bool
+                    pass
+
+                @abstractmethod
+                def handle(self, handler_input):
+                    # type: (HandlerInput) -> Response
+                    pass
+
+    .. tab:: RequestHandler Decorator
+
+        The ``request_handler`` decorator from SkillBuilder class is a custom wrapper
+        on top of the ``AbstractRequestHandler`` class and provides the same
+        functionality to any custom decorated function. However, there are couple of
+        things to take into consideration, before using the decorator:
+
+        - The decorator expects a ``can_handle_func`` parameter. This is similar to
+          the ``can_handle`` method in ``AbstractRequestHandler``. The value passed
+          should be a function that accepts a `Handler Input <#handler-input>`__
+          object and returns a ``boolean`` value
+        - The decorated function should accept only one parameter, which is the
+          `Handler Input <#handler-input>`__ object and may return a ``Response``
+          object.
+
+        .. code:: python
+
+            class SkillBuilder(object):
+                ....
+                def request_handler(self, can_handle_func):
+                    def wrapper(handle_func):
+                        # wrap the can_handle and handle into a class
+                        # add the class into request handlers list
+                        ....
+                    return wrapper
+
+Code Sample
+-----------
 
 The following example shows a request handler class that can handle the
 ``HelloWorldIntent``.
 
-.. code:: python
+    .. tabs::
 
-  from ask_sdk_core.dispatch_components import AbstractRequestHandler
-  from ask_sdk_model.ui import SimpleCard
+        .. tab:: AbstractRequestHandler Class
 
-  class HelloWorldIntentHandler(AbstractRequestHandler):
-      def can_handle(self, handler_input):
-          return handler_input.request_envelope.request.type == "IntentRequest"
-            and handler_input.request_envelope.request.intent.name == "HelloWorldIntent"
+            .. code:: python
 
-      def handle(self, handler_input):
-          speech_text = "Hello World";
+              from ask_sdk_core.dispatch_components import AbstractRequestHandler
+              from ask_sdk_core.utils import is_intent_name
+              from ask_sdk_model.ui import SimpleCard
 
-          return handler_input.response_builder.speak(speech_text).set_card(
-              SimpleCard("Hello World", speech_text)).response
+              class HelloWorldIntentHandler(AbstractRequestHandler):
+                  def can_handle(self, handler_input):
+                      return is_intent_name("HelloWorldIntent")(handler_input)
 
-The ``can_handle`` function detects if the incoming request is an
-``IntentRequest`` and returns true if the intent name is
-``HelloWorldIntent``. The ``handle`` function generates and returns a
-basic "Hello World" response.
+                  def handle(self, handler_input):
+                      speech_text = "Hello World";
 
-request_handler decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                      return handler_input.response_builder.speak(speech_text).set_card(
+                          SimpleCard("Hello World", speech_text)).response
 
-The ``request_handler`` decorator from SkillBuilder class is a custom wrapper
-on top of the ``AbstractRequestHandler`` class and provides the same
-functionality to any custom decorated function. However, there are couple of
-things to take into consideration, before using the decorator:
+            The ``can_handle`` function detects if the incoming request is an
+            ``IntentRequest`` and returns true if the intent name is
+            ``HelloWorldIntent``. The ``handle`` function generates and returns a
+            basic "Hello World" response.
 
-- The decorator expects a ``can_handle_func`` parameter. This is similar to
-  the ``can_handle`` method in ``AbstractRequestHandler``. The value passed
-  should be a function that accepts a `Handler Input <#handler-input>`__
-  object and returns a ``boolean`` value
-- The decorated function should accept only one parameter, which is the
-  `Handler Input <#handler-input>`__ object and may return a ``Response``
-  object.
+        .. tab:: RequestHandler Decorator
 
-.. code:: python
+            .. code-block:: python
 
-    class SkillBuilder(object):
-        ....
-        def request_handler(self, can_handle_func):
-            def wrapper(handle_func):
-                # wrap the can_handle and handle into a class
-                # add the class into request handlers list
-                ....
-            return wrapper
+                from ask_sdk_core.utils import is_intent_name
+                from ask_sdk_model.ui import SimpleCard
+                from ask_sdk_core.skill_builder import SkillBuilder
 
-The following example shows a request handler function that can handle the
-``HelloWorldIntent``.
+                sb = SkillBuilder()
 
-.. code-block:: python
+                @sb.request_handler(can_handle_func = is_intent_name("HelloWorldIntent"))
+                def hello_world_intent_handler(handler_input):
+                    speech_text = "Hello World!"
 
-    from ask_sdk_core.utils import is_intent_name
-    from ask_sdk_model.ui import SimpleCard
-    from ask_sdk_core.skill_builder import SkillBuilder
+                    return handler_input.response_builder.speak(speech_text).set_card(
+                        SimpleCard("Hello World", speech_text)).response
 
-    sb = SkillBuilder()
-
-    @sb.request_handler(can_handle_func = is_intent_name("HelloWorldIntent"))
-    def hello_world_intent_handler(handler_input):
-        speech_text = "Hello World!"
-
-        return handler_input.response_builder.speak(speech_text).set_card(
-            SimpleCard("Hello World", speech_text)).response
-
-The ``is_intent_name`` function accepts a ``string`` parameter and returns an
-anonymous function which accepts a ``HandlerInput`` as input parameter and
-checks if the incoming request in ``HandlerInput`` is an ``IntentRequest`` and
-returns if the intent name is the passed in ``string``, which is
-``HelloWorldIntent`` in this example. The ``handle`` function generates and returns a
-basic "Hello World" response.
+            The ``is_intent_name`` function accepts a ``string`` parameter and returns an
+            anonymous function which accepts a ``HandlerInput`` as input parameter and
+            checks if the incoming request in ``HandlerInput`` is an ``IntentRequest`` and
+            returns if the intent name is the passed in ``string``, which is
+            ``HelloWorldIntent`` in this example. The ``handle`` function generates and returns a
+            basic "Hello World" response.
 
 Registering and Processing the Request Handlers
 -----------------------------------------------
 
-
 The SDK calls the ``can_handle`` function on its request handlers in the
 order in which they were provided to the ``Skill`` builder.
 
-If you are following the ``AbstractRequestHandler`` class approach, then
-you can register the request handlers in the following way
+.. tabs::
 
-.. code-block:: python
+    .. tab:: AbstractRequestHandler Class
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        If you are following the ``AbstractRequestHandler`` class approach, then
+        you can register the request handlers in the following way
 
-    sb = SkillBuilder()
+        .. code-block:: python
 
-    # Implement FooHandler, BarHandler, BazHandler classes
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    sb.request_handlers.extend([
-            FooHandler(),
-            BarHandler(),
-            BazHandler()])
+            sb = SkillBuilder()
 
-If you are following the ``request_handler`` decorator approach, then
-there is no need to explicitly register the handler functions, since
-they are already decorated using a skill builder instance.
+            # Implement FooHandler, BarHandler, BazHandler classes
 
-.. code-block:: python
+            sb.request_handlers.extend([
+                    FooHandler(),
+                    BarHandler(),
+                    BazHandler()])
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+    .. tab:: RequestHandler Decorator
 
-    sb = SkillBuilder()
+        If you are following the ``request_handler`` decorator approach, then
+        there is no need to explicitly register the handler functions, since
+        they are already decorated using a skill builder instance.
 
-    # decorate foo_handler, bar_handler, baz_handler functions
+        .. code-block:: python
 
-In the above example, the SDK calls request handlers in the following order:
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-1. ``FooHandler`` class / ``foo_handler`` function
-2. ``BarHandler`` class / ``bar_handler`` function
-3. ``BazHandler`` class / ``baz_handler`` function
+            sb = SkillBuilder()
 
-The SDK always chooses the first handler that is capable of handling a
-given request. In this example, if both ``FooHandler`` class /``foo_handler`` function
-and ``BarHandler`` class /``bar_handler`` function are capable of handling a particular
-request, ``FooHandler`` class /``foo_handler`` function is always invoked.
-Keep this in mind when designing and registering request handlers.
+            # decorate foo_handler, bar_handler, baz_handler functions
+
+.. note::
+
+    In the above example, the SDK calls request handlers in the following order:
+
+    1. ``FooHandler`` class / ``foo_handler`` function
+    2. ``BarHandler`` class / ``bar_handler`` function
+    3. ``BazHandler`` class / ``baz_handler`` function
+
+    The SDK always chooses the first handler that is capable of handling a
+    given request. In this example, if both ``FooHandler`` class /``foo_handler`` function
+    and ``BarHandler`` class /``bar_handler`` function are capable of handling a particular
+    request, ``FooHandler`` class /``foo_handler`` function is always invoked.
+    Keep this in mind when designing and registering request handlers.
 
 
 Exception Handlers
@@ -226,131 +253,145 @@ request interceptors can be implemented in two ways:
   `Skill Builder <SKILL_BUILDERS.html##skill-builders>`__
   ``exception_handler`` decorator.
 
+.. warning::
+
+    You may use either implementation using **classes**
+    or **decorators** to write a skill.
+
+    We strongly recommend you to choose
+    **one** of the options and use it consistently throughout your skill, for
+    better code structure.
+
 Interface
 ---------
 
-AbstractExceptionHandler Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. tabs::
 
-If you plan on using the ``AbstractExceptionHandler`` class, you will
-need to implement the following methods :
+    .. tab:: AbstractExceptionHandler Class
 
--  **can_handle**: ``can_handle`` method, which is called by the SDK
-   to determine if the given handler is capable of handling the exception.
-   This function returns **True** if the handler can handle the exception,
-   or **False** if not. Return ``True`` in all cases to create a catch-all
-   handler.
--  **handle**: ``handle`` method, which is called by the SDK when invoking
-   the exception handler. This function contains all exception handling logic,
-   and returns a ``Response`` object.
+        If you plan on using the ``AbstractExceptionHandler`` class, you will
+        need to implement the following methods :
 
-.. code:: python
+        -  **can_handle**: ``can_handle`` method, which is called by the SDK
+           to determine if the given handler is capable of handling the exception.
+           This function returns **True** if the handler can handle the exception,
+           or **False** if not. Return ``True`` in all cases to create a catch-all
+           handler.
+        -  **handle**: ``handle`` method, which is called by the SDK when invoking
+           the exception handler. This function contains all exception handling logic,
+           and returns a ``Response`` object.
 
-    class AbstractExceptionHandler(object):
-        @abstractmethod
-        def can_handle(self, handler_input, exception):
-            # type: (HandlerInput, Exception) -> bool
-            pass
+        .. code:: python
 
-        @abstractmethod
-        def handle(self, handler_input, exception):
-            # type: (HandlerInput, Exception) -> Response
-            pass
+            class AbstractExceptionHandler(object):
+                @abstractmethod
+                def can_handle(self, handler_input, exception):
+                    # type: (HandlerInput, Exception) -> bool
+                    pass
 
+                @abstractmethod
+                def handle(self, handler_input, exception):
+                    # type: (HandlerInput, Exception) -> Response
+                    pass
+
+    .. tab:: ExceptionHandler Decorator
+
+        The ``exception_handler`` decorator from SkillBuilder class is a custom wrapper
+        on top of the ``AbstractExceptionHandler`` class and provides the same
+        functionality to any custom decorated function. However, there are couple of
+        things to take into consideration, before using the decorator:
+
+        - The decorator expects a ``can_handle_func`` parameter. This is similar to
+          the ``can_handle`` method in ``AbstractExceptionHandler``. The value passed
+          should be a function that accepts a `Handler Input <#handler-input>`__
+          object, an ``Exception`` instance and returns a ``boolean`` value.
+        - The decorated function should accept only two parameters, the
+          `Handler Input <#handler-input>`__ object and ``Exception`` object. It may
+          return a ``Response`` object.
+
+        .. code:: python
+
+            class SkillBuilder(object):
+                ....
+                def exception_handler(self, can_handle_func):
+                    def wrapper(handle_func):
+                        # wrap the can_handle and handle into a class
+                        # add the class into exception handlers list
+                        ....
+                    return wrapper
+
+Code Sample
+-----------
 The following example shows an exception handler that can handle any exception
 with name that contains “AskSdk”.
 
-.. code:: python
+.. tabs::
 
-   class AskExceptionHandler(AbstractExceptionHandler):
-        def can_handle(self, handler_input, exception):
-            return 'AskSdk' in exception.__class__.__name__
+    .. tab:: AbstractExceptionHandler Class
 
-        def handle(self, handler_input, exception):
-            speech_text = "Sorry, I am unable to figure out what to do. Try again later!!";
+        .. code:: python
 
-            return handler_input.response_builder.speak(speech_text).response
+            class AskExceptionHandler(AbstractExceptionHandler):
+                def can_handle(self, handler_input, exception):
+                    return 'AskSdk' in exception.__class__.__name__
 
-The handler’s ``can_handle`` method returns True if the incoming exception
-has a name that starts with “AskSdk”. The ``handle`` method returns a
-graceful exception response to the user.
+                def handle(self, handler_input, exception):
+                    speech_text = "Sorry, I am unable to figure out what to do. Try again later!!"
 
-exception_handler decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    return handler_input.response_builder.speak(speech_text).response
 
-The ``exception_handler`` decorator from SkillBuilder class is a custom wrapper
-on top of the ``AbstractExceptionHandler`` class and provides the same
-functionality to any custom decorated function. However, there are couple of
-things to take into consideration, before using the decorator:
+        The handler’s ``can_handle`` method returns True if the incoming exception
+        has a name that starts with “AskSdk”. The ``handle`` method returns a
+        graceful exception response to the user.
 
-- The decorator expects a ``can_handle_func`` parameter. This is similar to
-  the ``can_handle`` method in ``AbstractExceptionHandler``. The value passed
-  should be a function that accepts a `Handler Input <#handler-input>`__
-  object, an ``Exception`` instance and returns a ``boolean`` value.
-- The decorated function should accept only two parameters, the
-  `Handler Input <#handler-input>`__ object and ``Exception`` object. It may
-  return a ``Response`` object.
+    .. tab:: ExceptionHandler Decorator
 
-.. code:: python
+        .. code-block:: python
 
-    class SkillBuilder(object):
-        ....
-        def exception_handler(self, can_handle_func):
-            def wrapper(handle_func):
-                # wrap the can_handle and handle into a class
-                # add the class into exception handlers list
-                ....
-            return wrapper
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-The following example shows an exception handler function that can handle any exception
-with name that contains “AskSdk”.
+            sb = SkillBuilder()
 
-.. code-block:: python
+            @sb.exception_handler(can_handle_func = lambda i, e: 'AskSdk' in e.__class__.__name__)
+            def ask_exception_intent_handler(handler_input, exception):
+                speech_text = "Sorry, I am unable to figure out what to do. Try again later!!"
 
-    from ask_sdk_core.skill_builder import SkillBuilder
-
-    sb = SkillBuilder()
-
-    @sb.exception_handler(can_handle_func = lambda input, e: 'AskSdk' in e.__class__.__name__)
-    def ask_exception_intent_handler(handler_input, exception):
-        speech_text = "Sorry, I am unable to figure out what to do. Try again later!!";
-
-        return handler_input.response_builder.speak(speech_text).response
+                return handler_input.response_builder.speak(speech_text).response
 
 
 Registering and Processing the Exception Handlers
 -------------------------------------------------
 
-If you are following the ``AbstractExceptionHandler`` class approach, then
-you can register the request handlers in the following way
+.. tabs::
 
-.. code-block:: python
+    .. tab:: AbstractExceptionHandler Class
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        .. code-block:: python
 
-    sb = SkillBuilder()
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    # Implement FooExceptionHandler, BarExceptionHandler, BazExceptionHandler classes
+            sb = SkillBuilder()
 
-    sb.add_exception_handler(FooExceptionHandler())
-    sb.add_exception_handler(BarExceptionHandler())
-    sb.add_exception_handler(BazExceptionHandler())
+            # Implement FooExceptionHandler, BarExceptionHandler, BazExceptionHandler classes
 
-If you are following the ``exception_handler`` decorator approach, then
-there is no need to explicitly register the handler functions, since
-they are already decorated using a skill builder instance.
+            sb.add_exception_handler(FooExceptionHandler())
+            sb.add_exception_handler(BarExceptionHandler())
+            sb.add_exception_handler(BazExceptionHandler())
 
-.. code-block:: python
+    .. tab:: ExceptionHandler Decorator
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        .. code-block:: python
 
-    sb = SkillBuilder()
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    # decorate foo_exception_handler, bar_exception_handler, baz_exception_handler functions
+            sb = SkillBuilder()
 
+            # decorate foo_exception_handler, bar_exception_handler, baz_exception_handler functions
 
-Like request handlers, exception handlers are executed in the order in which
-they were provided to the Skill.
+.. note::
+
+    Like request handlers, exception handlers are executed in the order in which
+    they were registered to the Skill.
 
 Request and Response Interceptors
 =================================
@@ -371,74 +412,87 @@ request interceptors can be implemented in two ways:
   `Skill Builder <SKILL_BUILDERS.html##skill-builder>`__
   ``global_request_interceptor`` decorator.
 
+.. warning::
+
+    You may use either implementation using **classes**
+    or **decorators** to write a skill.
+
+    We strongly recommend you to choose
+    **one** of the options and use it consistently throughout your skill, for
+    better code structure.
+
 Interface
 ~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-AbstractRequestInterceptor Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. tabs::
 
-The ``AbstractRequestInterceptor`` class usage needs you to implement the
-``process`` method. This method takes a `Handler Input <#handler-input>`__
-instance and doesn't return anything.
+    .. tab:: AbstractRequestInterceptor Class
 
-.. code:: python
+        The ``AbstractRequestInterceptor`` class usage needs you to implement the
+        ``process`` method. This method takes a `Handler Input <#handler-input>`__
+        instance and doesn't return anything.
 
-    class AbstractRequestInterceptor(object):
-        @abstractmethod
-        def process(self, handler_input):
-            # type: (HandlerInput) -> None
-            pass
+        .. code:: python
+
+            class AbstractRequestInterceptor(object):
+                @abstractmethod
+                def process(self, handler_input):
+                    # type: (HandlerInput) -> None
+                    pass
+
+    .. tab:: GlobalRequestInterceptor Decorator
+
+        The ``global_request_interceptor`` decorator from SkillBuilder class is a custom
+        wrapper on top of the ``AbstractRequestInterceptor`` class and provides the same
+        functionality to any custom decorated function. However, there are couple of
+        things to take into consideration, before using the decorator:
+
+        - The decorator should be invoked as a function rather than as a function name,
+          since it requires the skill builder instance, to register the interceptor.
+        - The decorated function should accept only one parameter, which is the
+          `Handler Input <#handler-input>`__ object and the return value from the function
+          is not captured.
+
+        .. code:: python
+
+            class SkillBuilder(object):
+                ....
+                def global_request_interceptor(self):
+                    def wrapper(process_func):
+                        # wrap the process_func into a class
+                        # add the class into request interceptors list
+                        ....
+                    return wrapper
+
+Code Sample
+~~~~~~~~~~~
 
 The following example shows a request interceptor class that can print the
 request received by Alexa service, in AWS CloudWatch logs, before handling it.
 
-.. code:: python
+.. tabs::
 
-  from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
+    .. tab:: AbstractRequestInterceptor Class
 
-  class LoggingRequestInterceptor(AbstractRequestInterceptor):
-      def process(self, handler_input):
-          print("Request received: {}".format(handler_input.request_envelope.request))
+        .. code:: python
 
+            from ask_sdk_core.dispatch_components import AbstractRequestInterceptor
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-global_request_interceptor decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            class LoggingRequestInterceptor(AbstractRequestInterceptor):
+                def process(self, handler_input):
+                    print("Request received: {}".format(handler_input.request_envelope.request))
 
-The ``global_request_interceptor`` decorator from SkillBuilder class is a custom
-wrapper on top of the ``AbstractRequestInterceptor`` class and provides the same
-functionality to any custom decorated function. However, there are couple of
-things to take into consideration, before using the decorator:
+    .. tab:: GlobalRequestInterceptor Decorator
 
-- The decorator should be invoked as a function rather than as a function name,
-  since it requires the skill builder instance, to register the interceptor.
-- The decorated function should accept only one parameter, which is the
-  `Handler Input <#handler-input>`__ object and the return value from the function
-  is not captured.
+        .. code-block:: python
 
-.. code:: python
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    class SkillBuilder(object):
-        ....
-        def global_request_interceptor(self):
-            def wrapper(process_func):
-                # wrap the process_func into a class
-                # add the class into request interceptors list
-                ....
-            return wrapper
+            sb = SkillBuilder()
 
-The following example shows a logging function that can be used as request interceptor.
-
-.. code-block:: python
-
-    from ask_sdk_core.skill_builder import SkillBuilder
-
-    sb = SkillBuilder()
-
-    @sb.global_request_interceptor()
-    def request_logger(handler_input):
-        print("Request received: {}".format(handler_input.request_envelope.request))
+            @sb.global_request_interceptor()
+            def request_logger(handler_input):
+                print("Request received: {}".format(handler_input.request_envelope.request))
 
 
 Registering and Processing the Request Interceptors
@@ -449,38 +503,38 @@ for an incoming request. Request attributes in `Handler Input <#handler-input>`_
 ``Attribute Manager`` provide a way for request interceptors to pass data and entities
 on to other request interceptors and request handlers.
 
-If you are following the ``AbstractRequestInterceptor`` class approach, then
-you can register the request interceptors in the following way
+.. tabs::
 
-.. code-block:: python
+    .. tab:: AbstractRequestInterceptor Class
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        .. code-block:: python
 
-    sb = SkillBuilder()
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    # Implement FooInterceptor, BarInterceptor, BazInterceptor classes
+            sb = SkillBuilder()
 
-    sb.add_global_request_interceptor(FooInterceptor())
-    sb.add_global_request_interceptor(BarInterceptor())
-    sb.add_global_request_interceptor(BazInterceptor())
+            # Implement FooInterceptor, BarInterceptor, BazInterceptor classes
 
-If you are following the ``global_request_interceptor`` decorator approach, then
-there is no need to explicitly register the interceptor functions, since
-they are already decorated using a skill builder instance.
+            sb.add_global_request_interceptor(FooInterceptor())
+            sb.add_global_request_interceptor(BarInterceptor())
+            sb.add_global_request_interceptor(BazInterceptor())
 
-.. code-block:: python
+    .. tab:: GlobalRequestInterceptor Decorator
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        .. code-block:: python
 
-    sb = SkillBuilder()
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    # decorate foo_interceptor, bar_interceptor, baz_interceptor functions
+            sb = SkillBuilder()
+            # decorate foo_interceptor, bar_interceptor, baz_interceptor functions
 
-In the above example, the SDK executes all request interceptors in the following order:
+.. note::
 
-1. ``FooInterceptor`` class / ``foo_interceptor`` function
-2. ``BarInterceptor`` class / ``bar_interceptor`` function
-3. ``BazInterceptor`` class / ``baz_interceptor`` function
+    In the above example, the SDK executes all request interceptors in the following order:
+
+    1. ``FooInterceptor`` class / ``foo_interceptor`` function
+    2. ``BarInterceptor`` class / ``bar_interceptor`` function
+    3. ``BazInterceptor`` class / ``baz_interceptor`` function
 
 
 Response Interceptors
@@ -496,110 +550,124 @@ response interceptors can be implemented in two ways:
   `Skill Builder <SKILL_BUILDERS.html#skill-builders>`__
   ``global_response_interceptor`` decorator.
 
+.. warning::
+
+    You may use either implementation using **classes**
+    or **decorators** to write a skill.
+
+    We strongly recommend you to choose
+    **one** of the options and use it consistently throughout your skill, for
+    better code structure.
+
 Interface
 ~~~~~~~~~
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-AbstractResponseInterceptor Class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. tabs::
 
-The ``AbstractResponseInterceptor`` class usage needs you to implement the
-``process`` method. This method takes a `Handler Input <#handler-input>`__
-instance, a ``Response`` object that is returned from the previously executed
-request handler. The method doesn't return anything.
+    .. tab:: AbstractResponseInterceptor Class
 
-.. code:: python
+        The ``AbstractResponseInterceptor`` class usage needs you to implement the
+        ``process`` method. This method takes a `Handler Input <#handler-input>`__
+        instance, a ``Response`` object that is returned from the previously executed
+        request handler. The method doesn't return anything.
 
-    class AbstractResponseInterceptor(object):
-        @abstractmethod
-        def process(self, handler_input, response):
-            # type: (HandlerInput, Response) -> None
-            pass
+        .. code:: python
+
+            class AbstractResponseInterceptor(object):
+                @abstractmethod
+                def process(self, handler_input, response):
+                    # type: (HandlerInput, Response) -> None
+                    pass
+
+    .. tab:: GlobalResponseInterceptor Decorator
+
+        The ``global_response_interceptor`` decorator from SkillBuilder class is a custom
+        wrapper on top of the ``AbstractResponseInterceptor`` class and provides the same
+        functionality to any custom decorated function. However, there are couple of
+        things to take into consideration, before using the decorator:
+
+        - The decorator should be invoked as a function rather than as a function name,
+          since it requires the skill builder instance, to register the interceptor.
+        - The decorated function should accept two parameters, which are the
+          `Handler Input <#handler-input>`__ object and ``Response`` object respectively.
+          The return value from the function is not captured.
+
+        .. code:: python
+
+            class SkillBuilder(object):
+                ....
+                def global_response_interceptor(self):
+                    def wrapper(process_func):
+                        # wrap the process_func into a class
+                        # add the class into response interceptors list
+                        ....
+                    return wrapper
+
+Code Sample
+~~~~~~~~~~~
 
 The following example shows a response interceptor class that can print the
 response received from successfully handling the request, in AWS CloudWatch logs,
 before returning it to the Alexa Service.
 
-.. code:: python
+.. tabs::
 
-  from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
+    .. tab:: AbstractRequestInterceptor Class
 
-  class LoggingResponseInterceptor(AbstractResponseInterceptor):
-      def process(handler_input, response):
-          print("Response generated: {}".format(response))
+        .. code:: python
 
+          from ask_sdk_core.dispatch_components import AbstractResponseInterceptor
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-global_response_interceptor decorator from SkillBuilder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          class LoggingResponseInterceptor(AbstractResponseInterceptor):
+              def process(handler_input, response):
+                  print("Response generated: {}".format(response))
 
-The ``global_response_interceptor`` decorator from SkillBuilder class is a custom
-wrapper on top of the ``AbstractResponseInterceptor`` class and provides the same
-functionality to any custom decorated function. However, there are couple of
-things to take into consideration, before using the decorator:
+    .. tab:: GlobalRequestInterceptor Decorator
 
-- The decorator should be invoked as a function rather than as a function name,
-  since it requires the skill builder instance, to register the interceptor.
-- The decorated function should accept two parameters, which are the
-  `Handler Input <#handler-input>`__ object and ``Response`` object respectively.
-  The return value from the function is not captured.
+        .. code-block:: python
 
-.. code:: python
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    class SkillBuilder(object):
-        ....
-        def global_response_interceptor(self):
-            def wrapper(process_func):
-                # wrap the process_func into a class
-                # add the class into response interceptors list
-                ....
-            return wrapper
+            sb = SkillBuilder()
 
-The following example shows a logging function that can be used as response interceptor.
-
-.. code-block:: python
-
-    from ask_sdk_core.skill_builder import SkillBuilder
-
-    sb = SkillBuilder()
-
-    @sb.global_reresponse_interceptor()
-    def response_logger(handler_input, response):
-        print("Response generated: {}".format(response))
+            @sb.global_reresponse_interceptor()
+            def response_logger(handler_input, response):
+                print("Response generated: {}".format(response))
 
 
 Registering and Processing the Response Interceptors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Response interceptors are invoked immediately after execution of the request handler
 for an incoming request.
 
-If you are following the ``AbstractResponseInterceptor`` class approach, then
-you can register the response interceptors in the following way
+.. tabs::
 
-.. code-block:: python
+    .. tab:: AbstractRequestInterceptor Class
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        .. code-block:: python
 
-    sb = SkillBuilder()
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    # Implement FooInterceptor, BarInterceptor, BazInterceptor classes
+            sb = SkillBuilder()
 
-    sb.add_global_response_interceptor(FooInterceptor())
-    sb.add_global_response_interceptor(BarInterceptor())
-    sb.add_global_response_interceptor(BazInterceptor())
+            # Implement FooInterceptor, BarInterceptor, BazInterceptor classes
 
-If you are following the ``global_response_interceptor`` decorator approach, then
-there is no need to explicitly register the interceptor functions, since
-they are already decorated using a skill builder instance.
+            sb.add_global_response_interceptor(FooInterceptor())
+            sb.add_global_response_interceptor(BarInterceptor())
+            sb.add_global_response_interceptor(BazInterceptor())
 
-.. code-block:: python
+    .. tab:: GlobalRequestInterceptor Decorator
 
-    from ask_sdk_core.skill_builder import SkillBuilder
+        .. code-block:: python
 
-    sb = SkillBuilder()
+            from ask_sdk_core.skill_builder import SkillBuilder
 
-    # decorate foo_interceptor, bar_interceptor, baz_interceptor functions
+            sb = SkillBuilder()
 
-Similar to the processing of `Request Interceptors <#request-interceptors>`_,
-all of the response interceptors are executed in the same order they are registered.
+            # decorate foo_interceptor, bar_interceptor, baz_interceptor functions
+
+.. note::
+
+    Similar to the processing of `Request Interceptors <#request-interceptors>`_,
+    all of the response interceptors are executed in the same order they are registered.
