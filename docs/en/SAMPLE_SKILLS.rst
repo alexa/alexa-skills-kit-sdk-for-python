@@ -50,7 +50,7 @@ a list you provide.
 Demonstrates use of render template directives to support displays on
 Alexa-enabled devices with a screen.
 
-`Device Address <samples/GetDeviceAddress>`_
+`Device Address <https://github.com/alexa/alexa-skills-kit-sdk-for-python/tree/master/samples/GetDeviceAddress>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sample skill that shows how to request and access the configured address in
