@@ -6,7 +6,7 @@
           <br/>
           <h1 align="center">Alexa Skills Kit SDK for Python</h1>
           <p align="center">
-            <a href="https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
+            <a href="https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
             <a href="https://alexa-skills-kit-python-sdk.readthedocs.io"><img src="https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat"></a>
             <a href="https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
             <a href="https://pypi.python.org/pypi/ask-sdk/"><img src="http://img.shields.io/pypi/v/ask-sdk.svg?style=flat"></a>
