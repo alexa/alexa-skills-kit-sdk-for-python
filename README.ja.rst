@@ -4,11 +4,10 @@ ASK SDK for Python
 
 |Build Status| |Japanese Docs| |License|
 
-**ASK SDK for
-Python（ベータ版）**\ を使うと、ボイラープレートコード（毎回書かなければならないお決まりのコード）を書く手間が不要になります。これにより空いた時間をさまざまな機能の実装に充てることができ、人気のスキルをより簡単に作成できるようになります。
+**ASK SDK for Python**\ を使うと、ボイラープレートコード（毎回書かなければならないお決まりのコード）を書く手間が不要になります。これにより空いた時間をさまざまな機能の実装に充てることができ、人気のスキルをより簡単に作成できるようになります。
 
-.. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
-    :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
+.. |Build Status| image:: https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat
+    :target: https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python
     :alt: Build Status
 .. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io
