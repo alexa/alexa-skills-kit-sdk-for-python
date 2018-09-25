@@ -323,14 +323,17 @@ Interface
             # type: (Optional[List[InSkillProduct]], Optional[bool], Optional[str]) -> None
 
     class ask_sdk_model.services.monetization.InSkillProduct:
+    self, product_id=None, reference_name=None, name=None, object_type=None, summary=None, purchasable=None, entitled=None, active_entitlement_count=None, purchase_mode=None
         def __init__(
             self, product_id=None, reference_name=None, name=None,
-            object_type=None, summary=None, purchasable=None, entitled=None):
-            # type: (Optional[str], Optional[str], Optional[str], Optional[ProductType], Optional[str], Optional[PurchasableState], Optional[EntitledState]) -> None
+            object_type=None, summary=None, purchasable=None, entitled=None,
+            active_entitlement_count=None, purchase_mode=None):
+            # type: (Optional[str], Optional[str], Optional[str], Optional[ProductType], Optional[str], Optional[PurchasableState], Optional[EntitledState], Optional[int], Optional[PurchaseMode]) -> None
 
     class ask_sdk_model.services.monetization.ProductType(Enum):
         SUBSCRIPTION = "SUBSCRIPTION"
         ENTITLEMENT = "ENTITLEMENT"
+        CONSUMABLE = "CONSUMABLE"
 
     class ask_sdk_model.services.monetization.PurchasableState(Enum):
         PURCHASABLE = "PURCHASABLE"
@@ -339,6 +342,10 @@ Interface
     class ask_sdk_model.services.monetization.EntitledState(Enum):
         ENTITLED = "ENTITLED"
         NOT_ENTITLED = "NOT_ENTITLED"
+
+    class ask_sdk_model.services.monetization.PurchaseMode(Enum):
+        TEST = "TEST"
+        LIVE = "LIVE"
 
 
 .. note::
