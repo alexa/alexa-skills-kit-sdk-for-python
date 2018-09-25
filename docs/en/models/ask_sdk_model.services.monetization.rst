@@ -62,3 +62,10 @@ ask\_sdk\_model.services.monetization.purchasable\_state module
 .. automodule:: ask_sdk_model.services.monetization.purchasable_state
     :members:
     :show-inheritance:
+
+ask\_sdk\_model.services.monetization.purchase\_mode module
+------------------------------------------------------------
+
+.. automodule:: ask_sdk_model.services.monetization.purchase_mode
+    :members:
+    :show-inheritance:
