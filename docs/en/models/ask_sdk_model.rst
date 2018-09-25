@@ -193,3 +193,17 @@ ask\_sdk\_model.user module
 .. automodule:: ask_sdk_model.user
     :members:
     :show-inheritance:
+
+ask\_sdk\_model.permission_status module
+---------------------------
+
+.. automodule:: ask_sdk_model.permission_status
+    :members:
+    :show-inheritance:
+
+ask\_sdk\_model.scope module
+---------------------------
+
+.. automodule:: ask_sdk_model.scope
+    :members:
+    :show-inheritance:
