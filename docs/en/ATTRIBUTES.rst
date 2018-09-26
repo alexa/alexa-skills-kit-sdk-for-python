@@ -60,8 +60,8 @@ the skill.
 
     Persistent attributes are only available when you
     `configure the skill instance <SKILL_BUILDERS.html#skill-builders>`_
-    with a ``PersistenceAdapter``. Calls to the ``AttributesManager`` to
-    retrieve and save persistent attributes raise an exception if a
+    with a ``PersistenceAdapter``. A call to the ``AttributesManager`` to
+    retrieve or save persistent attributes will raise an exception if the
     ``PersistenceAdapter`` has not been configured.
 
 
