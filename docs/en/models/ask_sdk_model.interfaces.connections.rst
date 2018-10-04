@@ -1,6 +1,15 @@
 ask\_sdk\_model.interfaces.connections package
 ==============================================
 
+Subpackages
+-----------
+
+.. toctree::
+    :maxdepth: 1
+
+    ask_sdk_model.interfaces.connections.entities
+    ask_sdk_model.interfaces.connections.requests
+
 Submodules
 ~~~~~~~~~~
 

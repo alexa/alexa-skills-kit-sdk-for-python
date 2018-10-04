@@ -21,6 +21,7 @@ Guides
     GETTING_STARTED
     DEVELOPING_YOUR_FIRST_SKILL
     SAMPLE_SKILLS
+    SDK_SUPPORTED_ALEXA_CAPABILITIES
 
 `Setting Up The ASK SDK <GETTING_STARTED.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,6 +40,11 @@ sample.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Provides a comprehensive list of skill samples using the SDK.
+
+`SDK Supported Alexa Capabilities <SDK_SUPPORTED_ALEXA_CAPABILITIES.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Provides a list of alexa capabilities, that are supported in the ASK SDK.
 
 
 SDK Features
