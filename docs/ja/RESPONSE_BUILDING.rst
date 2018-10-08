@@ -35,13 +35,13 @@ SDKには、 ``ResponseFactory`` クラスが含まれています。このク�
 
 ``ResponseFactory`` クラスのインスタンスである ``response_builder`` は、
 スキル開発者に
-`HandlerInput <REQUEST_PROCESSING.html#id2>`_ オブジェクトを返します。
+`HandlerInput <REQUEST_PROCESSING.rst#id2>`_ オブジェクトを返します。
 スキルコンポーネントに渡される標準引数です。
 
 .. note::
 
-    - 異なるディレクティブを使用して追加するには、`directive <models/ask_sdk_model.html＃ask_sdk_model.directive.Directive>`__ モデル定義。
-    - カードを使用して設定するには、`Card <models/ask_sdk_model.ui.html＃ask_sdk_model.ui.card.Card>`__ モデル定義。
+    - 異なるディレクティブを使用して追加するには、`directive <models/ask_sdk_model.rst＃ask_sdk_model.directive.Directive>`__ モデル定義。
+    - カードを使用して設定するには、`Card <models/ask_sdk_model.ui.rst＃ask_sdk_model.ui.card.Card>`__ モデル定義。
 
 以下は、``ResponseFactory`` ヘルパー関数を使用して応答を作成する方法の例です。
 

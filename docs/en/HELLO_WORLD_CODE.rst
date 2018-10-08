@@ -2,7 +2,7 @@
 Source code for Hello World sample skill
 ========================================
 
-As mentioned in the `Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.html>`_
+As mentioned in the `Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.rst>`_
 section, we provide below the full source code for ``Hello World`` skill
 using **classes** and **decorators**.
 

@@ -21,14 +21,14 @@ Guides
     GETTING_STARTED
     DEVELOPING_YOUR_FIRST_SKILL
 
-`Setting Up The ASK SDK <GETTING_STARTED.html>`_
+`Setting Up The ASK SDK <GETTING_STARTED.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This guide will show you how to include the SDK as a dependency in your
 Python project.
 
 
-`Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.html>`_
+`Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Walks you through step-by-step instructions for building the Hello World
@@ -48,29 +48,29 @@ SDK Features
     SERVICE_CLIENTS
     SKILL_BUILDERS
 
-`Request Processing <REQUEST_PROCESSING.html>`_
+`Request Processing <REQUEST_PROCESSING.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to build request handlers, exception handlers, and request and
 response interceptors.
 
-`Skill Attributes <ATTRIBUTES.html>`_
+`Skill Attributes <ATTRIBUTES.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to use skill attributes to store and retrieve skill data.
 
-`Response Building <RESPONSE_BUILDING.html>`_
+`Response Building <RESPONSE_BUILDING.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to use the ResponseBuilder to compose multiple elements like
 text, cards, and audio into a single response.
 
-`Alexa Service Clients <SERVICE_CLIENTS.html>`_
+`Alexa Service Clients <SERVICE_CLIENTS.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to use service clients in your skill to access Alexa APIs.
 
-`Skill Builders <SKILL_BUILDERS.html>`_
+`Skill Builders <SKILL_BUILDERS.rst>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to configure and construct a skill instance.

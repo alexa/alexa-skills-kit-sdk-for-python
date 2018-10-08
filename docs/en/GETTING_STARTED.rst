@@ -205,5 +205,5 @@ Next Steps
 
 Now that you've added the SDK to your project, you're ready to begin
 developing your skill. Proceed to the next section
-`Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.html>`_, for
+`Developing Your First Skill <DEVELOPING_YOUR_FIRST_SKILL.rst>`_, for
 instructions on getting started with a basic skill.

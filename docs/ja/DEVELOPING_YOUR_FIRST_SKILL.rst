@@ -2,7 +2,7 @@
 初めてのスキル開発
 ===============
 
-`セットアップ <GETTING_STARTED.html>`__\ ガイドでは、ASK
+`セットアップ <GETTING_STARTED.rst>`__\ ガイドでは、ASK
 SDK for
 Pythonを特定のディレクトリまたはvirtualenvを使用して仮想環境にインストールする方法を説明しました。このガイドでは、ASK
 SDK for Pythonを使ったスキル開発の手順を説明します。

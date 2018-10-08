@@ -33,7 +33,7 @@ SDKを使うと、さまざまなスコープでアトリビュートの保存�
 
 永続アトリビュートは、現在のセッションのライフサイクルが終了しても存続します。主要なスコープ（ユーザーID、デバイスID）、TTL、ストレージレイヤーを含む、これらのアトリビュートがどのように保存されるかはスキルのコンフィギュレーションによって異なります。
 
-永続アトリビュートは、``PersistenceAdapter`` を使用して\ `スキルのインスタンスを設定 <SKILL_BUILDERS.html#skill-builders>`__\ する場合にのみ使用できます。``PersistenceAdapter`` が設定されていない場合に、``AttributesManager`` を呼び出して永続アトリビュートの取得と保存を行おうとするとエラーが発生します。
+永続アトリビュートは、``PersistenceAdapter`` を使用して\ `スキルのインスタンスを設定 <SKILL_BUILDERS.rst#skill-builders>`__\ する場合にのみ使用できます。``PersistenceAdapter`` が設定されていない場合に、``AttributesManager`` を呼び出して永続アトリビュートの取得と保存を行おうとするとエラーが発生します。
 
 PersistenceAdapter
 ==================
@@ -59,7 +59,7 @@ PersistenceAdapter
 AttributesManager
 =================
 
-AttributesManagerには、ハンドラーで取得や更新を行えるアトリビュートがあります。AttributesManagerは、`Handler Input <REQUEST_PROCESSING.html#id2>`__ オブジェクトからハンドラーで使用できます。``AttributesManager`` は、スキルで必要なアトリビュートと直接やり取りできるように、アトリビュートの取得と保存を行います。
+AttributesManagerには、ハンドラーで取得や更新を行えるアトリビュートがあります。AttributesManagerは、`Handler Input <REQUEST_PROCESSING.rst#id2>`__ オブジェクトからハンドラーで使用できます。``AttributesManager`` は、スキルで必要なアトリビュートと直接やり取りできるように、アトリビュートの取得と保存を行います。
 
 インターフェース
 ~~~~~~~~~~~~~~

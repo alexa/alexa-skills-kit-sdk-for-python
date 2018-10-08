@@ -38,23 +38,23 @@ Interface
 
 ``response_builder``, an instance of the ``ResponseFactory`` class, is
 provided to the skill developers through the
-`HandlerInput <REQUEST_PROCESSING.html#handler-input>`_ object, which
+`HandlerInput <REQUEST_PROCESSING.rst#handler-input>`_ object, which
 is the standard argument passed to the skill components.
 
 .. note::
 
     - For using and adding different directives, look at the
-      `Directive <models/ask_sdk_model.html#ask_sdk_model.directive.Directive>`__
+      `Directive <models/ask_sdk_model.rst#ask_sdk_model.directive.Directive>`__
       model definition.
 
     - For using and setting a card, look at the
-      `Card <models/ask_sdk_model.ui.html#ask_sdk_model.ui.card.Card>`__
+      `Card <models/ask_sdk_model.ui.rst#ask_sdk_model.ui.card.Card>`__
       model definition.
 
 Sample Code
 ~~~~~~~~~~~
 
-The following example shows how to construct a response containing a ``StandardCard`` 
+The following example shows how to construct a response containing a ``StandardCard``
 and a ``RenderTemplateDirective`` through ``handler_input.response_builder``.
 
 .. code:: python

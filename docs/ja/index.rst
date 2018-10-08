@@ -17,12 +17,12 @@ SDKの使用に役立つ以下のガイドをご用意しました。今後も�
     GETTING_STARTED
     DEVELOPING_YOUR_FIRST_SKILL
 
-`ASK SDKのセットアップ <GETTING_STARTED.html>`__
+`ASK SDKのセットアップ <GETTING_STARTED.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Pythonプロジェクトに依存関係としてSDKをインストールする方法を説明します。
 
-`初めてのスキル開発 <DEVELOPING_YOUR_FIRST_SKILL.html>`__
+`初めてのスキル開発 <DEVELOPING_YOUR_FIRST_SKILL.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hello Worldサンプルをビルドする手順を詳しく説明します。
@@ -40,28 +40,28 @@ SDKの機能
     SERVICE_CLIENTS
     SKILL_BUILDERS
 
-`リクエスト処理 <REQUEST_PROCESSING.html>`__
+`リクエスト処理 <REQUEST_PROCESSING.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 リクエストハンドラー、例外ハンドラー、リクエストと応答のインターセプターをビルドする方法を説明します。
 
-`スキルのアトリビュート <ATTRIBUTES.html>`__
+`スキルのアトリビュート <ATTRIBUTES.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 スキルのアトリビュートを使ったスキルデータの保存と取得の方法を説明します。
 
-`応答のビルド <RESPONSE_BUILDING.html>`__
+`応答のビルド <RESPONSE_BUILDING.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ResponseBuilderを使って、テキスト、カード、オーディオといった複数の要素を使用して1つの応答を構成する方法を説明します。
 
-`Alexaサービスクライアント <SERVICE_CLIENTS.html>`__
+`Alexaサービスクライアント <SERVICE_CLIENTS.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 サービスクライアントを使ってスキルからAlexa
 APIにアクセスする方法を説明します。
 
-`スキルビルダー <SKILL_BUILDERS.html>`__
+`スキルビルダー <SKILL_BUILDERS.rst>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 スキルインスタンスの構成と作成の方法を説明します。

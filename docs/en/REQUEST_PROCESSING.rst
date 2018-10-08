@@ -41,7 +41,7 @@ handlers:
 
 - By implementing the ``AbstractRequestHandler`` class.
 - By decorating a custom handle function using the
-  `Skill Builder <SKILL_BUILDERS.html#skill-builder>`__ ``request_handler``
+  `Skill Builder <SKILL_BUILDERS.rst#skill-builder>`__ ``request_handler``
   decorator.
 
 Interface
@@ -223,7 +223,7 @@ request interceptors can be implemented in two ways:
 
 - By implementing the ``AbstractExceptionHandler`` class.
 - By decorating a custom exception handling function using the
-  `Skill Builder <SKILL_BUILDERS.html##skill-builders>`__
+  `Skill Builder <SKILL_BUILDERS.rst##skill-builders>`__
   ``exception_handler`` decorator.
 
 Interface
@@ -368,7 +368,7 @@ request interceptors can be implemented in two ways:
 
 - By implementing the ``AbstractRequestInterceptor`` class.
 - By decorating a custom process function using the
-  `Skill Builder <SKILL_BUILDERS.html##skill-builder>`__
+  `Skill Builder <SKILL_BUILDERS.rst##skill-builder>`__
   ``global_request_interceptor`` decorator.
 
 Interface
@@ -493,7 +493,7 @@ response interceptors can be implemented in two ways:
 
 - By implementing the ``AbstractResponseInterceptor`` class.
 - By decorating a custom process function using the
-  `Skill Builder <SKILL_BUILDERS.html#skill-builders>`__
+  `Skill Builder <SKILL_BUILDERS.rst#skill-builders>`__
   ``global_response_interceptor`` decorator.
 
 Interface

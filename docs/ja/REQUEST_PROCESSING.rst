@@ -26,7 +26,7 @@
 リクエストハンドラーは、受信するさまざまなタイプのAlexaリクエストの処理を担当します。カスタムリクエストハンドラーを作成する方法は2つあります。
 
 -  ``AbstractRequestHandler`` クラスを実装する。
--  `スキルビルダー <SKILL_BUILDERS.html#id1>`__\ の ``request_handler`` デコレーターを使用してカスタムハンドル関数をデコレートする。
+-  `スキルビルダー <SKILL_BUILDERS.rst#id1>`__\ の ``request_handler`` デコレーターを使用してカスタムハンドル関数をデコレートする。
 
 インターフェース
 --------------
@@ -158,7 +158,7 @@ SDKは、指定されたリクエストを処理できる最初のハンドラ�
 `リクエストハンドラー <#id3>`__\ と同様に、カスタムリクエストインターセプターも2通りの方法で実装できます。
 
 -  ``AbstractExceptionHandler`` クラスを実装する。
--  `スキルビルダー <SKILL_BUILDERS.html#id1>`__\ の ``exception_handler`` デコレーターを使用してカスタム例外ハンドル関数をデコレートする。
+-  `スキルビルダー <SKILL_BUILDERS.rst#id1>`__\ の ``exception_handler`` デコレーターを使用してカスタム例外ハンドル関数をデコレートする。
 
 インターフェース
 --------------
@@ -275,7 +275,7 @@ SDKは、一致する ``RequestHandler`` の\ **実行前**\ と\ **実行後**\
 
 -  ``AbstractRequestInterceptor`` クラスを実装する。
 
--  `スキルビルダー <SKILL_BUILDERS.html#id1>`__\ の ``global_request_interceptor`` デコレーターを使用してカスタム処理関数をデコレートする。
+-  `スキルビルダー <SKILL_BUILDERS.rst#id1>`__\ の ``global_request_interceptor`` デコレーターを使用してカスタム処理関数をデコレートする。
 
 インターフェース
 ~~~~~~~~~~~~~~
@@ -378,7 +378,7 @@ SkillBuilderクラスの ``global_request_interceptor`` デコレーターは、
 グローバル応答インターセプターは、サポートされるリクエストハンドラーの処理後に、\ `ハンドラー入力 <#id2>`__\ オブジェクト、つまり応答を受け付けて処理します。\ `リクエストインターセプター <#id10>`__\ と同様に、カスタム応答インターセプターも二通りの方法で実装できます。
 
 -  ``AbstractResponseInterceptor`` クラスを実装する。
--  `スキルビルダー <SKILL_BUILDERS.html#id1>`__\ の ``global_response_interceptor`` デコレーターを使用してカスタム処理関数をデコレートする。
+-  `スキルビルダー <SKILL_BUILDERS.rst#id1>`__\ の ``global_response_interceptor`` デコレーターを使用してカスタム処理関数をデコレートする。
 
 インターフェース
 ~~~~~~~~~~~~~~

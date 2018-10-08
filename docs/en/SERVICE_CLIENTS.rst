@@ -8,7 +8,7 @@ you can use to call Alexa APIs from within your skill logic.
 ServiceClientFactory
 --------------------
 
-The ``service_client_factory`` contained inside the `Handler Input <REQUEST_PROCESSING.html#handler-input>`_
+The ``service_client_factory`` contained inside the `Handler Input <REQUEST_PROCESSING.rst#handler-input>`_
 allows you to retrieve client instances for every supported Alexa service. It
 takes care of creating individual service clients and configuring the metadata
 like ``api_access_token`` and ``api_endpoint``.
@@ -40,7 +40,7 @@ Available service clients
 .. note::
 
     The ``service_client_factory`` is only available for use, when you
-    `configure the skill instance <SKILL_BUILDERS.html#skill-builders>`_
+    `configure the skill instance <SKILL_BUILDERS.rst#skill-builders>`_
     with an ``ApiClient``.
 
 ApiClient
@@ -72,7 +72,7 @@ Interface
         def __init__(self, headers=None, body=None):
             # type: (List[Tuple[str, str]], str) -> None
 
-The `CustomSkillBuilder <SKILL_BUILDERS.html#customskillbuilder-class>`__
+The `CustomSkillBuilder <SKILL_BUILDERS.rst#customskillbuilder-class>`__
 constructor can be used to register the ApiClient.
 
 .. code-block:: python
@@ -87,7 +87,7 @@ DefaultApiClient
 A ``DefaultApiClient`` based on the ``requests`` library, is made available in
 the ``ask_sdk_core.api_client`` module for skill developers.
 
-This client is registered by default in the `StandardSkillBuilder <SKILL_BUILDERS.html#standardskillbuilder-class>`__.
+This client is registered by default in the `StandardSkillBuilder <SKILL_BUILDERS.rst#standardskillbuilder-class>`__.
 Alternatively, skill developers can register this client to the
 ``CustomSkillBuilder``.
 
@@ -135,7 +135,7 @@ Interface
 
     The device_id can be retrieved from ``handler_input.request_envelope.context.system.device.device_id``.
 
-More information on the models can be found `here <models/ask_sdk_model.services.device_address.html>`__.
+More information on the models can be found `here <models/ask_sdk_model.services.device_address.rst>`__.
 
 Code Sample
 ~~~~~~~~~~~
@@ -222,7 +222,7 @@ Interface
         def __init__(self, speech=None):
             # type: (Optional[str]) -> None
 
-More information on the models can be found `here <models/ask_sdk_model.services.directive.html>`__.
+More information on the models can be found `here <models/ask_sdk_model.services.directive.rst>`__.
 
 Code Sample
 ~~~~~~~~~~~
@@ -291,7 +291,7 @@ Interface
             # type: (str, str) -> Union[Error]
 
 
-More information on the models can be found `here <models/ask_sdk_model.services.list_management.html>`__.
+More information on the models can be found `here <models/ask_sdk_model.services.list_management.rst>`__.
 
 MonetizationServiceClient
 -------------------------
@@ -346,7 +346,7 @@ Interface
     ``accept_language`` is the locale of the request and can be retrieved from
     ``handler_input.request_envelope.request.locale``.
 
-More information on the models can be found `here <models/ask_sdk_model.services.monetization.html>`__.
+More information on the models can be found `here <models/ask_sdk_model.services.monetization.rst>`__.
 
 Code Sample
 ***********
@@ -436,7 +436,7 @@ available here: `Add In-Skill Purchases to a Custom Skill <https://developer.ama
 In-Skill Purchase Interface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The SDK provides the ``set_directive()`` `method <RESPONSE_BUILDING.html#interface>`__
+The SDK provides the ``set_directive()`` `method <RESPONSE_BUILDING.rst#interface>`__
 for skills to initiate in-skill purchase and cancellation requests through
 Alexa. Amazon systems then manage the voice interaction with customers, handle
 the purchase transaction and return a status response back to the requesting
@@ -644,5 +644,5 @@ Interface
 
     The device_id can be retrieved from ``handler_input.request_envelope.context.system.device.device_id``.
 
-More information on the models can be found `here <models/ask_sdk_model.services.ups.html>`__.
+More information on the models can be found `here <models/ask_sdk_model.services.ups.rst>`__.
 
