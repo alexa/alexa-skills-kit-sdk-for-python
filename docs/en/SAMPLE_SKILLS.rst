@@ -96,7 +96,7 @@ in the SDK.
 `AudioPlayer SingleStream and MultiStream <https://github.com/alexa/skill-sample-python-audio-player>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sample skills that show how to use AudioPlayer and Playback controller interfaces
-in Alexa. The SingleStream skill sample demonstrates how to create a live radio skill, 
+Sample skills that show how to use `AudioPlayer interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-audioplayer-interface-reference>`__ and `PlaybackController interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-playbackcontroller-interface-reference>`__
+in Alexa, to build audioplayer skills. The SingleStream skill sample demonstrates how to create a live radio skill, 
 along with localization support. The MultiStream skill sample demonstrates how to create 
-a basic podcast skill that can play multiple, pre-recorded audio streams.
+a basic podcast skill that can play multiple, pre-recorded audio streams. 
