@@ -194,7 +194,7 @@ in the SDK.
 `Audio Player <https://github.com/alexa/skill-sample-python-audio-player>`_
 ~~~~~~~~~~~~~~~~~~
 
-Project that demonstrates how to use the audio player for skills.
+Project that demonstrates how to use `AudioPlayer interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-audioplayer-interface-reference>`__ and `PlaybackController interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-playbackcontroller-interface-reference>`__ for building audioplayer skills in Alexa. The SingleStream skill sample demonstrates how to create a live radio skill, along with localization support. The MultiStream skill sample demonstrates how to create a basic podcast skill that can play multiple, pre-recorded audio streams.
 
 
 Alexa Capabilities supported by SDK
