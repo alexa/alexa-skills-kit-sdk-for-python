@@ -92,3 +92,11 @@ Template for a basic high-low game skill. When the user guesses a number,
 Alexa tells the user whether the number she has in mind is higher or lower.
 Demonstrates use of persistence attributes and the persistence adapter
 in the SDK.
+
+`AudioPlayer SingleStream and MultiStream <https://github.com/alexa/skill-sample-python-audio-player>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sample skills that show how to use AudioPlayer and Playback controller interfaces
+in Alexa. The SingleStream skill sample demonstrates how to create a live radio skill, 
+along with localization support. The MultiStream skill sample demonstrates how to create 
+a basic podcast skill that can play multiple, pre-recorded audio streams.
