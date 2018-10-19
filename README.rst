@@ -191,6 +191,11 @@ Alexa tells the user whether the number she has in mind is higher or lower.
 Demonstrates use of persistence attributes and the persistence adapter
 in the SDK.
 
+`Audio Player <https://github.com/alexa/skill-sample-python-audio-player>`_
+~~~~~~~~~~~~~~~~~~
+
+Project that demonstrates how to use the audio player for skills.
+
 
 Alexa Capabilities supported by SDK
 -----------------------------------
