@@ -66,7 +66,11 @@ class DefaultApiClient(ApiClient):
                 raise ApiClientException(
                     "Requests against non-HTTPS endpoints are not allowed.")
 
-            raw_data = json.dumps(request.body)
+            if request.body:
+                raw_data = json.dumps(request.body)
+            else:
+                raw_data = None
+
             http_response = http_method(
                 url=request.url, headers=http_headers, data=raw_data)
 
