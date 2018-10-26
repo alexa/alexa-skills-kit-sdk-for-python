@@ -15,15 +15,15 @@
 # License.
 #
 
-__pip_package_name__ = 'ask-sdk-core'
-__description__ = ('The ASK SDK Core package provides core Alexa Skills Kit '
-                   'functionality, for building Alexa Skills.')
+__pip_package_name__ = 'ask-sdk-runtime'
+__description__ = ('The ASK SDK Runtime package provides runtime components'
+                   'that act as fundamental implementation layer for ASK SDK'
+                   'packages')
 __url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
 __version__ = '1.0.0'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
-__keywords__ = ['ASK SDK', 'Alexa Skills Kit', 'Alexa', 'Core']
-__install_requires__ = ["six", "requests", "python_dateutil",
-                        "ask-sdk-model", "ask-sdk-runtime"]
+__keywords__ = ['ASK SDK Runtime', 'Alexa Skills Kit', 'Alexa', 'Runtime']
+__install_requires__ = ["typing"]
 

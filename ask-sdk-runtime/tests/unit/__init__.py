@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright 2018 Amazon.com, Inc. or its affiliates. All Rights
 # Reserved.
@@ -14,16 +15,3 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-
-__pip_package_name__ = 'ask-sdk-core'
-__description__ = ('The ASK SDK Core package provides core Alexa Skills Kit '
-                   'functionality, for building Alexa Skills.')
-__url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
-__version__ = '1.0.0'
-__author__ = 'Alexa Skills Kit'
-__author_email__ = 'ask-sdk-dynamic@amazon.com'
-__license__ = 'Apache 2.0'
-__keywords__ = ['ASK SDK', 'Alexa Skills Kit', 'Alexa', 'Core']
-__install_requires__ = ["six", "requests", "python_dateutil",
-                        "ask-sdk-model", "ask-sdk-runtime"]
-

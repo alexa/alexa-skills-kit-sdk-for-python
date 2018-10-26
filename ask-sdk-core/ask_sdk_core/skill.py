@@ -20,39 +20,45 @@ import typing
 from ask_sdk_model.services import ServiceClientFactory, ApiConfiguration
 from ask_sdk_model import ResponseEnvelope
 
-from .dispatch import RequestDispatcher
+from ask_sdk_runtime.skill import AbstractSkill, RuntimeConfiguration
+from ask_sdk_runtime.dispatch import GenericRequestDispatcher
+from ask_sdk_runtime.exceptions import AskSdkException
+
 from .serialize import DefaultSerializer
 from .handler_input import HandlerInput
-from .exceptions import AskSdkException
 from .attributes_manager import AttributesManager
-from .utils import user_agent_info, RESPONSE_FORMAT_VERSION
+from .utils import RESPONSE_FORMAT_VERSION, user_agent_info
+from .__version__ import __version__
 
 if typing.TYPE_CHECKING:
     from typing import List, TypeVar, Any
     from ask_sdk_model.services import ApiClient
     from ask_sdk_model import RequestEnvelope
-    from .dispatch_components import (
-        RequestMapper, HandlerAdapter, ExceptionMapper,
+    from ask_sdk_runtime.dispatch_components import (
+        GenericRequestMapper, GenericHandlerAdapter, GenericExceptionMapper,
         AbstractRequestInterceptor, AbstractResponseInterceptor)
+    from .attributes_manager import AbstractPersistenceAdapter
     T = TypeVar['T']
 
 
-class SkillConfiguration(object):
+class SkillConfiguration(RuntimeConfiguration):
     """Configuration Object that represents standard components
     needed to build :py:class:`Skill`.
 
     :param request_mappers: List of request mapper instances.
-    :type request_mappers: list(RequestMapper)
+    :type request_mappers: list(GenericRequestMapper)
     :param handler_adapters: List of handler adapter instances.
-    :type handler_adapters: list(HandlerAdapter)
+    :type handler_adapters: list(GenericHandlerAdapter)
     :param request_interceptors: List of
         request interceptor instances.
-    :type request_interceptors: list(AbstractRequestInterceptor)
+    :type request_interceptors: list(
+        ask_sdk_core.dispatch_components.request_components.AbstractRequestInterceptor)
     :param response_interceptors: List of
         response interceptor instances.
-    :type response_interceptors: list(AbstractResponseInterceptor)
+    :type response_interceptors: list(
+        ask_sdk_core.dispatch_components.request_components.AbstractResponseInterceptor)
     :param exception_mapper: Exception mapper instance.
-    :type exception_mapper: ExceptionMapper
+    :type exception_mapper: GenericExceptionMapper
     :param persistence_adapter: Persistence adapter instance.
     :type persistence_adapter: AbstractPersistenceAdapter
     :param api_client: Api Client instance.
@@ -68,22 +74,24 @@ class SkillConfiguration(object):
             request_interceptors=None, response_interceptors=None,
             exception_mapper=None, persistence_adapter=None,
             api_client=None, custom_user_agent=None, skill_id=None):
-        # type: (List[RequestMapper], List[HandlerAdapter], List[AbstractRequestInterceptor], List[AbstractResponseInterceptor], ExceptionMapper, PersistenceAdapter, ApiClient, str, str) -> None
+        # type: (List[GenericRequestMapper], List[GenericHandlerAdapter], List[AbstractRequestInterceptor], List[AbstractResponseInterceptor], GenericExceptionMapper, AbstractPersistenceAdapter, ApiClient, str, str) -> None
         """Configuration object that represents standard components
         needed for building :py:class:`Skill`.
 
         :param request_mappers: List of request mapper instances.
-        :type request_mappers: list(RequestMapper)
+        :type request_mappers: list(GenericRequestMapper)
         :param handler_adapters: List of handler adapter instances.
-        :type handler_adapters: list(HandlerAdapter)
+        :type handler_adapters: list(GenericHandlerAdapter)
         :param request_interceptors: List of
             request interceptor instances.
-        :type request_interceptors: list(AbstractRequestInterceptor)
+        :type request_interceptors: list(
+            ask_sdk_core.dispatch_components.request_components.AbstractRequestInterceptor)
         :param response_interceptors: List of
             response interceptor instances.
-        :type response_interceptors: list(AbstractResponseInterceptor)
+        :type response_interceptors: list(
+            ask_sdk_core.dispatch_components.request_components.AbstractResponseInterceptor)
         :param exception_mapper: Exception mapper instance.
-        :type exception_mapper: ExceptionMapper
+        :type exception_mapper: GenericExceptionMapper
         :param persistence_adapter: Persistence adapter instance.
         :type persistence_adapter: AbstractPersistenceAdapter
         :param api_client: Api Client instance.
@@ -93,30 +101,19 @@ class SkillConfiguration(object):
         :param skill_id: ID of the skill.
         :type skill_id: str
         """
-        if request_mappers is None:
-            request_mappers = []
-        self.request_mappers = request_mappers
-
-        if handler_adapters is None:
-            handler_adapters = []
-        self.handler_adapters = handler_adapters
-
-        if request_interceptors is None:
-            request_interceptors = []
-        self.request_interceptors = request_interceptors
-
-        if response_interceptors is None:
-            response_interceptors = []
-        self.response_interceptors = response_interceptors
-
-        self.exception_mapper = exception_mapper
+        super(SkillConfiguration, self).__init__(
+            request_mappers=request_mappers,
+            handler_adapters=handler_adapters,
+            request_interceptors=request_interceptors,
+            response_interceptors=response_interceptors,
+            exception_mapper=exception_mapper)
         self.persistence_adapter = persistence_adapter
         self.api_client = api_client
         self.custom_user_agent = custom_user_agent
         self.skill_id = skill_id
 
 
-class Skill(object):
+class CustomSkill(AbstractSkill):
     """Top level container for Request Dispatcher,
     Persistence Adapter and Api Client.
 
@@ -142,12 +139,23 @@ class Skill(object):
         self.skill_id = skill_configuration.skill_id
         self.custom_user_agent = skill_configuration.custom_user_agent
 
-        self.request_dispatcher = RequestDispatcher(
-            request_mappers=skill_configuration.request_mappers,
-            handler_adapters=skill_configuration.handler_adapters,
-            exception_mapper=skill_configuration.exception_mapper,
-            request_interceptors=skill_configuration.request_interceptors,
-            response_interceptors=skill_configuration.response_interceptors)
+        self.request_dispatcher = GenericRequestDispatcher(
+            options=skill_configuration
+        )
+
+    def supports(self, request_envelope, context):
+        # type: (RequestEnvelope, T) -> bool
+        """Check if request envelope is of the expected skill format.
+
+        :param request_envelope: input instance containing request information.
+        :type request_envelope: SkillInput
+        :param context: Context passed during invocation
+        :type context: Any
+        :return: boolean if this type of request can be handled by this
+            skill.
+        :rtype: bool
+        """
+        return 'request' in request_envelope
 
     def invoke(self, request_envelope, context):
         # type: (RequestEnvelope, T) -> ResponseEnvelope
@@ -188,7 +196,8 @@ class Skill(object):
             context=context,
             service_client_factory=factory)
 
-        response = self.request_dispatcher.dispatch(handler_input)
+        response = self.request_dispatcher.dispatch(
+            handler_input=handler_input)
         session_attributes = None
 
         if request_envelope.session is not None:
@@ -198,4 +207,6 @@ class Skill(object):
         return ResponseEnvelope(
             response=response, version=RESPONSE_FORMAT_VERSION,
             session_attributes=session_attributes,
-            user_agent=user_agent_info(self.custom_user_agent))
+            user_agent=user_agent_info(
+                sdk_version=__version__,
+                custom_user_agent=self.custom_user_agent))

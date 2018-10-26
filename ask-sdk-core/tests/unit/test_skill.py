@@ -21,9 +21,9 @@ from ask_sdk_model import (
     RequestEnvelope, Context, Application, Response, Session)
 from ask_sdk_model.interfaces.system import SystemState
 
-from ask_sdk_core.skill import SkillConfiguration, Skill
-from ask_sdk_core.dispatch_components import (
-    HandlerAdapter, RequestMapper, RequestHandlerChain)
+from ask_sdk_core.skill import SkillConfiguration, CustomSkill
+from ask_sdk_runtime.dispatch_components import (
+    GenericHandlerAdapter, GenericRequestMapper, GenericRequestHandlerChain)
 from ask_sdk_core.exceptions import AskSdkException
 
 try:
@@ -54,10 +54,10 @@ class TestSkillConfiguration(unittest.TestCase):
 
 class TestSkill(unittest.TestCase):
     def setUp(self):
-        self.mock_request_mapper = mock.MagicMock(spec=RequestMapper)
-        self.mock_handler_adapter = mock.MagicMock(spec=HandlerAdapter)
+        self.mock_request_mapper = mock.MagicMock(spec=GenericRequestMapper)
+        self.mock_handler_adapter = mock.MagicMock(spec=GenericHandlerAdapter)
         self.mock_request_handler_chain = mock.MagicMock(
-            spec=RequestHandlerChain)
+            spec=GenericRequestHandlerChain)
         self.mock_request_mapper.get_request_handler_chain.return_value = \
             self.mock_request_handler_chain
 
@@ -72,7 +72,7 @@ class TestSkill(unittest.TestCase):
         mock_request_envelope = RequestEnvelope(
             context=Context(system=SystemState(
                 application=Application(application_id="test"))))
-        skill = Skill(skill_configuration=skill_config)
+        skill = CustomSkill(skill_configuration=skill_config)
 
         with self.assertRaises(AskSdkException) as exc:
             skill.invoke(request_envelope=mock_request_envelope, context=None)
@@ -89,7 +89,7 @@ class TestSkill(unittest.TestCase):
         self.mock_handler_adapter.execute.return_value = mock_response
 
         skill_config = self.create_skill_config()
-        skill = Skill(skill_configuration=skill_config)
+        skill = CustomSkill(skill_configuration=skill_config)
 
         response_envelope = skill.invoke(
             request_envelope=mock_request_envelope, context=None)
@@ -105,7 +105,7 @@ class TestSkill(unittest.TestCase):
         self.mock_handler_adapter.execute.return_value = None
 
         skill_config = self.create_skill_config()
-        skill = Skill(skill_configuration=skill_config)
+        skill = CustomSkill(skill_configuration=skill_config)
 
         response_envelope = skill.invoke(
             request_envelope=mock_request_envelope, context=None)
@@ -128,7 +128,7 @@ class TestSkill(unittest.TestCase):
         skill_config = self.create_skill_config()
         skill_config.skill_id = "test"
         skill_config.api_client = "test_api_client"
-        skill = Skill(skill_configuration=skill_config)
+        skill = CustomSkill(skill_configuration=skill_config)
 
         skill.invoke(request_envelope=mock_request_envelope, context=None)
 
@@ -163,7 +163,7 @@ class TestSkill(unittest.TestCase):
 
         skill_config = self.create_skill_config()
         skill_config.skill_id = "test"
-        skill = Skill(skill_configuration=skill_config)
+        skill = CustomSkill(skill_configuration=skill_config)
 
         response_envelope = skill.invoke(
             request_envelope=mock_request_envelope, context=None)

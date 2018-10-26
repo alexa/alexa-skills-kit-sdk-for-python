@@ -3,6 +3,7 @@
   :titlesonly:
   :glob:
 
+  runtime
   core
   dynamodb_persistence
   standard
