@@ -17,17 +17,13 @@
 #
 import unittest
 
-from ask_sdk_model.request_envelope import RequestEnvelope
-from ask_sdk_model.intent_request import IntentRequest
-from ask_sdk_model.response import Response
-
-from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_core.dispatch import RequestDispatcher
-from ask_sdk_core.dispatch_components import (
-    RequestMapper, AbstractRequestHandler, RequestHandlerChain,
-    HandlerAdapter, AbstractRequestInterceptor,
-    AbstractResponseInterceptor, AbstractExceptionHandler, ExceptionMapper)
-from ask_sdk_core.exceptions import DispatchException
+from ask_sdk_runtime.dispatch import GenericRequestDispatcher
+from ask_sdk_runtime.skill import RuntimeConfiguration
+from ask_sdk_runtime.dispatch_components import (
+    GenericRequestMapper, AbstractRequestHandler, GenericRequestHandlerChain,
+    GenericHandlerAdapter, AbstractRequestInterceptor,
+    AbstractResponseInterceptor, AbstractExceptionHandler, GenericExceptionMapper)
+from ask_sdk_runtime.exceptions import DispatchException
 
 try:
     import mock
@@ -35,30 +31,41 @@ except ImportError:
     from unittest import mock
 
 
+class TestDispatchInput(object):
+    def __init__(self, request):
+        # type: (str) -> None
+        self.request = request
+
+
+class TestDispatchOutput(object):
+    def __init__(self, response):
+        # type: (str) -> None
+        self.response = response
+
+
 class TestRequestDispatcher(unittest.TestCase):
     def setUp(self):
-        test_request = mock.MagicMock(spec=IntentRequest)
-        test_request_envelope = mock.MagicMock(RequestEnvelope)
-        test_request_envelope.request = test_request
-        self.valid_handler_input = HandlerInput(
-            request_envelope=test_request_envelope)
-        self.test_dispatcher = RequestDispatcher()
+        self.valid_handler_input = mock.Mock()
+        self.test_dispatcher = GenericRequestDispatcher(
+            options=RuntimeConfiguration(
+                request_mappers=None, handler_adapters=None))
 
-    def test_dispatch_input_with_no_chains_in_request_mapper(self):
+    def test_handler_input_with_no_chains_in_request_mapper(self):
         with self.assertRaises(DispatchException) as exc:
             self.test_dispatcher.dispatch(
                 handler_input=self.valid_handler_input)
 
-        assert "Couldn't find handler that can handle the request" in str(exc.exception), (
+        assert "Unable to find a suitable request handler" in str(exc.exception), (
             "Dispatcher didn't throw Dispatch Exception when no chains are "
             "registered in request mappers")
 
-    def test_dispatch_input_with_unsupported_chains_in_request_mapper(self):
+    def test_handler_input_with_unsupported_chains_in_request_mapper(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = False
-        test_request_handler_chain = mock.MagicMock(spec=RequestHandlerChain)
+        test_request_handler_chain = mock.MagicMock(
+            spec=GenericRequestHandlerChain)
         test_request_handler_chain.request_handler = test_request_handler
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
@@ -66,17 +73,18 @@ class TestRequestDispatcher(unittest.TestCase):
             self.test_dispatcher.dispatch(
                 handler_input=self.valid_handler_input)
 
-        assert "Couldn't find handler that can handle the request" in str(exc.exception), (
+        assert "Unable to find a suitable request handler" in str(exc.exception), (
             "Dispatcher didn't throw Dispatch Exception when no suitable "
             "chains are registered in "
             "request mappers")
 
-    def test_dispatch_input_with_supported_chain_in_mapper_no_adapters(self):
+    def test_handler_input_with_supported_chain_in_mapper_no_adapters(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
-        test_request_handler_chain = mock.MagicMock(spec=RequestHandlerChain)
+        test_request_handler_chain = mock.MagicMock(
+            spec=GenericRequestHandlerChain)
         test_request_handler_chain.request_handler = test_request_handler
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
@@ -84,19 +92,21 @@ class TestRequestDispatcher(unittest.TestCase):
             self.test_dispatcher.dispatch(
                 handler_input=self.valid_handler_input)
 
-        assert "Couldn't find adapter that can handle the request" in str(exc.exception), (
+        assert "Unable to find a suitable request adapter" in str(
+            exc.exception), (
             "Dispatcher didn't throw Dispatch Exception when no adapters are "
             "registered in "
             "dispatcher")
 
-    def test_dispatch_input_with_supported_chain_in_mapper_and_unsupported_adapter(self):
+    def test_handler_input_with_supported_chain_in_mapper_and_unsupported_adapter(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
-        test_request_handler_chain = mock.MagicMock(spec=RequestHandlerChain)
+        test_request_handler_chain = mock.MagicMock(
+            spec=GenericRequestHandlerChain)
         test_request_handler_chain.request_handler = test_request_handler
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
-        test_adapter = mock.MagicMock(spec=HandlerAdapter)
+        test_adapter = mock.MagicMock(spec=GenericHandlerAdapter)
         test_adapter.supports.return_value = False
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
@@ -105,22 +115,23 @@ class TestRequestDispatcher(unittest.TestCase):
             self.test_dispatcher.dispatch(
                 handler_input=self.valid_handler_input)
 
-        assert "Couldn't find adapter that can handle the request" in str(exc.exception), (
+        assert "Unable to find a suitable request adapter" in str(
+            exc.exception), (
             "Dispatcher didn't throw Dispatch Exception when no suitable "
             "adapters are registered in "
             "dispatcher")
 
-    def test_dispatch_input_successful_execution_with_supported_chain_and_supported_adapter(self):
+    def test_handler_input_successful_execution_with_supported_chain_and_supported_adapter(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = HandlerAdapter()
+        test_adapter = GenericHandlerAdapter()
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
         self.test_dispatcher.handler_adapters = [test_adapter]
@@ -136,7 +147,7 @@ class TestRequestDispatcher(unittest.TestCase):
             "Dispatcher dispatch method called handle on Request Handler "
             "more than once")
 
-    def test_dispatch_input_successful_local_request_interceptors_execution(self):
+    def test_handler_input_successful_local_request_interceptors_execution(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
@@ -144,13 +155,13 @@ class TestRequestDispatcher(unittest.TestCase):
         test_interceptor_1 = mock.MagicMock(spec=AbstractRequestInterceptor)
         test_interceptor_2 = mock.MagicMock(spec=AbstractRequestInterceptor)
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler,
             request_interceptors=[test_interceptor_1, test_interceptor_2])
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = HandlerAdapter()
+        test_adapter = GenericHandlerAdapter()
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
         self.test_dispatcher.handler_adapters = [test_adapter]
@@ -169,7 +180,7 @@ class TestRequestDispatcher(unittest.TestCase):
             "interceptors before calling request handler "
             "handle")
 
-    def test_dispatch_input_successful_global_request_interceptors_execution(self):
+    def test_handler_input_successful_global_request_interceptors_execution(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
@@ -177,12 +188,12 @@ class TestRequestDispatcher(unittest.TestCase):
         test_interceptor_1 = mock.MagicMock(spec=AbstractRequestInterceptor)
         test_interceptor_2 = mock.MagicMock(spec=AbstractRequestInterceptor)
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = HandlerAdapter()
+        test_adapter = GenericHandlerAdapter()
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
         self.test_dispatcher.handler_adapters = [test_adapter]
@@ -200,7 +211,7 @@ class TestRequestDispatcher(unittest.TestCase):
             "Dispatcher dispatch method didn't process global request "
             "interceptors before calling dispatch request")
 
-    def test_dispatch_input_unsuccessful_global_request_interceptors_execution(self):
+    def test_handler_input_unsuccessful_global_request_interceptors_execution(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
@@ -214,12 +225,12 @@ class TestRequestDispatcher(unittest.TestCase):
         test_response_interceptor_1 = mock.MagicMock(
             spec=AbstractResponseInterceptor)
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = HandlerAdapter()
+        test_adapter = GenericHandlerAdapter()
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
         self.test_dispatcher.handler_adapters = [test_adapter]
@@ -254,10 +265,10 @@ class TestRequestDispatcher(unittest.TestCase):
             "interceptors threw exception")
 
 
-    def test_dispatch_input_successful_local_response_interceptors_execution(self):
+    def test_handler_input_successful_local_response_interceptors_execution(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
-        test_response = mock.MagicMock(spec=Response)
+        test_response = mock.MagicMock(spec=TestDispatchOutput)
         test_response_before_interceptor = test_response
         test_request_handler.handle.return_value = test_response
 
@@ -271,13 +282,13 @@ class TestRequestDispatcher(unittest.TestCase):
         test_response_from_interceptor_2 = test_response
         test_interceptor_2.process.return_value = test_response
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler,
             response_interceptors=[test_interceptor_1, test_interceptor_2])
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = HandlerAdapter()
+        test_adapter = GenericHandlerAdapter()
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
         self.test_dispatcher.handler_adapters = [test_adapter]
@@ -289,21 +300,23 @@ class TestRequestDispatcher(unittest.TestCase):
             "local response interceptors")
 
         test_interceptor_1.process.assert_called_once_with(
-            handler_input=self.valid_handler_input, response=test_response_before_interceptor), (
+            handler_input=self.valid_handler_input,
+            response=test_response_before_interceptor), (
             "Dispatcher dispatch method didn't process local response "
             "interceptors after calling request handler "
             "handle")
 
         test_interceptor_2.process.assert_called_once_with(
-            handler_input=self.valid_handler_input, response=test_response_from_interceptor_1), (
+            handler_input=self.valid_handler_input,
+            response=test_response_from_interceptor_1), (
             "Dispatcher dispatch method didn't process local response "
             "interceptors after calling request handler "
             "handle")
 
-    def test_dispatch_input_successful_global_response_interceptors_execution(self):
+    def test_handler_input_successful_global_response_interceptors_execution(self):
         test_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
         test_request_handler.can_handle.return_value = True
-        test_response = mock.MagicMock(spec=Response)
+        test_response = mock.MagicMock(spec=TestDispatchOutput)
         test_response_before_interceptor = test_response
         test_request_handler.handle.return_value = test_response
 
@@ -317,12 +330,12 @@ class TestRequestDispatcher(unittest.TestCase):
         test_response_from_interceptor_2 = test_response
         test_interceptor_2.process.return_value = test_response
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = HandlerAdapter()
+        test_adapter = GenericHandlerAdapter()
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
         self.test_dispatcher.handler_adapters = [test_adapter]
@@ -336,12 +349,14 @@ class TestRequestDispatcher(unittest.TestCase):
             "global response interceptors")
 
         test_interceptor_1.process.assert_called_once_with(
-            handler_input=self.valid_handler_input, response=test_response_before_interceptor), (
+            handler_input=self.valid_handler_input,
+            response=test_response_before_interceptor), (
             "Dispatcher dispatch method didn't process global request "
             "interceptors after calling dispatch request")
 
         test_interceptor_2.process.assert_called_once_with(
-            handler_input=self.valid_handler_input, response=test_response_from_interceptor_1), (
+            handler_input=self.valid_handler_input,
+            response=test_response_from_interceptor_1), (
             "Dispatcher dispatch method didn't process global request "
             "interceptors after calling dispatch request")
 
@@ -350,12 +365,12 @@ class TestRequestDispatcher(unittest.TestCase):
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = mock.MagicMock(spec=HandlerAdapter)
+        test_adapter = mock.MagicMock(spec=GenericHandlerAdapter)
         test_adapter.supports.return_value = True
         test_adapter.execute.side_effect = Exception(
             "Test low level Exception")
@@ -377,19 +392,19 @@ class TestRequestDispatcher(unittest.TestCase):
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = mock.MagicMock(spec=HandlerAdapter)
+        test_adapter = mock.MagicMock(spec=GenericHandlerAdapter)
         test_adapter.supports.return_value = True
         test_adapter.execute.side_effect = Exception(
             "Test low level Exception")
 
         test_exception_handler = mock.MagicMock(spec=AbstractExceptionHandler)
         test_exception_handler.can_handle.return_value = False
-        test_exception_mapper = ExceptionMapper(
+        test_exception_mapper = GenericExceptionMapper(
             exception_handlers=[test_exception_handler])
 
         self.test_dispatcher.request_mappers = [test_request_mapper]
@@ -410,12 +425,12 @@ class TestRequestDispatcher(unittest.TestCase):
         test_request_handler.can_handle.return_value = True
         test_request_handler.handle.return_value = "Test Response"
 
-        test_request_handler_chain = RequestHandlerChain(
+        test_request_handler_chain = GenericRequestHandlerChain(
             request_handler=test_request_handler)
-        test_request_mapper = RequestMapper(
+        test_request_mapper = GenericRequestMapper(
             request_handler_chains=[test_request_handler_chain])
 
-        test_adapter = mock.MagicMock(spec=HandlerAdapter)
+        test_adapter = mock.MagicMock(spec=GenericHandlerAdapter)
         test_adapter.supports.return_value = True
         test_adapter.execute.side_effect = DispatchException(
             "Custom dispatch exception")
@@ -429,12 +444,14 @@ class TestRequestDispatcher(unittest.TestCase):
         test_exception_handler_2.handle.return_value = "Custom exception " \
                                                        "handler response"
 
-        self.test_dispatcher = RequestDispatcher(
+        options = RuntimeConfiguration(
             request_mappers=[test_request_mapper],
             handler_adapters=[test_adapter],
-            exception_mapper=ExceptionMapper(
+            exception_mapper=GenericExceptionMapper(
                 exception_handlers=[test_exception_handler_1,
-                                    test_exception_handler_2]))
+                                    test_exception_handler_2])
+        )
+        self.test_dispatcher = GenericRequestDispatcher(options=options)
 
         assert self.test_dispatcher.dispatch(
             handler_input=self.valid_handler_input) == "Custom exception handler response", (

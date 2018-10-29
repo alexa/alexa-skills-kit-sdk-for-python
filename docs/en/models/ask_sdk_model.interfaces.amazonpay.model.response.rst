@@ -1,5 +1,5 @@
 ask\_sdk\_model.interfaces.amazonpay.model.response package
-=====================================================
+===========================================================
 
 Submodules
 ~~~~~~~~~~
@@ -15,35 +15,35 @@ Submodules
     ``from a.b import C``.
 
 ask\_sdk\_model.interfaces.amazonpay.model.response.authorization\_details module
----------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.model.response.authorization_details
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.amazonpay.model.response.authorization\_status module
---------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.model.response.authorization_status
     :members:
     :show-inheritance:
 
-ask\_sdk\_model.interfaces.amazonpay.model.response.billing\_agreement\_attributes module
---------------------------------------------------------------------------
+ask\_sdk\_model.interfaces.amazonpay.model.response.billing\_agreement\_details module
+--------------------------------------------------------------------------------------
 
-.. automodule:: ask_sdk_model.interfaces.amazonpay.model.response.billing_agreement_attributes
+.. automodule:: ask_sdk_model.interfaces.amazonpay.model.response.billing_agreement_details
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.amazonpay.model.response.destination module
------------------------------------------------------------------------------------
+----------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.model.response.destination
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.amazonpay.model.response.price module
---------------------------------------------------------------------------------
+----------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.model.response.price
     :members:

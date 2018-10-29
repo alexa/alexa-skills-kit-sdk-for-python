@@ -18,20 +18,11 @@ Request Dispatch Components
 Abstract Classes
 ----------------
 
-.. automodule:: ask_sdk_core.dispatch
-   :members:
-   :undoc-members:
-   :inherited-members:
-   :show-inheritance:
-   :exclude-members: RequestDispatcher
-   :member-order: bysource
-
 .. automodule:: ask_sdk_core.dispatch_components.request_components
    :members:
    :undoc-members:
    :inherited-members:
    :show-inheritance:
-   :exclude-members: GenericRequestHandlerChain, RequestHandlerChain, RequestMapper, HandlerAdapter
    :member-order: bysource
 
 
@@ -40,29 +31,6 @@ Abstract Classes
    :undoc-members:
    :inherited-members:
    :show-inheritance:
-   :exclude-members: ExceptionMapper
-
-Implementations
----------------
-
-.. automodule:: ask_sdk_core.dispatch
-   :members: RequestDispatcher
-   :ignore-module-all:
-   :show-inheritance:
-   :member-order: bysource
-
-.. automodule:: ask_sdk_core.dispatch_components.request_components
-   :members: GenericRequestHandlerChain, RequestHandlerChain, RequestMapper, HandlerAdapter
-   :ignore-module-all:
-   :show-inheritance:
-   :member-order: bysource
-
-
-.. automodule:: ask_sdk_core.dispatch_components.exception_components
-   :members: ExceptionMapper
-   :ignore-module-all:
-   :show-inheritance:
-   :member-order: bysource
 
 
 Response Builder Components

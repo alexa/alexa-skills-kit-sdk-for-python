@@ -13,7 +13,8 @@ def run(command):
 
 
 sdk_packages = [
-    "ask-sdk-core", "ask-sdk-dynamodb-persistence-adapter", "ask-sdk"]
+    "ask-sdk-runtime", "ask-sdk-core",
+    "ask-sdk-dynamodb-persistence-adapter", "ask-sdk"]
 
 run("pip install coverage")
 

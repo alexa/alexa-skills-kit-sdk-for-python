@@ -1,5 +1,4 @@
-six
-typing
-requests<=2.19.1
+requests
 python_dateutil
 ask-sdk-model
+ask-sdk-runtime

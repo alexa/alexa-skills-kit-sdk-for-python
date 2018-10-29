@@ -15,12 +15,15 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-from ask_sdk_runtime.exceptions import (
-    AskSdkException, DispatchException, SkillBuilderException)
 
 
-class AttributesManagerException(AskSdkException):
-    """Class for exceptions raised during handling attributes logic"""
+class AskSdkException(Exception):
+    """Base class for exceptions raised by the SDK."""
+    pass
+
+
+class DispatchException(AskSdkException):
+    """Class for exceptions raised during dispatch logic."""
     pass
 
 
@@ -31,11 +34,11 @@ class SerializationException(AskSdkException):
     pass
 
 
-class PersistenceException(AskSdkException):
-    """Exception class for Persistence Adapter processing."""
+class SkillBuilderException(AskSdkException):
+    """Base exception class for Skill Builder exceptions."""
     pass
 
 
-class ApiClientException(AskSdkException):
-    """Exception class for ApiClient Adapter processing."""
+class RuntimeConfigException(AskSdkException):
+    """Base exception class for Runtime Configuration Builder exceptions."""
     pass

@@ -15,38 +15,10 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import sys
-
 from ask_sdk_model import (
     IntentRequest, RequestEnvelope, Intent, SessionEndedRequest)
-from ask_sdk_core.utils import (
-    user_agent_info, is_intent_name, is_request_type)
+from ask_sdk_core.utils import is_intent_name, is_request_type
 from ask_sdk_core.handler_input import HandlerInput
-from ask_sdk_core.__version__ import __version__
-
-
-def test_user_agent_info_with_no_custom_user_agent():
-    py_major_version = str(sys.version_info.major)
-    py_minor_version = str(sys.version_info.minor)
-    py_micro_version = str(sys.version_info.micro)
-
-    expected_user_agent = "ask-python/{} Python/{}.{}.{}".format(
-        __version__, py_major_version, py_minor_version, py_micro_version)
-    assert user_agent_info(custom_user_agent=None) == expected_user_agent, (
-        "Incorrect User Agent info for Null custom user agent")
-
-
-def test_user_agent_info_with_custom_user_agent():
-    py_major_version = str(sys.version_info.major)
-    py_minor_version = str(sys.version_info.minor)
-    py_micro_version = str(sys.version_info.micro)
-    custom_user_agent = "test"
-
-    expected_user_agent = "ask-python/{} Python/{}.{}.{} {}".format(
-        __version__, py_major_version, py_minor_version,
-        py_micro_version, custom_user_agent)
-    assert user_agent_info(custom_user_agent=custom_user_agent) == expected_user_agent, (
-        "Incorrect User Agent info for custom user agent")
 
 
 def test_is_intent_name_match():
