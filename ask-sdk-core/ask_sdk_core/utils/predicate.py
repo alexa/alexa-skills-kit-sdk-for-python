@@ -18,17 +18,10 @@
 import typing
 
 from ask_sdk_model import IntentRequest
-from ask_sdk_runtime.utils import user_agent_info
-
-from .__version__ import __version__
 
 if typing.TYPE_CHECKING:
     from typing import Callable
-    from .handler_input import HandlerInput
-
-
-SDK_VERSION = __version__
-RESPONSE_FORMAT_VERSION = "1.0"
+    from ..handler_input import HandlerInput
 
 
 def is_intent_name(name):

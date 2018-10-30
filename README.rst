@@ -29,6 +29,12 @@ boiler-plate code.
 .. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io
     :alt: Read the docs
+.. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-runtime/
+    :alt: Version
+.. |Runtime Downloads| image:: https://pepy.tech/badge/ask-sdk-runtime
+    :target: https://pepy.tech/project/ask-sdk-runtime
+    :alt: Downloads
 .. |Core Version| image:: http://img.shields.io/pypi/v/ask-sdk-core.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-core/
     :alt: Version
@@ -56,6 +62,7 @@ Package Versions
 ====================================   ==================
 Package                                Version
 ------------------------------------   ------------------
+ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
@@ -235,6 +242,8 @@ Preview
 ~~~~~~~
 
 * `Connections <https://developer.amazon.com/blogs/alexa/post/7b332b32-893e-4cad-be07-a5877efcbbb4/skill-connections-preview-now-skills-can-work-together-to-help-customers-get-more-done>`__
+
+* `Alexa Presentation Language <https://developer.amazon.com/blogs/alexa/post/1dee3fa0-8c5f-4179-ab7a-74545ead24ce/introducing-the-alexa-presentation-language-preview>`__
 
 
 Got Feedback?

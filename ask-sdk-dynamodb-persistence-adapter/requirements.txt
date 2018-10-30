@@ -1,2 +1,2 @@
 boto3
-ask-sdk-core
+ask-sdk-core>=1.1.0

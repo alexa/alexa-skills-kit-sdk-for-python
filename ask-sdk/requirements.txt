@@ -1,2 +1,2 @@
-ask-sdk-core
-ask-sdk-dynamodb-persistence-adapter
+ask-sdk-core>=1.1.0
+ask-sdk-dynamodb-persistence-adapter>=1.1.0

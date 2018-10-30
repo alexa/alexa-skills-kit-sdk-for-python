@@ -8,6 +8,7 @@ Subpackages
     :maxdepth: 1
 
 
+    ask_sdk_model.interfaces.alexa
     ask_sdk_model.interfaces.amazonpay
     ask_sdk_model.interfaces.audioplayer
     ask_sdk_model.interfaces.connections
@@ -19,3 +20,4 @@ Subpackages
     ask_sdk_model.interfaces.playbackcontroller
     ask_sdk_model.interfaces.system
     ask_sdk_model.interfaces.videoapp
+    ask_sdk_model.interfaces.viewport
