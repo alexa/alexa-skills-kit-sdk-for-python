@@ -23,6 +23,9 @@ from ask_sdk_model.ui import SsmlOutputSpeech, Reprompt
 from ask_sdk_model.interfaces.display import TextContent
 from ask_sdk_model.interfaces.display import PlainText
 from ask_sdk_model.interfaces.display import RichText
+from ask_sdk_model.canfulfill import (
+    CanFulfillIntent, CanFulfillIntentValues, CanFulfillSlot,
+    CanFulfillSlotValues, CanUnderstandSlotValues)
 
 from ask_sdk_core.response_helper import (
     ResponseFactory, get_text_content, get_plain_text_content,
@@ -130,6 +133,23 @@ class TestResponseFactory(unittest.TestCase):
         assert self.response_factory.speak(
             speech=speech_output4).response.output_speech.ssml == "<speak>Hello World</speak>", (
             "The trim_outputspeech method fails to trim the outputspeech")
+
+    def test_set_can_fulfill_intent(self):
+        intent = CanFulfillIntent(
+            can_fulfill=CanFulfillIntentValues.MAYBE,
+            slots={
+                "testSlot": CanFulfillSlot(
+                    can_understand=CanUnderstandSlotValues.YES,
+                    can_fulfill=CanFulfillSlotValues.YES
+                )
+            }
+        )
+        response_factory = self.response_factory.set_can_fulfill_intent(
+            can_fulfill_intent=intent)
+
+        assert response_factory.response.can_fulfill_intent == intent, (
+            "The set_can_fulfill_intent method of ResponseFactory fails to "
+            "set can_fulfill_intent value")
 
 
 class TestTextHelper(unittest.TestCase):

@@ -13,6 +13,7 @@ Subpackages
 .. toctree::
   :maxdepth: 1
 
+  ask_sdk_model.canfulfill
   ask_sdk_model.dialog
   ask_sdk_model.events
   ask_sdk_model.interfaces

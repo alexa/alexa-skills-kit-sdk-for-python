@@ -245,6 +245,8 @@ Preview
 
 * `Alexa Presentation Language <https://developer.amazon.com/docs/alexa-presentation-language/apl-overview.html>`__
 
+* `Name-free Interactions <https://developer.amazon.com/docs/custom-skills/understand-name-free-interaction-for-custom-skills.html>`_
+
 
 Got Feedback?
 -------------

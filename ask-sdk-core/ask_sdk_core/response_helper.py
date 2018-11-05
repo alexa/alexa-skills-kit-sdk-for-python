@@ -26,6 +26,7 @@ if typing.TYPE_CHECKING:
     from typing import Union
     from ask_sdk_model import Directive
     from ask_sdk_model.ui import Card
+    from ask_sdk_model.canfulfill import CanFulfillIntent
 
 
 PLAIN_TEXT_TYPE = "PlainText"
@@ -47,7 +48,8 @@ class ResponseFactory(object):
         """
         self.response = Response(
             output_speech=None, card=None, reprompt=None,
-            directives=None, should_end_session=None)
+            directives=None, should_end_session=None,
+            can_fulfill_intent=None)
 
     def speak(self, speech):
         # type: (str) -> 'ResponseFactory'
@@ -134,6 +136,22 @@ class ResponseFactory(object):
         """
         if not self.__is_video_app_launch_directive_present():
             self.response.should_end_session = should_end_session
+        return self
+
+    def set_can_fulfill_intent(self, can_fulfill_intent):
+        # type: (CanFulfillIntent) -> 'ResponseFactory'
+        """Sets CanFulfill intent to the response.
+
+        For more information on CanFulfillIntent, check the name-free
+        interaction doc here: https://developer.amazon.com/docs/custom-skills/understand-name-free-interaction-for-custom-skills.html
+
+        :param can_fulfill_intent: CanFulfill Intent sent back in response.
+        :type can_fulfill_intent: CanFulfillIntent
+        :return: response factory with partial response being built and
+            access from self.response.
+        :rtype: ResponseFactory
+        """
+        self.response.can_fulfill_intent = can_fulfill_intent
         return self
 
     def __trim_outputspeech(self, speech_output=None):
