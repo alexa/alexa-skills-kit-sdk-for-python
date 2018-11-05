@@ -48,3 +48,11 @@ This release contains the following changes:
 This release contains the following changes : 
 
 - Add support for Alexa Presentation Language (Public Beta). The Alexa Presentation Language (APL) enables you to build interactive voice experiences that include graphics, images, slideshows, and to customize them for different device types.
+
+
+1.3.0
+~~~~~~~
+
+This release contains the following features : 
+
+- Support for [Name-free Interactions, using CanFulfill Intent in responses](https://developer.amazon.com/docs/custom-skills/implement-canfulfillintentrequest-for-name-free-interaction.html).
