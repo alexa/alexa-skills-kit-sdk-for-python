@@ -71,7 +71,7 @@ command prompt, use the following command to install the package:
 
     $ pip install virtualenv
 
-Next, create a create a new folder for your Alexa skill and navigate to the folder:
+Next, create a new folder for your Alexa skill and navigate to the folder:
 
 .. code-block:: sh
 
