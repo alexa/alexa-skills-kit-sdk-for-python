@@ -18,10 +18,36 @@
 import typing
 
 from ask_sdk_model import IntentRequest
+from ask_sdk_model.canfulfill import CanFulfillIntentRequest
 
 if typing.TYPE_CHECKING:
     from typing import Callable
     from ..handler_input import HandlerInput
+
+
+def is_canfulfill_intent_name(name):
+    # type: (str) -> Callable[[HandlerInput], bool]
+    """A predicate function returning a boolean, when name matches the
+    intent name in a CanFulfill Intent Request.
+
+    The function can be applied on a
+    :py:class:`ask_sdk_core.handler_input.HandlerInput`, to
+    check if the input is of
+    :py:class:`ask_sdk_model.intent_request.CanFulfillIntentRequest` type and if the
+    name of the request matches with the passed name.
+
+    :param name: Name to be matched with the CanFulfill Intent Request Name
+    :type name: str
+    :return: Predicate function that can be used to check name of the
+        request
+    :rtype: Callable[[HandlerInput], bool]
+    """
+    def can_handle_wrapper(handler_input):
+        # type: (HandlerInput) -> bool
+        return (isinstance(
+            handler_input.request_envelope.request, CanFulfillIntentRequest) and
+                handler_input.request_envelope.request.intent.name == name)
+    return can_handle_wrapper
 
 
 def is_intent_name(name):
