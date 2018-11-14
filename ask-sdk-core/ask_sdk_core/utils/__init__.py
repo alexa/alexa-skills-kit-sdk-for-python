@@ -18,7 +18,7 @@
 import sys
 
 from ..__version__ import __version__
-from .predicate import is_intent_name, is_request_type
+from .predicate import is_canfulfill_intent_name, is_intent_name, is_request_type
 from ask_sdk_runtime.utils import user_agent_info
 
 

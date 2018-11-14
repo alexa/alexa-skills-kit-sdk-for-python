@@ -20,11 +20,60 @@ import random
 
 from ask_sdk_model import (
     IntentRequest, RequestEnvelope, Intent, SessionEndedRequest, Context)
+from ask_sdk_model.canfulfill import CanFulfillIntentRequest
 from ask_sdk_core.utils import (
-    is_intent_name, is_request_type, viewport)
+    is_canfulfill_intent_name, is_intent_name, is_request_type, viewport)
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.exceptions import AskSdkException
 from ask_sdk_model.interfaces.viewport import ViewportState, Shape
+
+
+def test_is_canfulfill_intent_name_match():
+    test_canfulfill_intent_name = "TestIntent"
+    test_handler_input = HandlerInput(
+        request_envelope=RequestEnvelope(request=CanFulfillIntentRequest(
+            intent=Intent(name=test_canfulfill_intent_name))))
+
+    canfulfill_intent_name_wrapper = is_canfulfill_intent_name(test_canfulfill_intent_name)
+    assert canfulfill_intent_name_wrapper(
+        test_handler_input), "is_canfulfill_intent_name matcher didn't match with the " \
+                             "correct intent name"
+
+
+def test_is_canfulfill_intent_name_not_match():
+    test_canfulfill_intent_name = "TestIntent"
+    test_handler_input = HandlerInput(
+        request_envelope=RequestEnvelope(request=CanFulfillIntentRequest(
+            intent=Intent(name=test_canfulfill_intent_name))))
+
+    canfulfill_intent_name_wrapper = is_canfulfill_intent_name("TestIntent1")
+    assert not canfulfill_intent_name_wrapper(
+        test_handler_input), "is_canfulfill_intent_name matcher matched with the " \
+                             "incorrect intent name"
+
+
+def test_is_canfulfill_intent_not_match_intent():
+    test_canfulfill_intent_name = "TestIntent"
+    test_canfulfill_handler_input = HandlerInput(
+        request_envelope=RequestEnvelope(request=CanFulfillIntentRequest(
+            intent=Intent(name=test_canfulfill_intent_name))))
+
+    intent_name_wrapper = is_intent_name(test_canfulfill_intent_name)
+    assert not intent_name_wrapper(
+        test_canfulfill_handler_input), "is_intent_name matcher matched with the " \
+                                        "incorrect request type"
+
+
+def test_is_intent_not_match_canfulfill_intent():
+    test_intent_name = "TestIntent"
+    test_handler_input = HandlerInput(
+        request_envelope=RequestEnvelope(request=IntentRequest(
+            intent=Intent(name=test_intent_name))))
+
+    canfulfill_intent_name_wrapper = is_canfulfill_intent_name(test_intent_name)
+    assert not canfulfill_intent_name_wrapper(
+        test_handler_input), "is_canfulfill_intent_name matcher matched with the " \
+                             "incorrect request type"
 
 
 def test_is_intent_name_match():
@@ -344,5 +393,3 @@ class TestViewportProfile(unittest.TestCase):
         assert (viewport.get_viewport_profile(test_request_env)
                 is viewport.ViewportProfile.UNKNOWN_VIEWPORT_PROFILE), (
             "Viewport profile couldn't resolve UNKNOWN_VIEWPORT_PROFILE")
-
-
