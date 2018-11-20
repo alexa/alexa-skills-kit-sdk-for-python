@@ -33,3 +33,13 @@ This release contains the following changes :
 This release contains the following features : 
 
 - Support for [Name-free Interactions, using CanFulfill Intent in responses](https://developer.amazon.com/docs/custom-skills/implement-canfulfillintentrequest-for-name-free-interaction.html).
+
+
+1.4.0
+~~~~~~~
+
+This release contains the following changes : 
+
+- Add helper function for matching CanFulfill Intent name `#46 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/46>`
+- Deserialize only if payload is not None `48 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/48>`
+
