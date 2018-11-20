@@ -143,6 +143,9 @@ class DefaultSerializer(Serializer):
         :return: deserialized object
         :rtype: T
         """
+        if payload is None:
+            return None
+
         if type(obj_type) == str:
             if obj_type.startswith('list['):
                 # Get object type for each item in the list
