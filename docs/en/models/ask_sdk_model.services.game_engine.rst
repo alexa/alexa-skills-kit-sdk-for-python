@@ -49,6 +49,13 @@ ask\_sdk\_model.services.game\_engine.input\_event\_action\_type module
     :members:
     :show-inheritance:
 
+ask\_sdk\_model.services.game\_engine.input\_handler\_event module
+------------------------------------------------------------------
+
+.. automodule:: ask_sdk_model.services.game_engine.input_handler_event
+    :members:
+    :show-inheritance:
+
 ask\_sdk\_model.services.game\_engine.pattern module
 ----------------------------------------------------
 

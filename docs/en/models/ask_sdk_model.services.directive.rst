@@ -20,7 +20,6 @@ ask\_sdk\_model.services.directive.directive module
 .. automodule:: ask_sdk_model.services.directive.directive
     :members:
     :show-inheritance:
-    :exclude-members: attribute_map, deserialized_types, json_discriminator_key
 
 ask\_sdk\_model.services.directive.directive\_service\_client module
 --------------------------------------------------------------------
