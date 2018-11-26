@@ -5,13 +5,13 @@ Subpackages
 -----------
 
 .. toctree::
+    :maxdepth: 1
 
-    alexa.presentation
+    ask_sdk_model.interfaces.alexa.presentation
 
 Module contents
 ---------------
 
-.. automodule:: alexa
+.. automodule:: ask_sdk_model.interfaces.alexa
     :members:
-    :undoc-members:
     :show-inheritance:

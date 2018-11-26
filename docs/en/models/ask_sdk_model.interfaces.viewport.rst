@@ -1,5 +1,5 @@
-ask_sdk_model.interfaces.viewport package
-=========================================
+ask\_sdk\_model.interfaces.viewport package
+===========================================
 
 Submodules
 ----------
@@ -14,51 +14,45 @@ Submodules
     ``class C``, you can do ``from a import C`` instead of
     ``from a.b import C``.
 
-viewport.experience module
---------------------------
+ask\_sdk\_model.interfaces.viewport.experience module
+-----------------------------------------------------
 
-.. automodule:: viewport.experience
+.. automodule:: ask_sdk_model.interfaces.viewport.experience
     :members:
-    :undoc-members:
     :show-inheritance:
 
-viewport.keyboard module
-------------------------
+ask\_sdk\_model.interfaces.viewport.keyboard module
+---------------------------------------------------
 
-.. automodule:: viewport.keyboard
+.. automodule:: ask_sdk_model.interfaces.viewport.keyboard
     :members:
-    :undoc-members:
     :show-inheritance:
 
-viewport.shape module
----------------------
+ask\_sdk\_model.interfaces.viewport.shape module
+------------------------------------------------
 
-.. automodule:: viewport.shape
+.. automodule:: ask_sdk_model.interfaces.viewport.shape
     :members:
-    :undoc-members:
     :show-inheritance:
 
-viewport.touch module
----------------------
+ask\_sdk\_model.interfaces.viewport.touch module
+------------------------------------------------
 
-.. automodule:: viewport.touch
+.. automodule:: ask_sdk_model.interfaces.viewport.touch
     :members:
-    :undoc-members:
     :show-inheritance:
 
-viewport.viewport\_state module
--------------------------------
+ask\_sdk\_model.interfaces.viewport.viewport\_state module
+----------------------------------------------------------
 
-.. automodule:: viewport.viewport_state
+.. automodule:: ask_sdk_model.interfaces.viewport.viewport_state
     :members:
-    :undoc-members:
     :show-inheritance:
 
 
 Module contents
 ---------------
 
-.. automodule:: viewport
+.. automodule:: ask_sdk_model.interfaces.viewport
     :members:
-    :undoc-members:
     :show-inheritance:

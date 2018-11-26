@@ -5,6 +5,7 @@ Subpackages
 -----------
 
 .. toctree::
+    :maxdepth: 1
 
     ask_sdk_model.interfaces.amazonpay.model
     ask_sdk_model.interfaces.amazonpay.v1

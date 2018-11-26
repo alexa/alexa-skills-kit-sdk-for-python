@@ -63,34 +63,6 @@ ask\_sdk\_model.interfaces.amazonpay.model.request.provider\_credit module
     :members:
     :show-inheritance:
 
-ask\_sdk\_model.interfaces.amazonpay.model.request.payment\_action module
---------------------------------------------------------------------
-
-.. automodule:: ask_sdk_model.interfaces.amazonpay.model.request.payment_action
-    :members:
-    :show-inheritance:
-
-ask\_sdk\_model.interfaces.amazonpay.model.request.price module
-----------------------------------------------------------
-
-.. automodule:: ask_sdk_model.interfaces.amazonpay.model.request.price
-    :members:
-    :show-inheritance:
-
-ask\_sdk\_model.interfaces.amazonpay.model.request.provider\_attributes module
--------------------------------------------------------------------------
-
-.. automodule:: ask_sdk_model.interfaces.amazonpay.model.request.provider_attributes
-    :members:
-    :show-inheritance:
-
-ask\_sdk\_model.interfaces.amazonpay.model.request.provider\_credit module
----------------------------------------------------------------------
-
-.. automodule:: ask_sdk_model.interfaces.amazonpay.model.request.provider_credit
-    :members:
-    :show-inheritance:
-
 ask\_sdk\_model.interfaces.amazonpay.model.request.seller\_billing\_agreement\_attributes module
 -------------------------------------------------------------------------------------------
 
