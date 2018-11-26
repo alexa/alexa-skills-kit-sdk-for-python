@@ -43,12 +43,6 @@ setup(
     license=about['__license__'],
     include_package_data=True,
     install_requires=about['__install_requires__'],
-    extras_require={
-        ':python_version == "2.7"': [
-            'enum34',
-            'typing',
-        ],
-    },
     packages=find_packages(
         exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     zip_safe=False,
