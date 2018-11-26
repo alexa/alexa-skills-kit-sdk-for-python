@@ -26,4 +26,4 @@ __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
 __keywords__ = ['ASK SDK', 'Alexa Skills Kit', 'Alexa', 'ASK SDK Core',
                 'Persistence', 'DynamoDB', 'ASK SDK Standard']
-__install_requires__ = ["ask-sdk-core", 'ask-sdk-dynamodb-persistence-adapter']
+__install_requires__ = ["ask-sdk-core>=1.1.0", "ask-sdk-dynamodb-persistence-adapter>=1.1.0"]
