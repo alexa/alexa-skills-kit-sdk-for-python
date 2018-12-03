@@ -43,3 +43,11 @@ This release contains the following changes :
 - Add helper function for matching CanFulfill Intent name `#46 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/46>`
 - Deserialize only if payload is not None `48 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/48>`
 
+
+
+1.5.0
+~~~~~~~
+
+This release contains the following changes :
+
+- Refactor Python version dependencies for Python 3.7 support `50 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/50>`__
