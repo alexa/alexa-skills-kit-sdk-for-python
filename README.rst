@@ -206,7 +206,7 @@ Project that demonstrates how to use `AudioPlayer interface <https://developer.a
 `Pager Karaoke <https://github.com/alexa-labs/skill-sample-python-pager-karaoke>`__
 ~~~~~~~~~~~~~~~
 
-This sample demonstrates 3 features of APL: the [Pager Component](https://developer.amazon.com/docs/alexa-presentation-language/apl-pager.html), [SpeakItem Command](https://developer.amazon.com/docs/alexa-presentation-language/apl-commands-components.html), and accessing [device characteristics](https://developer.amazon.com/docs/alexa-presentation-language/apl-viewport-characteristics.html) in the skill code.
+This sample demonstrates 3 features of APL: the `Pager Component <https://developer.amazon.com/docs/alexa-presentation-language/apl-pager.html>`__, `SpeakItem Command <https://developer.amazon.com/docs/alexa-presentation-language/apl-commands-components.html>`__, and accessing `device characteristics <https://developer.amazon.com/docs/alexa-presentation-language/apl-viewport-characteristics.html>`__ in the skill code.
 
 
 Alexa Capabilities supported by SDK
