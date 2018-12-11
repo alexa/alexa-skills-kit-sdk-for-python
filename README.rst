@@ -203,6 +203,11 @@ in the SDK.
 
 Project that demonstrates how to use `AudioPlayer interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-audioplayer-interface-reference>`__ and `PlaybackController interface <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-playbackcontroller-interface-reference>`__ for building audioplayer skills in Alexa. The SingleStream skill sample demonstrates how to create a live radio skill, along with localization support. The MultiStream skill sample demonstrates how to create a basic podcast skill that can play multiple, pre-recorded audio streams.
 
+`Pager Karaoke <https://github.com/alexa-labs/skill-sample-python-pager-karaoke>`__
+~~~~~~~~~~~~~~~
+
+This sample demonstrates 3 features of APL: the [Pager Component](https://developer.amazon.com/docs/alexa-presentation-language/apl-pager.html), [SpeakItem Command](https://developer.amazon.com/docs/alexa-presentation-language/apl-commands-components.html), and accessing [device characteristics](https://developer.amazon.com/docs/alexa-presentation-language/apl-viewport-characteristics.html) in the skill code.
+
 
 Alexa Capabilities supported by SDK
 -----------------------------------
