@@ -13,6 +13,7 @@ Subpackages
     ask_sdk_model.interfaces.audioplayer
     ask_sdk_model.interfaces.connections
     ask_sdk_model.interfaces.display
+    ask_sdk_model.interfaces.geolocation
     ask_sdk_model.interfaces.gadget_controller
     ask_sdk_model.interfaces.game_engine
     ask_sdk_model.interfaces.messaging

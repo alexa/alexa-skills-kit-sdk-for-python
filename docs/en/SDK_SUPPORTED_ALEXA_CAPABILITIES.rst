@@ -38,6 +38,8 @@ Stable
 
 * `Dialog Management <https://developer.amazon.com/docs/custom-skills/dialog-interface-reference.html>`__
 
+* `Location Services <https://developer.amazon.com/docs/custom-skills/location-services-for-alexa-skills.html>`__
+
 
 Preview
 -------
