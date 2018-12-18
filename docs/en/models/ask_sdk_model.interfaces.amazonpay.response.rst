@@ -1,5 +1,5 @@
 ask\_sdk\_model.interfaces.amazonpay.response package
-===============================================
+=====================================================
 
 Submodules
 ~~~~~~~~~~
@@ -15,21 +15,21 @@ Submodules
     ``from a.b import C``.
 
 ask\_sdk\_model.interfaces.amazonpay.response.amazon\_pay\_error\_response module
----------------------------------------------------------------------------
+---------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.response.amazon_pay_error_response
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.amazonpay.response.charge\_amazon\_pay\_result module
---------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.response.charge_amazon_pay_result
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.amazonpay.response.setup\_amazon\_pay\_result module
--------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.response.setup_amazon_pay_result
     :members:

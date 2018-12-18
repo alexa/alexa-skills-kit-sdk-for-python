@@ -1,5 +1,5 @@
 ask\_sdk\_model.interfaces.amazonpay.request package
-===============================================
+====================================================
 
 Submodules
 ~~~~~~~~~~
@@ -15,14 +15,14 @@ Submodules
     ``from a.b import C``.
 
 ask\_sdk\_model.interfaces.amazonpay.request.charge\_amazon\_pay\_request module
---------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.request.charge_amazon_pay_request
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.amazonpay.request.setup\_amazon\_pay\_request module
--------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.amazonpay.request.setup_amazon_pay_request
     :members:

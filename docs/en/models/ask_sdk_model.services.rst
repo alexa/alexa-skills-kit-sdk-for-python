@@ -13,6 +13,7 @@ Subpackages
     ask_sdk_model.services.game_engine
     ask_sdk_model.services.list_management
     ask_sdk_model.services.monetization
+    ask_sdk_model.services.reminder_management
     ask_sdk_model.services.ups
 
 Submodules

@@ -40,6 +40,8 @@ Stable
 
 * `Location Services <https://developer.amazon.com/docs/custom-skills/location-services-for-alexa-skills.html>`__
 
+* `Reminders <https://developer.amazon.com/docs/smapi/alexa-reminders-overview.html>`__
+
 
 Preview
 -------

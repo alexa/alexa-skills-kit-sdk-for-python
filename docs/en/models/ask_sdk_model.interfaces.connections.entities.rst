@@ -1,5 +1,5 @@
 ask\_sdk\_model.interfaces.connections.entities package
-==============================================
+=======================================================
 
 Submodules
 ~~~~~~~~~~
@@ -15,21 +15,21 @@ Submodules
     ``from a.b import C``.
 
 ask\_sdk\_model.interfaces.connections.entities.base\_entity module
-------------------------------------------------------------------
+-------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.connections.entities.base_entity
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.connections.entities.postal\_address module
--------------------------------------------------------------------
+----------------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.connections.entities.postal_address
     :members:
     :show-inheritance:
 
 ask\_sdk\_model.interfaces.connections.entities.restaurant module
--------------------------------------------------------------------
+-----------------------------------------------------------------
 
 .. automodule:: ask_sdk_model.interfaces.connections.entities.restaurant
     :members:
