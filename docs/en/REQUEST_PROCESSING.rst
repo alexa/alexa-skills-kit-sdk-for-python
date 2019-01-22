@@ -630,7 +630,7 @@ before returning it to the Alexa Service.
 
             sb = SkillBuilder()
 
-            @sb.global_reresponse_interceptor()
+            @sb.global_response_interceptor()
             def response_logger(handler_input, response):
                 print("Response generated: {}".format(response))
 
