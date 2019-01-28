@@ -101,8 +101,13 @@ class DefaultSerializer(Serializer):
             # and attributes which value is not None.
             # Convert attribute name to json key in
             # model definition for request.
+            class_attribute_map = getattr(obj, 'attribute_map', {})
+            class_attribute_map.update({k: k for k
+                                        in obj.deserialized_types.keys()
+                                        if k not in class_attribute_map})
+
             obj_dict = {
-                obj.attribute_map[attr]: getattr(obj, attr)
+                class_attribute_map[attr]: getattr(obj, attr)
                 for attr, _ in iteritems(obj.deserialized_types)
                 if getattr(obj, attr) is not None
             }
@@ -279,14 +284,16 @@ class DefaultSerializer(Serializer):
             if issubclass(obj_type, Enum):
                 return obj_type(payload)
 
-            if hasattr(obj_type, 'deserialized_types') and hasattr(
-                    obj_type, 'attribute_map'):
+            if hasattr(obj_type, 'deserialized_types'):
                 if hasattr(obj_type, 'get_real_child_model'):
                     obj_type = self.__get_obj_by_discriminator(
                         payload, obj_type)
 
                 class_deserialized_types = obj_type.deserialized_types
-                class_attribute_map = obj_type.attribute_map
+                class_attribute_map = getattr(obj_type, 'attribute_map', {})
+                class_attribute_map.update({k: k for k
+                                            in obj_type.deserialized_types.keys()
+                                            if k not in class_attribute_map})
 
                 deserialized_model = obj_type()
                 for class_param_name, payload_param_name in iteritems(
