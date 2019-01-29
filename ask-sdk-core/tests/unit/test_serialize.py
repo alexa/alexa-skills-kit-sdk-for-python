@@ -132,6 +132,24 @@ class TestSerialization(unittest.TestCase):
         assert self.test_serializer.serialize(test_model_obj_1) == expected_serialized_obj, \
             "Default Serializer serialized model object incorrectly"
 
+    def test_model_obj_without_attrmap_serialization(self):
+        test_obj_inst = data.ModelTestObject3(str_var="test", int_var=123)
+        expected_dict = {
+            "str_var": "test",
+            "int_var": 123
+        }
+        assert self.test_serializer.serialize(test_obj_inst) == expected_dict, \
+            "Default Serializer serialized object without attribute_map incorrectly"
+
+    def test_model_obj_with_incomplete_attrmap_serialization(self):
+        test_obj_inst = data.ModelTestObject4(str_var="test", float_var=3.14)
+        expected_dict = {
+            "str_var": "test",
+            "floatingValue": 3.14
+        }
+        assert self.test_serializer.serialize(test_obj_inst) == expected_dict, \
+            "Default Serializer serialized object with incomplete attribute map incorrectly"
+
     def test_enum_obj_serialization(self):
         test_model_obj_2 = data.ModelTestObject2(int_var=123)
         test_enum_obj = data.ModelEnumObject("ENUM_VAL_1")
@@ -405,6 +423,34 @@ class TestDeserialization(unittest.TestCase):
             assert self.test_serializer.deserialize(
                 test_payload, test_obj_type) == expected_obj, (
                 "Default Serializer deserialized model object incorrectly when payload has additional parameters")
+
+    def test_model_obj_without_attrmap_deserialization(self):
+        test_payload = {
+            "str_var": "Test",
+            "int_var": 123
+        }
+        test_obj_type = data.ModelTestObject3
+        expected_obj = data.ModelTestObject3(str_var="Test", int_var=123)
+
+        with patch("json.loads") as mock_json_loader:
+            mock_json_loader.return_value = test_payload
+            assert self.test_serializer.deserialize(
+                test_payload, test_obj_type) == expected_obj, (
+                "Default Serializer deserialized model object without attribute map incorrectly")
+
+    def test_model_obj_with_incomplete_attrmap_deserialization(self):
+        test_payload = {
+            "str_var": "Test",
+            "floatingValue": 3.14
+        }
+        test_obj_type = data.ModelTestObject4
+        expected_obj = data.ModelTestObject4(str_var="Test", float_var=3.14)
+
+        with patch("json.loads") as mock_json_loader:
+            mock_json_loader.return_value = test_payload
+            assert self.test_serializer.deserialize(
+                test_payload, test_obj_type) == expected_obj, (
+                "Default Serializer deserialized model object with incomplete attribute map incorrectly")
 
     def test_invalid_model_obj_deserialization(self):
         test_payload = {

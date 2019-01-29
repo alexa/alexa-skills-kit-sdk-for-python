@@ -67,8 +67,8 @@ class DefaultSerializer(Serializer):
         If obj is list, serialize each element in the list.
         If obj is dict, return the dict with serialized values.
         If obj is ask sdk model, return the dict with keys resolved
-        from model's ``attribute_map`` and values serialized
-        based on ``deserialized_types``.
+        from the union of model's ``attribute_map`` and ``deserialized_types``
+        and values serialized based on ``deserialized_types``.
 
         :param obj: The data to serialize.
         :type obj: object

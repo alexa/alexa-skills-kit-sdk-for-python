@@ -16,12 +16,16 @@
 # License.
 #
 
-from .model_enum_object import ModelEnumObject
-from .model_test_object_1 import ModelTestObject1
-from .model_test_object_2 import ModelTestObject2
-from .model_test_object_3 import ModelTestObject3
-from .model_test_object_4 import ModelTestObject4
-from .invalid_model_object import InvalidModelObject
-from .model_abstract_parent_object import ModelAbstractParentObject
-from .model_child_objects import ModelChildObject1
-from .model_child_objects import ModelChildObject2
+
+class ModelTestObject3(object):
+    deserialized_types = {
+        'str_var': 'str',
+        'int_var': 'int'
+    }
+
+    def __init__(self, str_var=None, int_var=None):
+        self.str_var = str_var
+        self.int_var = int_var
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
