@@ -60,15 +60,19 @@ class DefaultSerializer(Serializer):
         # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, None]
         """Builds a serialized object.
 
-        If obj is None, return None.
-        If obj is str, int, long, float, bool, return directly.
-        If obj is datetime.datetime, datetime.date convert to
-        string in iso8601 format.
-        If obj is list, serialize each element in the list.
-        If obj is dict, return the dict with serialized values.
-        If obj is ask sdk model, return the dict with keys resolved
-        from the union of model's ``attribute_map`` and ``deserialized_types``
-        and values serialized based on ``deserialized_types``.
+        * If obj is None, return None.
+        * If obj is str, int, long, float, bool, return directly.
+        * If obj is datetime.datetime, datetime.date convert to
+          string in iso8601 format.
+        * If obj is list, serialize each element in the list.
+        * If obj is dict, return the dict with serialized values.
+        * If obj is ask sdk model, return the dict with keys resolved
+          from the union of model's ``attribute_map`` and
+          ``deserialized_types`` and values serialized based on
+          ``deserialized_types``.
+        * If obj is a generic class instance, return the dict with keys
+          from instance's ``deserialized_types`` and values serialized
+          based on ``deserialized_types``.
 
         :param obj: The data to serialize.
         :type obj: object
@@ -96,15 +100,19 @@ class DefaultSerializer(Serializer):
         if isinstance(obj, dict):
             obj_dict = obj
         else:
-            # Convert model obj to dict except
-            # attributes `deserialized_types`, `attribute_map`
-            # and attributes which value is not None.
-            # Convert attribute name to json key in
-            # model definition for request.
+            # Convert model obj to dict
+            # All the non null attributes under `deserialized_types`
+            # map are considered for serialization.
+            # The `attribute_map` provides the key names to be used
+            # in the dict. In case of missing `attribute_map` mapping,
+            # the original attribute name is retained as the key name.
             class_attribute_map = getattr(obj, 'attribute_map', {})
-            class_attribute_map.update({k: k for k
-                                        in obj.deserialized_types.keys()
-                                        if k not in class_attribute_map})
+            class_attribute_map.update(
+                {
+                    k: k for k in obj.deserialized_types.keys()
+                    if k not in class_attribute_map
+                }
+            )
 
             obj_dict = {
                 class_attribute_map[attr]: getattr(obj, attr)
@@ -116,7 +124,28 @@ class DefaultSerializer(Serializer):
 
     def deserialize(self, payload, obj_type):
         # type: (str, Union[T, str]) -> Any
-        """Deserializes payload into ask sdk model object.
+        """Deserializes payload into an instance of provided ``obj_type``.
+
+        The ``obj_type`` parameter can be a primitive type, a generic
+        model object or a list / dict of model objects.
+
+        The list or dict object type has to be provided as a string
+        format. For eg:
+
+        * ``'list[a.b.C]'`` if the payload is a list of instances of
+          class ``a.b.C``.
+        * ``'dict(str, a.b.C)'`` if the payload is a dict containing
+          mappings of ``str : a.b.C`` class instance types.
+
+        The method looks for a ``deserialized_types`` dict in the model
+        class, that mentions which payload values has to be
+        deserialized. In case the payload key names are different than
+        the model attribute names, the corresponding mapping can be
+        provided in another special dict ``attribute_map``. The model
+        class should also have the ``__init__`` method with default
+        values for arguments. Check
+        :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`
+        source code for an example implementation.
 
         :param payload: data to be deserialized.
         :type payload: str
@@ -139,14 +168,14 @@ class DefaultSerializer(Serializer):
 
     def __deserialize(self, payload, obj_type):
         # type: (str, Union[T, str]) -> Any
-        """Deserializes payload into ask sdk model object.
+        """Deserializes payload into a model object.
 
         :param payload: data to be deserialized.
         :type payload: str
         :param obj_type: resolved class name for deserialized object
         :type obj_type: Union[str, object]
         :return: deserialized object
-        :rtype: T
+        :rtype: object
         """
         if payload is None:
             return None
@@ -184,7 +213,7 @@ class DefaultSerializer(Serializer):
             if obj_type in self.NATIVE_TYPES_MAPPING:
                 obj_type = self.NATIVE_TYPES_MAPPING[obj_type]
             else:
-                # deserialize ask sdk models
+                # deserialize models
                 obj_type = self.__load_class_from_name(obj_type)
 
         if obj_type in self.PRIMITIVE_TYPES:
@@ -199,7 +228,20 @@ class DefaultSerializer(Serializer):
             return self.__deserialize_model(payload, obj_type)
 
     def __load_class_from_name(self, class_name):
-        # type: (str) -> str
+        # type: (str) -> T
+        """Load the class from the ``class_name`` provided.
+
+        Resolve the class name from the ``class_name`` provided, load
+        the class on path and return the resolved class. If the module
+        information is not provided in the ``class_name``, then look
+        for the class on sys ``modules``.
+
+        :param class_name: absolute class name to be loaded
+        :type class_name: str
+        :return: Resolved class reference
+        :rtype: object
+        :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
+        """
         try:
             module_class_list = class_name.rsplit(".", 1)
             if len(module_class_list) > 1:
@@ -228,7 +270,7 @@ class DefaultSerializer(Serializer):
         :type obj_type: object
         :return: deserialized primitive datatype object
         :rtype: object
-        :raises SerializationException
+        :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
         try:
             return obj_type(payload)
@@ -252,7 +294,7 @@ class DefaultSerializer(Serializer):
         :type obj_type: object
         :return: deserialized primitive datatype object
         :rtype: object
-        :raises SerializationException
+        :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
         try:
             from dateutil.parser import parse
@@ -278,7 +320,7 @@ class DefaultSerializer(Serializer):
         :type obj_type: object
         :return: deserialized sdk model object
         :rtype: object
-        :raises SerializationException
+        :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
         try:
             if issubclass(obj_type, Enum):
@@ -291,9 +333,12 @@ class DefaultSerializer(Serializer):
 
                 class_deserialized_types = obj_type.deserialized_types
                 class_attribute_map = getattr(obj_type, 'attribute_map', {})
-                class_attribute_map.update({k: k for k
-                                            in obj_type.deserialized_types.keys()
-                                            if k not in class_attribute_map})
+                class_attribute_map.update(
+                    {
+                        k: k for k in obj_type.deserialized_types.keys()
+                        if k not in class_attribute_map
+                    }
+                )
 
                 deserialized_model = obj_type()
                 for class_param_name, payload_param_name in iteritems(
@@ -319,7 +364,19 @@ class DefaultSerializer(Serializer):
             raise SerializationException(str(e))
 
     def __get_obj_by_discriminator(self, payload, obj_type):
-        # type: (str, Union[T, str]) -> str
+        # type: (str, Union[T, str]) -> T
+        """Get correct subclass instance using the discriminator in
+        payload.
+
+        :param payload: Payload for deserialization
+        :type payload: str
+        :param obj_type: parent class for deserializing payload into
+        :type obj_type: object
+        :return: Subclass of provided parent class, that resolves to
+            the discriminator in payload.
+        :rtype: object
+        :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
+        """
         namespaced_class_name = obj_type.get_real_child_model(payload)
         if not namespaced_class_name:
             raise SerializationException(
