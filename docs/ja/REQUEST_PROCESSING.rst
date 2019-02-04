@@ -125,10 +125,9 @@ SDKは、リクエストハンドラーで、スキルビルダーに指定さ�
 
     # Implement FooHandler, BarHandler, BazHandler classes
 
-    sb.request_handlers.extend([
-            FooHandler(),
-            BarHandler(),
-            BazHandler()])
+    sb.add_request_handler(FooHandler())
+    sb.add_request_handler(BarHandler())
+    sb.add_request_handler(BazHandler())
 
 ``request_handler`` デコレーターを使用する方法に従っている場合、ハンドラー関数を明示的に登録する必要はありません。スキルビルダーインスタンスを使用してすでにデコレートされています。
 
