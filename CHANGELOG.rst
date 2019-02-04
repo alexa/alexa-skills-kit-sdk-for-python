@@ -74,3 +74,11 @@ This release contains the following changes :
 This release contains the following changes :
 
 - Refactor Python version dependencies for Python 3.7 support `50 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/50>`__
+
+
+1.6.0
+~~~~~~~
+
+This release contains the following changes :
+
+- Update DefaultSerializer to let generic classes to be added as session attributes `60 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/60>`__.
