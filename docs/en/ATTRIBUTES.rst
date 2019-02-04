@@ -48,6 +48,15 @@ Session attributes do not require the use of an external storage
 solution. They are not available for use when handling out-of-session
 requests. They are discarded once the skill session closes.
 
+.. note::
+
+    Since session attributes are stored in the ``session`` property of
+    Alexa's :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`
+    and :py:class:`ask_sdk_model.response_envelope.ResponseEnvelope`
+    objects, only serializable types can be stored under them. The
+    :py:class:`ask_sdk_core.serialize.DefaultSerializer` is used to
+    serialize / deserialize the values.
+
 Persistent Attributes
 ~~~~~~~~~~~~~~~~~~~~~
 
