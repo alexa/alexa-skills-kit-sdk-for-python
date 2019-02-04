@@ -198,10 +198,9 @@ order in which they were provided to the ``Skill`` builder.
 
             # Implement FooHandler, BarHandler, BazHandler classes
 
-            sb.request_handlers.extend([
-                    FooHandler(),
-                    BarHandler(),
-                    BazHandler()])
+            sb.add_request_handler(FooHandler())
+            sb.add_request_handler(BarHandler())
+            sb.add_request_handler(BazHandler())
 
     .. tab:: RequestHandler Decorator
 
