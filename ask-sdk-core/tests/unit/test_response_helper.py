@@ -26,6 +26,7 @@ from ask_sdk_model.interfaces.display import RichText
 from ask_sdk_model.canfulfill import (
     CanFulfillIntent, CanFulfillIntentValues, CanFulfillSlot,
     CanFulfillSlotValues, CanUnderstandSlotValues)
+from ask_sdk_model.ui.play_behavior import PlayBehavior
 
 from ask_sdk_core.response_helper import (
     ResponseFactory, get_text_content, get_plain_text_content,
@@ -43,6 +44,16 @@ class TestResponseFactory(unittest.TestCase):
             ssml="<speak></speak>"), (
             "The speak method of ResponseFactory fails to set output speech")
 
+    def test_speak_with_play_behavior(self):
+        test_play_behavior = PlayBehavior.ENQUEUE
+        response_factory = self.response_factory.speak(
+            speech=None, play_behavior=test_play_behavior)
+
+        assert response_factory.response.output_speech == SsmlOutputSpeech(
+            ssml="<speak></speak>", play_behavior=test_play_behavior), (
+            "The speak method of ResponseFactory fails to set play behavior "
+            "on output speech")
+
     def test_ask(self):
         response_factory = self.response_factory.ask(reprompt=None)
 
@@ -52,6 +63,18 @@ class TestResponseFactory(unittest.TestCase):
         assert response_factory.response.should_end_session is False, (
             "The ask method of ResponseFactory fails to set the "
             "should_end_session to False")
+
+    def test_ask_with_play_behavior(self):
+        test_play_behavior = PlayBehavior.REPLACE_ALL
+        response_factory = self.response_factory.ask(
+            reprompt=None, play_behavior=test_play_behavior)
+
+        assert response_factory.response.reprompt == Reprompt(
+            output_speech=SsmlOutputSpeech(
+                ssml="<speak></speak>",
+                play_behavior=test_play_behavior)), (
+            "The ask method of ResponseFactory fails to set play behavior "
+            "on reprompt output speech")
 
     def test_ask_with_video_app_launch_directive(self):
         directive = LaunchDirective(video_item=VideoItem(

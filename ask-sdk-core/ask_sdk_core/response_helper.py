@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
     from ask_sdk_model import Directive
     from ask_sdk_model.ui import Card
     from ask_sdk_model.canfulfill import CanFulfillIntent
+    from ask_sdk_model.ui.play_behavior import PlayBehavior
 
 
 PLAIN_TEXT_TYPE = "PlainText"
@@ -51,23 +52,27 @@ class ResponseFactory(object):
             directives=None, should_end_session=None,
             can_fulfill_intent=None)
 
-    def speak(self, speech):
-        # type: (str) -> 'ResponseFactory'
+    def speak(self, speech, play_behavior=None):
+        # type: (str, PlayBehavior) -> 'ResponseFactory'
         """Say the provided speech to the user.
 
         :param speech: the output speech sent back to the user.
         :type speech: str
+        :param play_behavior: attribute to control alexa's speech
+            interruption
+        :type play_behavior: ask_sdk_model.ui.play_behavior.PlayBehavior
         :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
         """
         ssml = "<speak>{}</speak>".format(self.__trim_outputspeech(
             speech_output=speech))
-        self.response.output_speech = SsmlOutputSpeech(ssml=ssml)
+        self.response.output_speech = SsmlOutputSpeech(
+            ssml=ssml, play_behavior=play_behavior)
         return self
 
-    def ask(self, reprompt):
-        # type: (str) -> 'ResponseFactory'
+    def ask(self, reprompt, play_behavior=None):
+        # type: (str, PlayBehavior) -> 'ResponseFactory'
         """Provide reprompt speech to the user, if no response for
         8 seconds.
 
@@ -76,13 +81,17 @@ class ResponseFactory(object):
 
         :param reprompt: the output speech to reprompt.
         :type reprompt: str
+        :param play_behavior: attribute to control alexa's speech
+            interruption
+        :type play_behavior: ask_sdk_model.ui.play_behavior.PlayBehavior
         :return: response factory with partial response being built and
             access from self.response.
         :rtype: ResponseFactory
         """
         ssml = "<speak>{}</speak>".format(self.__trim_outputspeech(
             speech_output=reprompt))
-        output_speech = SsmlOutputSpeech(ssml=ssml)
+        output_speech = SsmlOutputSpeech(
+            ssml=ssml, play_behavior=play_behavior)
         self.response.reprompt = Reprompt(output_speech=output_speech)
         if not self.__is_video_app_launch_directive_present():
             self.response.should_end_session = False
