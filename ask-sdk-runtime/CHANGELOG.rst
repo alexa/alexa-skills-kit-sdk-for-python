@@ -59,3 +59,11 @@ This release contains the following changes :
 This release contains the following changes :
 
 - Update DefaultSerializer to let generic classes to be added as session attributes `60 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/60>`__.
+
+
+1.7.0
+~~~~~~~
+
+This release contains the following changes :
+
+- Add optional `play_behavior` attribute to `speak` and `ask` methods in response builder `61 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/61>`__. 
