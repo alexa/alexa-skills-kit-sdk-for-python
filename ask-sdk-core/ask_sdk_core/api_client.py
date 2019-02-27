@@ -67,7 +67,12 @@ class DefaultApiClient(ApiClient):
                     "Requests against non-HTTPS endpoints are not allowed.")
 
             if request.body:
-                raw_data = json.dumps(request.body)
+                body_content_type = http_headers.get("Content-type", None)
+                if (body_content_type is not None and
+                        "json" in body_content_type):
+                    raw_data = json.dumps(request.body)
+                else:
+                    raw_data = request.body
             else:
                 raw_data = None
 
