@@ -184,7 +184,26 @@ class TestDefaultApiClient(unittest.TestCase):
 
             assert "Requests against non-HTTPS endpoints are not allowed." in str(exc.exception)
 
-    def test_api_client_send_request_with_raw_data(self):
+    def test_api_client_send_request_with_raw_data_serialized_for_json_content(
+            self):
+        test_data = "test\nstring"
+        self.valid_request.body = "test\nstring"
+        self.valid_request.method = "POST"
+        headers = [("Content-type", "application/json")]
+        self.valid_request.headers = headers
+
+        with mock.patch(
+                "requests.post",
+                side_effect=lambda *args, **kwargs: self.valid_mock_response
+        ) as mock_put:
+            actual_response = self.test_api_client.invoke(self.valid_request)
+            mock_put.assert_called_once_with(
+                data=json.dumps(test_data),
+                headers={'Content-type': 'application/json'},
+                url=self.valid_request.url)
+
+    def test_api_client_send_request_with_raw_data_unchanged_for_non_json_content(
+            self):
         test_data = "test\nstring"
         self.valid_request.body = "test\nstring"
         self.valid_request.method = "POST"
@@ -195,5 +214,5 @@ class TestDefaultApiClient(unittest.TestCase):
         ) as mock_put:
             actual_response = self.test_api_client.invoke(self.valid_request)
             mock_put.assert_called_once_with(
-                data=json.dumps(test_data), headers={},
+                data=test_data, headers={},
                 url=self.valid_request.url)
