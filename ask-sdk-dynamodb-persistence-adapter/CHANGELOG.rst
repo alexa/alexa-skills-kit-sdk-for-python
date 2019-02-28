@@ -90,3 +90,12 @@ This release contains the following changes :
 This release contains the following changes :
 
 - Add optional `play_behavior` attribute to `speak` and `ask` methods in response builder `61 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/61>`__. 
+
+
+1.8.0
+~~~~~~~
+
+This release contains the following changes : 
+
+- Allow Default API Client to invoke Alexa APIs that require other than 'application/json' body type.
+
