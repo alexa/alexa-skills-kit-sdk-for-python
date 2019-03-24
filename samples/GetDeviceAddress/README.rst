@@ -36,7 +36,7 @@ This sample shows how to create a Lambda function for handling Alexa
 Skill requests that:
 
 -  Use service clients in SDK, to call the Alexa APIs.
-   More on `service clients here <../../docs/SERVICE_CLIENTS.rst>`__
+   More on `service clients here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/SERVICE_CLIENTS.html#>`__
 -  Use ``AskForPermissionsConsentCard`` for asking for location consent
 
 Setup
@@ -50,8 +50,8 @@ Prerequisites
 ~~~~~~~~~~~~~
 
 Please follow the
-`prerequisites <../../docs/GETTING_STARTED.rst#prerequisites>`_ section and the
-`adding ASK SDK <../../docs/GETTING_STARTED.rst#adding-the-ask-sdk-to-your-project>`_
+`prerequisites <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/GETTING_STARTED.html#prerequisites>`_ section and the
+`adding ASK SDK <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/GETTING_STARTED.html#adding-the-ask-sdk-for-python-to-your-project>`_
 section in
 Getting Started documentation. For this sample skill, you need
 the ``ASK SDK Core`` package.
