@@ -118,7 +118,21 @@ Default Serializer
 General Utilities
 ~~~~~~~~~~~~~~~~~
 
-.. automodule:: ask_sdk_core.utils
+.. automodule:: ask_sdk_core.utils.predicate
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :member-order: bysource
+
+.. automodule:: ask_sdk_core.utils.viewport
+   :members:
+   :undoc-members:
+   :inherited-members:
+   :show-inheritance:
+   :member-order: bysource
+
+.. automodule:: ask_sdk_core.utils.request_util
    :members:
    :undoc-members:
    :inherited-members:

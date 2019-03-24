@@ -76,3 +76,11 @@ This release contains the following changes :
 
 - Allow Default API Client to invoke Alexa APIs that require other than 'application/json' body type.
 
+
+
+1.9.0
+~~~~~~~
+
+This release includes the following : 
+
+- Request utility methods which makes it easier to retrieve common properties from an incoming request.
