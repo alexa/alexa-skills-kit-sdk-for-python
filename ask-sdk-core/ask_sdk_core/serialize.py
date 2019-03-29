@@ -27,8 +27,6 @@ from six import text_type
 from six import integer_types
 from enum import Enum
 
-from typing import cast, Any
-
 from ask_sdk_model.services import Serializer
 
 from .exceptions import SerializationException
@@ -36,7 +34,7 @@ from .exceptions import SerializationException
 unicode_type = text_type
 
 try:
-    long  # type: ignore
+    long
 except NameError:
     long = int
 
@@ -59,7 +57,7 @@ class DefaultSerializer(Serializer):
     }
 
     def serialize(self, obj):
-        # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, int, float, None]
+        # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, None]
         """Builds a serialized object.
 
         * If obj is None, return None.
@@ -79,7 +77,7 @@ class DefaultSerializer(Serializer):
         :param obj: The data to serialize.
         :type obj: object
         :return: The serialized form of data.
-        :rtype: Union[Dict[str, Any], List, Tuple, str, int, float, None]
+        :rtype: Union[Dict[str, Any], List[Any], Tuple[Any], str, None]
         """
         if obj is None:
             return None
@@ -152,7 +150,7 @@ class DefaultSerializer(Serializer):
         :param payload: data to be deserialized.
         :type payload: str
         :param obj_type: resolved class name for deserialized object
-        :type obj_type: object
+        :type obj_type: Union[str, object]
         :return: deserialized object
         :rtype: object
         :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
@@ -175,29 +173,26 @@ class DefaultSerializer(Serializer):
         :param payload: data to be deserialized.
         :type payload: str
         :param obj_type: resolved class name for deserialized object
-        :type obj_type: object
+        :type obj_type: Union[str, object]
         :return: deserialized object
         :rtype: object
         """
         if payload is None:
             return None
 
-        if isinstance(obj_type, str):
+        if type(obj_type) == str:
             if obj_type.startswith('list['):
                 # Get object type for each item in the list
                 # Deserialize each item using the object type.
-                sub_obj_type =  re.match(
-                    'list\[(.*)\]', obj_type)
-                if sub_obj_type is None:
-                    return []
-                sub_obj_types = sub_obj_type.group(1)
-                deserialized_list = []  # type: List
+                sub_obj_types = re.match(
+                    'list\[(.*)\]', obj_type).group(1)
+                deserialized_list = []
                 if "," in sub_obj_types:
                     # list contains objects of different types
-                    for sub_payload, sub_obj_types in zip(
+                    for sub_payload, sub_obj_type in zip(
                             payload, sub_obj_types.split(",")):
                         deserialized_list.append(self.__deserialize(
-                            sub_payload, sub_obj_types.strip()))
+                            sub_payload, sub_obj_type.strip()))
                 else:
                     for sub_payload in payload:
                         deserialized_list.append(self.__deserialize(
@@ -208,17 +203,15 @@ class DefaultSerializer(Serializer):
                 # Get object type for each k,v pair in the dict
                 # Deserialize each value using the object type of v.
                 sub_obj_type = re.match(
-                    'dict\(([^,]*), (.*)\)', obj_type)
-                if sub_obj_type is None:
-                    return {}
-                sub_obj_types = sub_obj_type.group(2)
+                    'dict\(([^,]*), (.*)\)', obj_type).group(2)
                 return {
                     k: self.__deserialize(v, sub_obj_type)
-                    for k, v in iteritems(cast(Any, payload))
+                    for k, v in iteritems(payload)
                 }
+
             # convert str to class
             if obj_type in self.NATIVE_TYPES_MAPPING:
-                obj_type = self.NATIVE_TYPES_MAPPING[obj_type]  # type: ignore
+                obj_type = self.NATIVE_TYPES_MAPPING[obj_type]
             else:
                 # deserialize models
                 obj_type = self.__load_class_from_name(obj_type)
@@ -279,9 +272,8 @@ class DefaultSerializer(Serializer):
         :rtype: object
         :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
-        obj_cast = cast(Any, obj_type)
         try:
-            return obj_cast(payload)
+            return obj_type(payload)
         except UnicodeEncodeError:
             return unicode_type(payload)
         except TypeError:
@@ -289,7 +281,7 @@ class DefaultSerializer(Serializer):
         except ValueError:
             raise SerializationException(
                 "Failed to parse {} into '{}' object".format(
-                    payload, obj_cast.__name__))
+                    payload, obj_type.__name__))
 
     def __deserialize_datetime(self, payload, obj_type):
         # type: (str, Union[T, str]) -> Any
@@ -316,7 +308,7 @@ class DefaultSerializer(Serializer):
         except ValueError:
             raise SerializationException(
                 "Failed to parse {} into '{}' object".format(
-                    payload, cast(Any, obj_type).__name__))
+                    payload, obj_type.__name__))
 
     def __deserialize_model(self, payload, obj_type):
         # type: (str, Union[T, str]) -> Any
@@ -331,45 +323,43 @@ class DefaultSerializer(Serializer):
         :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
         try:
-            obj_cast = cast(Any, obj_type)
-            if not isinstance(obj_cast, str):
-                if isinstance(obj_cast, type) and issubclass(obj_cast, Enum):
-                    return obj_cast(payload)
+            if issubclass(obj_type, Enum):
+                return obj_type(payload)
 
-                if hasattr(obj_cast, 'deserialized_types'):
-                    if hasattr(obj_cast, 'get_real_child_model'):
-                        obj_cast = self.__get_obj_by_discriminator(
-                            payload, obj_cast)
+            if hasattr(obj_type, 'deserialized_types'):
+                if hasattr(obj_type, 'get_real_child_model'):
+                    obj_type = self.__get_obj_by_discriminator(
+                        payload, obj_type)
 
-                    class_deserialized_types = obj_cast.deserialized_types
-                    class_attribute_map = getattr(obj_cast, 'attribute_map', {})
-                    class_attribute_map.update(
-                        {
-                            k: k for k in obj_cast.deserialized_types.keys()
-                            if k not in class_attribute_map
-                        }
-                    )
+                class_deserialized_types = obj_type.deserialized_types
+                class_attribute_map = getattr(obj_type, 'attribute_map', {})
+                class_attribute_map.update(
+                    {
+                        k: k for k in obj_type.deserialized_types.keys()
+                        if k not in class_attribute_map
+                    }
+                )
 
-                    deserialized_model = obj_cast()
-                    for class_param_name, payload_param_name in iteritems(
-                            class_attribute_map):
-                        if payload_param_name in payload:
-                            setattr(
-                                deserialized_model,
-                                class_param_name,
-                                self.__deserialize(
-                                    payload[payload_param_name],
-                                    class_deserialized_types[class_param_name]))
+                deserialized_model = obj_type()
+                for class_param_name, payload_param_name in iteritems(
+                        class_attribute_map):
+                    if payload_param_name in payload:
+                        setattr(
+                            deserialized_model,
+                            class_param_name,
+                            self.__deserialize(
+                                payload[payload_param_name],
+                                class_deserialized_types[class_param_name]))
 
-                    additional_params = [
-                        param for param in payload
-                        if param not in class_attribute_map.values()]
+                additional_params = [
+                    param for param in payload
+                    if param not in class_attribute_map.values()]
 
-                    for add_param in additional_params:
-                        setattr(deserialized_model, add_param, payload[cast(Any, add_param)])
-                    return deserialized_model
-                else:
-                    return payload
+                for add_param in additional_params:
+                    setattr(deserialized_model, add_param, payload[add_param])
+                return deserialized_model
+            else:
+                return payload
         except Exception as e:
             raise SerializationException(str(e))
 
@@ -387,7 +377,7 @@ class DefaultSerializer(Serializer):
         :rtype: object
         :raises: :py:class:`ask_sdk_core.exceptions.SerializationException`
         """
-        namespaced_class_name = cast(Any, obj_type).get_real_child_model(payload)
+        namespaced_class_name = obj_type.get_real_child_model(payload)
         if not namespaced_class_name:
             raise SerializationException(
                 "Couldn't resolve object by discriminator type "
