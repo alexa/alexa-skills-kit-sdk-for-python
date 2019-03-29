@@ -30,10 +30,10 @@ from . import data
 try:
     import mock
 except ImportError:
-    from unittest import mock
+    from unittest import mock  # type: ignore
 
 try:
-    long_type = long
+    long_type = long  # type: ignore
 except NameError:
     long_type = int
 

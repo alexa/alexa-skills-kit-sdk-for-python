@@ -38,7 +38,7 @@ if typing.TYPE_CHECKING:
         GenericRequestMapper, GenericHandlerAdapter, GenericExceptionMapper,
         AbstractRequestInterceptor, AbstractResponseInterceptor)
     from .attributes_manager import AbstractPersistenceAdapter
-    T = TypeVar['T']
+    T = TypeVar('T')
 
 
 class SkillConfiguration(RuntimeConfiguration):

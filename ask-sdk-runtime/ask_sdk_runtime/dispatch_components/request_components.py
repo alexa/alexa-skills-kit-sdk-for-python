@@ -323,7 +323,7 @@ class GenericRequestMapper(AbstractRequestMapper):
         :raises: :py:class:`ask_sdk_runtime.exceptions.DispatchException`
             when any object inside the input list is of invalid type
         """
-        self._request_handler_chains = []
+        self._request_handler_chains = []  # type: List
         if request_handler_chains is not None:
             for chain in request_handler_chains:
                 self.add_request_handler_chain(request_handler_chain=chain)
