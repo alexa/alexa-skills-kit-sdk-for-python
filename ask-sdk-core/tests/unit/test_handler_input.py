@@ -22,7 +22,7 @@ from ask_sdk_core.handler_input import HandlerInput
 try:
     import mock
 except ImportError:
-    from unittest import mock  # type: ignore
+    from unittest import mock
 
 
 class TestHandlerInput(unittest.TestCase):

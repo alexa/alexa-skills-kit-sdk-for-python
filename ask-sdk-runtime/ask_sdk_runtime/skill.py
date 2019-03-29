@@ -100,10 +100,10 @@ class RuntimeConfigurationBuilder(object):
         """Builder class for creating a runtime configuration object,
         from base dispatch components.
         """
-        self.request_handler_chains = [] # type: List
-        self.global_request_interceptors = []  # type: List
-        self.global_response_interceptors = []  # type: List
-        self.exception_handlers = []  # type: List
+        self.request_handler_chains = []
+        self.global_request_interceptors = []
+        self.global_response_interceptors = []
+        self.exception_handlers = []
 
     def add_request_handler(self, request_handler):
         # type: (AbstractRequestHandler) -> None

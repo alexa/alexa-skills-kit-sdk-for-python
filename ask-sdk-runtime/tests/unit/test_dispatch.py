@@ -301,14 +301,14 @@ class TestRequestDispatcher(unittest.TestCase):
 
         test_interceptor_1.process.assert_called_once_with(
             handler_input=self.valid_handler_input,
-            dispatch_output=test_response_before_interceptor), (
+            response=test_response_before_interceptor), (
             "Dispatcher dispatch method didn't process local response "
             "interceptors after calling request handler "
             "handle")
 
         test_interceptor_2.process.assert_called_once_with(
             handler_input=self.valid_handler_input,
-            dispatch_output=test_response_from_interceptor_1), (
+            response=test_response_from_interceptor_1), (
             "Dispatcher dispatch method didn't process local response "
             "interceptors after calling request handler "
             "handle")
@@ -350,13 +350,13 @@ class TestRequestDispatcher(unittest.TestCase):
 
         test_interceptor_1.process.assert_called_once_with(
             handler_input=self.valid_handler_input,
-            dispatch_output=test_response_before_interceptor), (
+            response=test_response_before_interceptor), (
             "Dispatcher dispatch method didn't process global request "
             "interceptors after calling dispatch request")
 
         test_interceptor_2.process.assert_called_once_with(
             handler_input=self.valid_handler_input,
-            dispatch_output=test_response_from_interceptor_1), (
+            response=test_response_from_interceptor_1), (
             "Dispatcher dispatch method didn't process global request "
             "interceptors after calling dispatch request")
 

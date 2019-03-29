@@ -27,7 +27,7 @@ from .data.mock_response_object import MockResponse
 try:
     import mock
 except ImportError:
-    from unittest import mock  # type: ignore
+    from unittest import mock
 
 
 class TestDefaultApiClient(unittest.TestCase):

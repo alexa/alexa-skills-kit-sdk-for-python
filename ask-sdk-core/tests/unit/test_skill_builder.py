@@ -18,7 +18,7 @@
 import unittest
 import inspect
 
-from ask_sdk_model import Response, Session
+from ask_sdk_model import Response
 from ask_sdk_runtime.dispatch_components import (
     GenericHandlerAdapter, GenericExceptionMapper)
 
@@ -34,7 +34,7 @@ from ask_sdk_core.utils import RESPONSE_FORMAT_VERSION, user_agent_info
 try:
     import mock
 except ImportError:
-    from unittest import mock  # type: ignore
+    from unittest import mock
 
 
 class TestSkillBuilder(unittest.TestCase):
@@ -172,9 +172,6 @@ class TestSkillBuilder(unittest.TestCase):
                         "applicationId": "test"
                     }
                 }
-            },
-            "session":{
-                "new": "True"
             }
         }
 

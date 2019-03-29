@@ -29,7 +29,7 @@ from ask_sdk_core.exceptions import AskSdkException
 try:
     import mock
 except ImportError:
-    from unittest import mock  # type: ignore
+    from unittest import mock
 
 
 class TestSkillConfiguration(unittest.TestCase):
@@ -69,11 +69,9 @@ class TestSkill(unittest.TestCase):
     def test_skill_invoke_throw_exception_when_skill_id_doesnt_match(self):
         skill_config = self.create_skill_config()
         skill_config.skill_id = "123"
-        session = Session()
         mock_request_envelope = RequestEnvelope(
             context=Context(system=SystemState(
-                application=Application(application_id="test"))),
-                session=session)
+                application=Application(application_id="test"))))
         skill = CustomSkill(skill_configuration=skill_config)
 
         with self.assertRaises(AskSdkException) as exc:
@@ -84,8 +82,7 @@ class TestSkill(unittest.TestCase):
             "doesn't match Application ID")
 
     def test_skill_invoke_non_empty_response_in_response_envelope(self):
-        session = Session()
-        mock_request_envelope = RequestEnvelope(session=session)
+        mock_request_envelope = RequestEnvelope()
         mock_response = Response()
 
         self.mock_handler_adapter.supports.return_value = True
@@ -102,8 +99,7 @@ class TestSkill(unittest.TestCase):
             "request dispatch")
 
     def test_skill_invoke_null_response_in_response_envelope(self):
-        session = Session()
-        mock_request_envelope = RequestEnvelope(session=session)
+        mock_request_envelope = RequestEnvelope()
 
         self.mock_handler_adapter.supports.return_value = True
         self.mock_handler_adapter.execute.return_value = None
@@ -119,14 +115,12 @@ class TestSkill(unittest.TestCase):
             "request dispatch")
 
     def test_skill_invoke_set_service_client_factory_if_api_client_provided(self):
-        session = Session()
         mock_request_envelope = RequestEnvelope(
             context=Context(
                 system=SystemState(
                     application=Application(application_id="test"),
                     api_access_token="test_api_access_token",
-                    api_endpoint="test_api_endpoint")),
-                    session=session)
+                    api_endpoint="test_api_endpoint")))
 
         self.mock_handler_adapter.supports.return_value = True
         self.mock_handler_adapter.execute.return_value = None

@@ -89,14 +89,13 @@ class AttributesManager(object):
             raise AttributesManagerException("RequestEnvelope cannot be none!")
         self._request_envelope = request_envelope
         self._persistence_adapter = persistence_adapter
-        self._persistence_attributes = {}  # type: Dict
-        self._request_attributes = {}  # type: Dict
+        self._persistence_attributes = None
+        self._request_attributes = {}
         if not self._request_envelope.session:
-            raise AttributesManagerException(
-                "Cannot get SessionAttributes from out of session request!")
+            self._session_attributes = None
         else:
             if not self._request_envelope.session.attributes:
-                self._session_attributes = {}  # type: Dict
+                self._session_attributes = {}
             else:
                 self._session_attributes = deepcopy(
                     request_envelope.session.attributes)

@@ -24,7 +24,7 @@ from ask_sdk_dynamodb.adapter import DynamoDbAdapter
 try:
     import mock
 except ImportError:
-    from unittest import mock  # type: ignore
+    from unittest import mock
 
 
 class TestStandardSkillBuilder(unittest.TestCase):

@@ -16,17 +16,12 @@
 # License.
 #
 import os
-import typing
 from setuptools import setup, find_packages
 from codecs import open
 
-if typing.TYPE_CHECKING:
-    from typing import Dict
-
 here = os.path.abspath(os.path.dirname(__file__))
 
-about = {}  # type: Dict
-
+about = {}
 with open(os.path.join(
         here, 'ask_sdk_core', '__version__.py'), 'r', 'utf-8') as f:
     exec(f.read(), about)

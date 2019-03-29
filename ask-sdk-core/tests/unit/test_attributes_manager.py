@@ -36,9 +36,8 @@ class TestAttributesManager(unittest.TestCase):
             "none")
 
     def test_get_initial_request_attributes(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
@@ -61,7 +60,9 @@ class TestAttributesManager(unittest.TestCase):
             "session request envelope")
 
     def test_get_default_session_attributes_from_new_session_request_envelope(self):
-        session = Session()
+        session = Session(
+            new=True, session_id=None, user=None,
+            attributes=None, application=None)
         request_envelope = RequestEnvelope(
             version=None, session=session, context=None, request=None)
         attributes_manager = AttributesManager(
@@ -72,13 +73,11 @@ class TestAttributesManager(unittest.TestCase):
             "new session request envelope")
 
     def test_get_session_attributes_from_out_of_session_request_envelope(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
-        attributes_manager._request_envelope.session = None
         with self.assertRaises(AttributesManagerException) as exc:
             test_session_attributes = attributes_manager.session_attributes
 
@@ -87,9 +86,8 @@ class TestAttributesManager(unittest.TestCase):
             "attributes from out of session envelope")
 
     def test_get_persistent_attributes(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope,
             persistence_adapter=MockPersistenceAdapter())
@@ -100,9 +98,8 @@ class TestAttributesManager(unittest.TestCase):
             "persistent adapter")
 
     def test_get_persistent_attributes_without_persistence_adapter(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
@@ -114,9 +111,8 @@ class TestAttributesManager(unittest.TestCase):
             "persistent attributes without persistence adapter")
 
     def test_set_request_attributes(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
         attributes_manager.request_attributes = {"key": "value"}
@@ -141,13 +137,11 @@ class TestAttributesManager(unittest.TestCase):
             "AttributesManager fails to set the session attributes")
 
     def test_set_session_attributes_to_out_of_session_request_envelope(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
-        attributes_manager._request_envelope.session = None
         with self.assertRaises(AttributesManagerException) as exc:
             attributes_manager.session_attributes = {"key": "value"}
 
@@ -156,9 +150,8 @@ class TestAttributesManager(unittest.TestCase):
             "attributes to out of session request")
 
     def test_set_persistent_attributes(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope,
             persistence_adapter=MockPersistenceAdapter())
@@ -170,9 +163,8 @@ class TestAttributesManager(unittest.TestCase):
             "AttributesManager fails to set the persistent attributes")
 
     def test_set_persistent_attributes_without_persistence_adapter(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
@@ -184,9 +176,8 @@ class TestAttributesManager(unittest.TestCase):
             "persistent attributes without persistence adapter")
 
     def test_save_persistent_attributes(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope,
             persistence_adapter=MockPersistenceAdapter())
@@ -201,9 +192,8 @@ class TestAttributesManager(unittest.TestCase):
             "persistence adapter")
 
     def test_save_persistent_attributes_without_persistence_adapter(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
@@ -216,9 +206,8 @@ class TestAttributesManager(unittest.TestCase):
         )
 
     def test_save_persistent_attributes_without_changing_persistent_attributes(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope,
             persistence_adapter=MockPersistenceAdapter())
@@ -231,9 +220,8 @@ class TestAttributesManager(unittest.TestCase):
             "has not been changed")
 
     def test_get_persistent_attributes_with_calling_get_persistent_attributes_multiple_times(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope,
             persistence_adapter=MockPersistenceAdapter())

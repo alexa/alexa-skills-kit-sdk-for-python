@@ -25,7 +25,7 @@ from ask_sdk_runtime.skill_builder import AbstractSkillBuilder
 from .skill import CustomSkill, SkillConfiguration
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, TypeVar, Dict, List, Tuple, Union, Optional, Any
+    from typing import Callable, TypeVar, Dict
     from ask_sdk_model.services import ApiClient
     from .attributes_manager import AbstractPersistenceAdapter
     T = TypeVar('T')
@@ -78,7 +78,7 @@ class SkillBuilder(AbstractSkillBuilder):
         return CustomSkill(skill_configuration=skill_configuration)
 
     def lambda_handler(self):
-        # type: () -> Callable[[RequestEnvelope, T], Union[Dict[str, Any], List, Tuple, str, int, float, None]]
+        # type: () -> Callable[[RequestEnvelope, T], Dict[str, T]]
         """Create a handler function that can be used as handler in
         AWS Lambda console.
 
@@ -90,7 +90,7 @@ class SkillBuilder(AbstractSkillBuilder):
         :return: Handler function to tag on AWS Lambda console.
         """
         def wrapper(event, context):
-            # type: (RequestEnvelope, T) -> Union[Dict[str, Any], List, Tuple, str, int, float, None]
+            # type: (RequestEnvelope, T) -> Dict[str, T]
             skill = CustomSkill(skill_configuration=self.skill_configuration)
             request_envelope = skill.serializer.deserialize(
                 payload=json.dumps(event), obj_type=RequestEnvelope)
