@@ -9,5 +9,11 @@ matrix:
 install:
   - python scripts/ci/sdk_install
   - pip install flake8
+  - pip install mypy
 before_script: flake8 .
-script: python scripts/ci/run_tests
+script:
+  - python scripts/ci/run_tests
+  - mypy --ignore-missing-imports --no-strict-optional ask-sdk
+  - mypy --ignore-missing-imports --no-strict-optional ask-sdk-core
+  - mypy --ignore-missing-imports --no-strict-optional ask-sdk-runtime
+  - mypy --ignore-missing-imports --no-strict-optional ask-sdk-dynamodb-persistence-adapter
