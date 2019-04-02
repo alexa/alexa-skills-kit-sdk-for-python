@@ -25,7 +25,7 @@ from ask_sdk_runtime.skill_builder import AbstractSkillBuilder
 from .skill import CustomSkill, SkillConfiguration
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, TypeVar, Dict, List, Tuple, Union, Optional, Any, cast
+    from typing import Callable, TypeVar, Dict
     from ask_sdk_model.services import ApiClient
     from .attributes_manager import AbstractPersistenceAdapter
     T = TypeVar('T')
