@@ -27,7 +27,7 @@ from ask_sdk_model.services import ApiClient, ApiClientResponse
 from .exceptions import ApiClientException
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, Dict, List, Tuple
+    from typing import Callable, Dict, List, Tuple, Optional
     from ask_sdk_model.services import ApiClientRequest
 
 
@@ -118,7 +118,7 @@ class DefaultApiClient(ApiClient):
             as comma separated strings
         :rtype: Dict[str, str]
         """
-        headers_dict = {}
+        headers_dict = {}  # type: Dict
         if headers_list is not None:
             for header_tuple in headers_list:
                 key, value = header_tuple[0], header_tuple[1]

@@ -157,7 +157,7 @@ class GenericExceptionMapper(AbstractExceptionMapper):
         :raises: :py:class:`ask_sdk_runtime.exceptions.DispatchException` when
             any object inside the input list is of invalid type
         """
-        self._exception_handlers = []
+        self._exception_handlers = []  # type: List
         if exception_handlers is not None:
             for handler in exception_handlers:
                 self.add_exception_handler(exception_handler=handler)

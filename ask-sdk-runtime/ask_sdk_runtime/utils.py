@@ -17,9 +17,8 @@
 #
 import sys
 
-
 def user_agent_info(sdk_version, custom_user_agent):
-    # type: (str) -> str
+    # type: (str, str) -> str
     """Return the user agent info along with the SDK and Python
     Version information.
 

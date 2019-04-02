@@ -25,7 +25,7 @@ from ask_sdk_runtime.skill_builder import AbstractSkillBuilder
 from .skill import CustomSkill, SkillConfiguration
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, TypeVar, Dict
+    from typing import Callable, TypeVar, Dict, List, Tuple, Union, Optional, Any, cast
     from ask_sdk_model.services import ApiClient
     from .attributes_manager import AbstractPersistenceAdapter
     T = TypeVar('T')
@@ -96,7 +96,7 @@ class SkillBuilder(AbstractSkillBuilder):
                 payload=json.dumps(event), obj_type=RequestEnvelope)
             response_envelope = skill.invoke(
                 request_envelope=request_envelope, context=context)
-            return skill.serializer.serialize(response_envelope)
+            return skill.serializer.serialize(response_envelope)  # type:ignore
         return wrapper
 
 
