@@ -130,7 +130,7 @@ def get_api_access_token(handler_input):
 
 
 def get_device_id(handler_input):
-    # type: (HandlerInput) -> AnyStr
+    # type: (HandlerInput) -> Optional[AnyStr]
     """Return the device id from the input request.
 
     The method retrieves the `deviceId` property from the input request.
@@ -139,13 +139,21 @@ def get_device_id(handler_input):
     can be found here :
     https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#system-object
 
+    If there is no device information in the input request, then a ``None``
+    is returned.
+
     :param handler_input: The handler input instance that is generally
         passed in the sdk's request and exception components
     :type handler_input: ask_sdk_core.handler_input.HandlerInput
     :return: Unique device id of the device used to send the alexa request
-    :rtype: str
+        or `None` if device information is not present
+    :rtype: Optional[str]
     """
-    return handler_input.request_envelope.context.system.device.device_id
+    device = handler_input.request_envelope.context.system.device
+    if device:
+        return handler_input.request_envelope.context.system.device.device_id
+    else:
+        return None
 
 
 def get_dialog_state(handler_input):
