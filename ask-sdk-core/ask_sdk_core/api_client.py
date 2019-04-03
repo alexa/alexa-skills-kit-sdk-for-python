@@ -27,7 +27,7 @@ from ask_sdk_model.services import ApiClient, ApiClientResponse
 from .exceptions import ApiClientException
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, Dict, List, Tuple, Optional
+    from typing import Callable, Dict, List, Tuple
     from ask_sdk_model.services import ApiClientRequest
 
 
