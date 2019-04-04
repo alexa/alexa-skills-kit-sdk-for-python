@@ -31,14 +31,14 @@ from .utils import RESPONSE_FORMAT_VERSION, user_agent_info
 from .__version__ import __version__
 
 if typing.TYPE_CHECKING:
-    from typing import List, TypeVar, Any
+    from typing import List, TypeVar
     from ask_sdk_model.services import ApiClient
     from ask_sdk_model import RequestEnvelope
     from ask_sdk_runtime.dispatch_components import (
         GenericRequestMapper, GenericHandlerAdapter, GenericExceptionMapper,
         AbstractRequestInterceptor, AbstractResponseInterceptor)
     from .attributes_manager import AbstractPersistenceAdapter
-    T = TypeVar['T']
+    T = TypeVar('T')
 
 
 class SkillConfiguration(RuntimeConfiguration):

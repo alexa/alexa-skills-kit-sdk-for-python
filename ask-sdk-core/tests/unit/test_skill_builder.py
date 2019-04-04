@@ -172,6 +172,9 @@ class TestSkillBuilder(unittest.TestCase):
                         "applicationId": "test"
                     }
                 }
+            },
+            "session":{
+                "new": "True"
             }
         }
 

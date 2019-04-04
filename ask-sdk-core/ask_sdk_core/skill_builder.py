@@ -96,7 +96,7 @@ class SkillBuilder(AbstractSkillBuilder):
                 payload=json.dumps(event), obj_type=RequestEnvelope)
             response_envelope = skill.invoke(
                 request_envelope=request_envelope, context=context)
-            return skill.serializer.serialize(response_envelope)
+            return skill.serializer.serialize(response_envelope)  # type:ignore
         return wrapper
 
 

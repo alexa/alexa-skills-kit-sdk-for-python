@@ -22,7 +22,7 @@ from ask_sdk_core.api_client import DefaultApiClient
 from ask_sdk_dynamodb.adapter import DynamoDbAdapter
 
 if typing.TYPE_CHECKING:
-    from typing import Callable
+    from typing import Callable, Dict, Any
     from ask_sdk_model import RequestEnvelope
     from ask_sdk_core.skill_builder import SkillConfiguration
     from boto3.resources.base import ServiceResource
@@ -88,7 +88,7 @@ class StandardSkillBuilder(SkillBuilder):
         skill_config.api_client = DefaultApiClient()
 
         if self.table_name is not None:
-            kwargs = {"table_name": self.table_name}
+            kwargs = {"table_name": self.table_name}  # type: Dict[str, Any]
             if self.auto_create_table:
                 kwargs["create_table"] = self.auto_create_table
 

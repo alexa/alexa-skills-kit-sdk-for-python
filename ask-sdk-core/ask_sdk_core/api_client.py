@@ -118,7 +118,7 @@ class DefaultApiClient(ApiClient):
             as comma separated strings
         :rtype: Dict[str, str]
         """
-        headers_dict = {}
+        headers_dict = {}  # type: Dict
         if headers_list is not None:
             for header_tuple in headers_list:
                 key, value = header_tuple[0], header_tuple[1]

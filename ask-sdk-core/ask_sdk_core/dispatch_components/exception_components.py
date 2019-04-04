@@ -25,7 +25,7 @@ from ask_sdk_runtime.dispatch_components.exception_components import (
 from ..exceptions import DispatchException
 
 if typing.TYPE_CHECKING:
-    from typing import Union, List
+    from typing import Union
     from ask_sdk_model import Response
     from ..handler_input import HandlerInput
 
