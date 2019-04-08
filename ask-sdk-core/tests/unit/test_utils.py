@@ -512,6 +512,17 @@ class TestRequestUtils(unittest.TestCase):
             "get_device_id method returned incorrect "
             "device id from input request")
 
+    def test_get_device_id_returns_none_for_missing_device_info(self):
+        self.test_request_envelope.context.system.device = None
+        test_input = self._create_handler_input(
+            request=self.test_launch_request)
+
+        self.assertEqual(
+            get_device_id(handler_input=test_input),
+            None,
+            "get_device_id method didn't return None when input request "
+            "doesn't have device information")
+
     def test_get_dialog_state_throws_exception_for_non_intent_request(self):
         test_input = self._create_handler_input(
             request=self.test_launch_request)
