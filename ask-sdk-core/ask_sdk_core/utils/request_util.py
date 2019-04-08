@@ -22,13 +22,14 @@ from ask_sdk_model.supported_interfaces import SupportedInterfaces
 
 if typing.TYPE_CHECKING:
     from ..handler_input import HandlerInput
-    from typing import Optional, AnyStr
+    from typing import Optional, AnyStr, NewType, Text
     from ask_sdk_model.slot import Slot
     from ask_sdk_model.dialog_state import DialogState
 
+Unicode = NewType('Unicode', Text)
 
 def get_locale(handler_input):
-    # type: (HandlerInput) -> AnyStr
+    # type: (HandlerInput) -> Unicode
     """Return locale value from input request.
 
     The method returns the ``locale`` value present in the request. More
