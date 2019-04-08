@@ -151,7 +151,7 @@ def get_device_id(handler_input):
     """
     device = handler_input.request_envelope.context.system.device
     if device:
-        return handler_input.request_envelope.context.system.device.device_id
+        return device.device_id
     else:
         return None
 
