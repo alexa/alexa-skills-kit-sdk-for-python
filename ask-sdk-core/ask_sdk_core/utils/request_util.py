@@ -26,7 +26,7 @@ if typing.TYPE_CHECKING:
     from ask_sdk_model.slot import Slot
     from ask_sdk_model.dialog_state import DialogState
 
-Unicode = NewType('Unicode', Text)
+Unicode = NewType('Unicode', AnyStr)
 
 def get_locale(handler_input):
     # type: (HandlerInput) -> Unicode
