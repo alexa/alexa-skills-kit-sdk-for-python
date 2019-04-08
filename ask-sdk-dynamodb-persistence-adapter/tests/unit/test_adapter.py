@@ -307,6 +307,76 @@ class TestDynamoDbAdapter(unittest.TestCase):
             "create_table flag is set and create table "
             "resource raises exception")
 
+    def test_delete_attributes_to_existing_table(self):
+        mock_table = mock.Mock()
+        mock_table.delete_item.return_value = True
+        self.dynamodb_resource.Table.return_value = mock_table
+        self.partition_keygen.return_value = "test_partition_key"
+
+        test_dynamodb_adapter = DynamoDbAdapter(
+            table_name="test_table", partition_keygen=self.partition_keygen,
+            dynamodb_resource=self.dynamodb_resource)
+
+        try:
+            test_dynamodb_adapter.delete_attributes(
+                request_envelope=self.request_envelope)
+        except:
+            # Should not reach here
+            raise Exception("Delete attributes failed on existing table")
+
+        self.dynamodb_resource.Table.assert_called_once_with("test_table"), (
+            "Existing table name passed incorrectly to dynamodb get table "
+            "call")
+        self.partition_keygen.assert_called_once_with(
+            self.request_envelope), (
+            "Partition Keygen provided incorrect input parameters during "
+            "delete attributes call")
+        mock_table.delete_item.assert_called_once_with(
+            Key={"id": "test_partition_key"}), (
+            "Partition keygen provided incorrect partition key in item for "
+            "delete attributes call")
+
+    def test_delete_attributes_to_existing_table_delete_item_fails(self):
+        mock_table = mock.Mock()
+        mock_table.delete_item.side_effect = ValueError("test exception")
+        self.dynamodb_resource.Table.return_value = mock_table
+        self.partition_keygen.return_value = "test_partition_key"
+
+        test_dynamodb_adapter = DynamoDbAdapter(
+            table_name="test_table", partition_keygen=self.partition_keygen,
+            dynamodb_resource=self.dynamodb_resource)
+
+        with self.assertRaises(PersistenceException) as exc:
+            test_dynamodb_adapter.delete_attributes(
+                request_envelope=self.request_envelope)
+
+        assert ("test exception") in str(exc.exception), (
+            "Delete attributes didn't raise Persistence Exception when delete item "
+            "failed on dynamodb resource")
+        mock_table.delete_item.assert_called_once_with(
+            Key={"id": "test_partition_key"}), (
+            "DynamoDb Delete item called with incorrect parameters")
+
+    def test_delete_attributes_fails_with_no_existing_table(self):
+        self.dynamodb_resource.Table.side_effect = ResourceNotExistsError(
+            "test", "test", "test")
+        self.dynamodb_resource.create_table.return_value = "test"
+        test_dynamodb_adapter = DynamoDbAdapter(
+            table_name="test_table", partition_keygen=self.partition_keygen,
+            dynamodb_resource=self.dynamodb_resource)
+
+        with self.assertRaises(PersistenceException) as exc:
+            test_dynamodb_adapter.delete_attributes(
+                request_envelope=self.request_envelope)
+
+        assert "DynamoDb table test_table doesn't exist" in str(
+            exc.exception), (
+            "Delete attributes didn't raise Persistence Exception when no "
+            "existing table and create table set as false")
+        self.dynamodb_resource.create_table.assert_not_called(), (
+            "Create table called on dynamodb resource when create_table flag "
+            "is set as False")
+
     def tearDown(self):
         self.dynamodb_resource = None
         self.partition_keygen = None

@@ -174,6 +174,36 @@ class DynamoDbAdapter(AbstractPersistenceAdapter):
                 "type {} occurred: {}".format(
                     type(e).__name__, str(e)))
 
+    def delete_attributes(self, request_envelope):
+        # type: (RequestEnvelope) -> None
+        """Deletes attributes from table in Dynamodb resource.
+
+        Deletes the attributes from Dynamodb table. Raises
+        PersistenceException if table doesn't exist or ``delete_item`` fails
+        on the table.
+
+        :param request_envelope: Request Envelope passed during skill
+            invocation
+        :type request_envelope: ask_sdk_model.RequestEnvelope
+        :rtype: None
+        :raises: :py:class:`ask_sdk_core.exceptions.PersistenceException`
+        """
+        try:
+            table = self.dynamodb.Table(self.table_name)
+            partition_key_val = self.partition_keygen(request_envelope)
+            table.delete_item(
+                Key={self.partition_key_name: partition_key_val})
+        except ResourceNotExistsError:
+            raise PersistenceException(
+                "DynamoDb table {} doesn't exist. Failed to delete attributes "
+                "from DynamoDb table.".format(
+                    self.table_name))
+        except Exception as e:
+            raise PersistenceException(
+                "Failed to delete attributes in DynamoDb table. Exception of "
+                "type {} occurred: {}".format(
+                    type(e).__name__, str(e)))
+
     def __create_table_if_not_exists(self):
         # type: () -> None
         """Creates table in Dynamodb resource if it doesn't exist and

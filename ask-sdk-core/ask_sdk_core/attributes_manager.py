@@ -62,6 +62,17 @@ class AbstractPersistenceAdapter(object):
         """
         pass
 
+    @abstractmethod
+    def delete_attributes(self, request_envelope):
+        # type: (RequestEnvelope) -> None
+        """Delete attributes from  persistent tier.
+
+        :param request_envelope: request envelope.
+        :type request_envelope: RequestEnvelope
+        :rtype: None
+        """
+        pass
+
 
 class AttributesManager(object):
     """AttributesManager is a class that handles three level
@@ -207,3 +218,20 @@ class AttributesManager(object):
             self._persistence_adapter.save_attributes(
                 request_envelope=self._request_envelope,
                 attributes=self._persistence_attributes)
+
+    def delete_persistent_attributes(self):
+        # type: () -> None
+        """Deletes the persistent attributes from the persistence layer.
+        :rtype: None
+        :raises: :py:class: `ask_sdk_core.exceptions.AttributesManagerException`
+            if trying to delete persistence attributes without persistence adapter
+        """
+        if not self._persistence_adapter:
+            raise AttributesManagerException(
+                "Cannot delete PersistentAttributes without "
+                "persistence adapter!")
+        if self._persistent_attributes_set:
+            self._persistence_adapter.delete_attributes(
+                request_envelope=self._request_envelope)
+            self._persistence_attributes = {}
+            self._persistent_attributes_set = False

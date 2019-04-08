@@ -23,6 +23,7 @@ class MockPersistenceAdapter(AbstractPersistenceAdapter):
         self.attributes = {"key_1": "v1", "key_2": "v2"}
         self.get_count = 0
         self.save_count = 0
+        self.del_count = 0
 
     def get_attributes(self, request_envelope):
         self.get_count += 1
@@ -32,3 +33,6 @@ class MockPersistenceAdapter(AbstractPersistenceAdapter):
         self.save_count += 1
         self.attributes = attributes
 
+    def delete_attributes(self, request_envelope):
+        self.del_count += 1
+        self.attributes = {}
