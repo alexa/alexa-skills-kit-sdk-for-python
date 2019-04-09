@@ -31,14 +31,13 @@ from .utils import RESPONSE_FORMAT_VERSION, user_agent_info
 from .__version__ import __version__
 
 if typing.TYPE_CHECKING:
-    from typing import List, TypeVar
+    from typing import List, TypeVar, Any
     from ask_sdk_model.services import ApiClient
     from ask_sdk_model import RequestEnvelope
     from ask_sdk_runtime.dispatch_components import (
         GenericRequestMapper, GenericHandlerAdapter, GenericExceptionMapper,
         AbstractRequestInterceptor, AbstractResponseInterceptor)
     from .attributes_manager import AbstractPersistenceAdapter
-    T = TypeVar('T')
 
 
 class SkillConfiguration(RuntimeConfiguration):
@@ -144,7 +143,7 @@ class CustomSkill(AbstractSkill):
         )
 
     def supports(self, request_envelope, context):
-        # type: (RequestEnvelope, T) -> bool
+        # type: (RequestEnvelope, Any) -> bool
         """Check if request envelope is of the expected skill format.
 
         :param request_envelope: input instance containing request information.
@@ -155,10 +154,10 @@ class CustomSkill(AbstractSkill):
             skill.
         :rtype: bool
         """
-        return 'request' in request_envelope
+        return 'request' in request_envelope  # type: ignore
 
     def invoke(self, request_envelope, context):
-        # type: (RequestEnvelope, T) -> ResponseEnvelope
+        # type: (RequestEnvelope, Any) -> ResponseEnvelope
         """Invokes the dispatcher, to handle the request envelope and
         return a response envelope.
 
