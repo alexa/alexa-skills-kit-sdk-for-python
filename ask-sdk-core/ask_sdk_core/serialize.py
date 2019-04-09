@@ -58,7 +58,7 @@ class DefaultSerializer(Serializer):
         'object': object,
     }
 
-    def serialize(self, obj):
+    def serialize(self, obj):  # type: ignore
         # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, int, float, None]
         """Builds a serialized object.
 
