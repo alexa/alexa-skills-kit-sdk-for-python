@@ -58,7 +58,7 @@ class DefaultSerializer(Serializer):
         'object': object,
     }
 
-    def serialize(self, obj):
+    def serialize(self, obj):  # type: ignore
         # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, int, float, None]
         """Builds a serialized object.
 
@@ -214,7 +214,7 @@ class DefaultSerializer(Serializer):
                 sub_obj_types = sub_obj_type.group(2)
                 return {
                     k: self.__deserialize(v, sub_obj_types)
-                    for k, v in iteritems(cast(Any,payload))
+                    for k, v in iteritems(cast(Any, payload))
                 }
             # convert str to class
             if obj_type in self.NATIVE_TYPES_MAPPING:

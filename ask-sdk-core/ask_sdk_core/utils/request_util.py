@@ -22,9 +22,10 @@ from ask_sdk_model.supported_interfaces import SupportedInterfaces
 
 if typing.TYPE_CHECKING:
     from ..handler_input import HandlerInput
-    from typing import Optional, AnyStr
+    from typing import Optional, Union
     from ask_sdk_model.slot import Slot
     from ask_sdk_model.dialog_state import DialogState
+    AnyStr = Union[str, bytes]
 
 
 def get_locale(handler_input):
@@ -186,7 +187,7 @@ def get_dialog_state(handler_input):
 
 
 def get_slot(handler_input, slot_name):
-    # type: (HandlerInput, AnyStr) -> Optional[Slot]
+    # type: (HandlerInput, str) -> Optional[Slot]
     """Return the slot information from intent request.
 
     The method retrieves the slot information
@@ -221,7 +222,7 @@ def get_slot(handler_input, slot_name):
 
 
 def get_slot_value(handler_input, slot_name):
-    # type: (HandlerInput, AnyStr) -> AnyStr
+    # type: (HandlerInput, str) -> AnyStr
     """Return the slot value from intent request.
 
     The method retrieves the slot value from the input intent request

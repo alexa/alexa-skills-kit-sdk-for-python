@@ -19,7 +19,8 @@ import typing
 from .response_helper import ResponseFactory
 
 if typing.TYPE_CHECKING:
-    from ask_sdk_model import Context, RequestEnvelope
+    from typing import Any
+    from ask_sdk_model import RequestEnvelope
     from ask_sdk_model.services import ServiceClientFactory
     from .attributes_manager import AttributesManager
 
@@ -51,7 +52,7 @@ class HandlerInput(object):
     def __init__(
             self, request_envelope, attributes_manager=None,
             context=None, service_client_factory=None):
-        # type: (RequestEnvelope, AttributesManager, Context, ServiceClientFactory) -> None
+        # type: (RequestEnvelope, AttributesManager, Any, ServiceClientFactory) -> None
         """Input to Request Handler, Exception Handler and Interceptors.
 
         :param request_envelope: Request Envelope passed from Alexa
