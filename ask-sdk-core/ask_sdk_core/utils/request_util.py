@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
     from ask_sdk_model.dialog_state import DialogState
     AnyStr = Union[str, bytes]
 
+
 def get_locale(handler_input):
     # type: (HandlerInput) -> AnyStr
     """Return locale value from input request.
