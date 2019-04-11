@@ -659,7 +659,7 @@ string.
 .. code-block:: python
  
     device_id = req_envelope.context.system.device.device_id
-    user_preferences_client = service_client_fact.get_ups_service()
+    user_preferences_client = handler_input.service_client_factory.get_ups_service()
  
     # Fetch Preferred Distance Units From Alexa Settings API
     preferred_distance_units = user_preferences_client.get_system_distance_units(device_id).value
