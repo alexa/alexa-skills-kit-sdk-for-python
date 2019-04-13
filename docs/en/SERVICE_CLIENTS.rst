@@ -5,6 +5,15 @@ Alexa Skills Kit provides multiple service APIs that you can use to
 personalize your skill experience. The SDK includes service clients that
 you can use to call Alexa APIs from within your skill logic.
 
+.. note::
+
+    SDK also provides support for out-of-session Alexa APIs
+    (`Proactive Events <https://developer.amazon.com/docs/smapi/proactive-events-api.html>`__,
+    `Skill Messaging <https://developer.amazon.com/docs/smapi/send-a-message-request-to-a-skill.html>`__
+    etc.). For more information on how to call these services through SDK,
+    please check
+    `Out Of Session Alexa Service Clients <OUT_OF_SESSION_SERVICE_CLIENTS.html>`__.
+
 ServiceClientFactory
 --------------------
 
@@ -36,6 +45,9 @@ Available service clients
 
     def get_ups_service(self):
         # type: () -> ask_sdk_model.services.ups.UpsServiceClient
+
+    def get_reminder_management_service(self):
+        # type: () -> ask_sdk_model.services.reminder_management.ReminderManagementServiceClient
 
 .. note::
 
@@ -652,4 +664,33 @@ Interface
     The device_id can be retrieved from ``handler_input.request_envelope.context.system.device.device_id``.
 
 More information on the models can be found `here <models/ask_sdk_model.services.ups.html>`__.
+
+ReminderManagementServiceClient
+-------------------------------
+
+``ReminderManagementServiceClient`` can be used to `create and manage Reminders <https://developer.amazon.com/docs/smapi/alexa-reminders-overview.html>`__
+for your customers.
+
+Interface
+~~~~~~~~~
+
+.. code-block:: python
+
+    class ask_sdk_model.services.reminder_management.ReminderManagementServiceClient:
+        def create_reminder(self, reminder_request):
+            # type: (ReminderRequest) -> Union[ReminderResponse, Error]
+
+        def update_reminder(self, alert_token, reminder_request):
+            # type: (str, ReminderRequest) -> Union[ReminderResponse, Error]
+
+        def delete_reminder(self, alert_token):
+            # type: (str) -> Union[Error]
+
+        def get_reminder(self, alert_token):
+            # type: (str) -> Union[GetReminderResponse, Error]
+
+        def get_reminders(self):
+            # type: () -> Union[GetRemindersResponse, Error]
+
+More information on the models can be found `here <models/ask_sdk_model.services.reminder_management.html>`__.
 
