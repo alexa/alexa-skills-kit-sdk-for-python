@@ -658,6 +658,32 @@ Interface
     class ask_sdk_model.services.TemparatureUnit(Enum):
         CELSIUS = "CELSIUS"
         FAHRENHEIT = "FAHRENHEIT"
+Code Sample
+~~~~~~~~~~~
+**Alexa Customer Settings API**
+ 
+The Alexa Customer Settings API provides access to three pieces of information: preferred distance units, 
+preferred temperature units and the device's current configured time zone. When using the UpsServiceClient, 
+``get_system_distance_units`` and ``get_system_temperature_unit`` will return enum objects whose values must 
+be accessed by using the ``.value`` attribue. By comparision, ``get_system_time_zone`` will simply return a 
+string.
+ 
+.. code-block:: python
+ 
+    device_id = req_envelope.context.system.device.device_id
+    user_preferences_client = handler_input.service_client_factory.get_ups_service()
+ 
+    # Fetch Preferred Distance Units From Alexa Settings API
+    preferred_distance_units = user_preferences_client.get_system_distance_units(device_id).value
+    print (preferred_distance_units) # String of either "IMPERIAL" or "METRIC"
+ 
+    # Fetch Preferred Temperature Units From Alexa Settings API
+    preferred_temperature_units = user_preferences_client.get_system_temperature_unit(device_id).value
+    print (preferred_temperature_units) # String of either "FAHRENHEIT" or "CELSIUS"
+ 
+    # Fetch Device's Current Configured Time Zone From Alexa Settings API
+    time_zone = user_preferences_client.get_system_time_zone(device_id)
+    print (time_zone) # String representing a time zone for example "America/Los_Angeles"
 
 .. note::
 
