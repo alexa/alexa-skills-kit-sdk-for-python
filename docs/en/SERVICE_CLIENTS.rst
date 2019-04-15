@@ -692,5 +692,85 @@ Interface
         def get_reminders(self):
             # type: () -> Union[GetRemindersResponse, Error]
 
+
+Code Sample
+~~~~~~~~~~~
+
+The following example shows a request handler that creates an instance
+of the ``ReminderManagementServiceClient`` and creates a new reminder.
+
+.. code-block:: python
+
+    import logging
+    import typing
+
+    from datetime import datetime
+    from ask_sdk_core.skill_builder import CustomSkillBuilder
+    from ask_sdk_model.ui import SimpleCard
+    from ask_sdk_core.utils import is_intent_name
+    from ask_sdk_core.api_client import DefaultApiClient
+    from ask_sdk_model.services.reminder_management import (
+        ReminderRequest, Trigger, TriggerType, AlertInfo, PushNotification,
+        PushNotificationStatus, ReminderResponse, SpokenInfo, SpokenText)
+    from ask_sdk_model.services import ServiceException
+    from ask_sdk_model.ui import AskForPermissionsConsentCard
+
+    if typing.TYPE_CHECKING:
+        from ask_sdk_core.handler_input import HandlerInput
+        from ask_sdk_model import Response
+
+    permissions = ["alexa::alerts:reminders:skill:readwrite"]
+    NOTIFY_MISSING_PERMISSIONS = ("Please enable Reminders permissions in "
+                                  "the Amazon Alexa app.")
+
+
+    sb = CustomSkillBuilder(api_client=DefaultApiClient())
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+
+
+    @sb.request_handler(can_handle_func=is_intent_name("CreateReminder"))
+    def create_reminder_intent_handler(handler_input):
+        # type: (HandlerInput) -> Response
+        req_envelope = handler_input.request_envelope
+        response_builder = handler_input.response_builder
+
+        # Check if user gave permissions to create reminders.
+        # If not, request to provide permissions to the skill.
+        if not (req_envelope.context.system.user.permissions and
+                req_envelope.context.system.user.permissions.consent_token):
+            response_builder.speak(NOTIFY_MISSING_PERMISSIONS)
+            response_builder.set_card(
+                AskForPermissionsConsentCard(permissions=permissions))
+            return response_builder.response
+
+        reminder_client = handler_input.service_client_factory.get_reminder_management_service()
+
+        try:
+            reminder_response = reminder_client.create_reminder(
+                reminder_request=ReminderRequest(
+                    request_time=datetime.utcnow(),
+                    trigger=Trigger(
+                        object_type=TriggerType.SCHEDULED_RELATIVE,
+                        offset_in_seconds=60),
+                    alert_info=AlertInfo(
+                        spoken_info=SpokenInfo(
+                            content=[SpokenText(locale="en-US", text="Test reminder")])),
+                    push_notification=PushNotification(
+                        status=PushNotificationStatus.ENABLED))) # type: ReminderResponse
+            speech_text = "Great! I've scheduled a reminder for you."
+
+            logger.info("Created reminder : {}".format(reminder_response))
+            return handler_input.response_builder.speak(speech_text).set_card(
+                SimpleCard(
+                    "Reminder created with id", reminder_response.alert_token)).response
+
+        except ServiceException as e:
+            logger.info("Exception encountered : {}".format(e.body))
+            speech_text = "Uh Oh. Looks like something went wrong."
+            return handler_input.response_builder.speak(speech_text).set_card(
+                SimpleCard(
+                    "Reminder not created",str(e.body))).response
+
 More information on the models can be found `here <models/ask_sdk_model.services.reminder_management.html>`__.
 
