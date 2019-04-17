@@ -1,0 +1,2 @@
+ask-sdk-webservice-support>=0.1.0
+flask>=1.0.2

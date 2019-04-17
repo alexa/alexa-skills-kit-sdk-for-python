@@ -6,32 +6,71 @@ ASK SDK for Python
 
 **ASK SDK for Python**\ を使うと、ボイラープレートコード（毎回書かなければならないお決まりのコード）を書く手間が不要になります。これにより空いた時間をさまざまな機能の実装に充てることができ、人気のスキルをより簡単に作成できるようになります。
 
-.. |Build Status| image:: https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat
-    :target: https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python
+.. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
+    :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
     :alt: Build Status
 .. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
     :target: https://alexa-skills-kit-python-sdk.readthedocs.io
     :alt: Read the docs
+.. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-runtime/
+    :alt: Version
+.. |Runtime Downloads| image:: https://pepy.tech/badge/ask-sdk-runtime
+    :target: https://pepy.tech/project/ask-sdk-runtime
+    :alt: Downloads
 .. |Core Version| image:: http://img.shields.io/pypi/v/ask-sdk-core.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-core/
     :alt: Version
+.. |Core Downloads| image:: https://pepy.tech/badge/ask-sdk-core
+    :target: https://pepy.tech/project/ask-sdk-core
+    :alt: Downloads
 .. |DynamoDb Version| image:: http://img.shields.io/pypi/v/ask-sdk-dynamodb-persistence-adapter.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-dynamodb-persistence-adapter/
     :alt: Version
+.. |DynamoDb Downloads| image:: https://pepy.tech/badge/ask-sdk-dynamodb-persistence-adapter
+    :target: https://pepy.tech/project/ask-sdk-dynamodb-persistence-adapter
+    :alt: Downloads
 .. |Standard Version| image:: http://img.shields.io/pypi/v/ask-sdk.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk/
     :alt: Version
+.. |Standard Downloads| image:: https://pepy.tech/badge/ask-sdk
+    :target: https://pepy.tech/project/ask-sdk
+    :alt: Downloads
+.. |Webservice Version| image:: http://img.shields.io/pypi/v/ask-sdk-webservice-support.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-webservice-support/
+    :alt: Version
+.. |Webservice Downloads| image:: https://pepy.tech/badge/ask-sdk-webservice-support
+    :target: https://pepy.tech/project/ask-sdk-webservice-support
+    :alt: Downloads
+.. |Flask Sdk Version| image:: http://img.shields.io/pypi/v/flask-ask-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/flask-ask-sdk/
+    :alt: Version
+.. |Flask Sdk Downloads| image:: https://pepy.tech/badge/flask-ask-sdk
+    :target: https://pepy.tech/project/flask-ask-sdk
+    :alt: Downloads
+.. |Django Sdk Version| image:: http://img.shields.io/pypi/v/django-ask-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/django-ask-sdk/
+    :alt: Version
+.. |Django Sdk Downloads| image:: https://pepy.tech/badge/django-ask-sdk
+    :target: https://pepy.tech/project/django-ask-sdk
+    :alt: Downloads
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
 
-====================================   =======
+Package Versions
+----------------
+====================================   ==================
 Package                                Version
-------------------------------------   -------
-ask-sdk-core                           |Core Version|
-ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version|
-ask-sdk                                |Standard Version|
-====================================   =======
+------------------------------------   ------------------
+ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
+ask-sdk-core                           |Core Version| |Core Downloads|
+ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
+ask-sdk                                |Standard Version| |Standard Downloads|
+ask-sdk-webservice-support (Beta)      |Webservice Version| |Webservice Downloads|
+flask-ask-sdk (Beta)                   |Flask Sdk Version| |Flask Sdk Downloads|
+django-ask-sdk (Beta)                  |Django Sdk Version| |Django Sdk Downloads|
+====================================   ==================
 
 
 SDKの使用をより迅速に開始するには、次のリソースを参照してください。
@@ -87,7 +126,7 @@ Worldから機能を一歩進めて、ユーザーからの入力をキャプチ
 ユーザーのデバイス設定で設定したアドレスをリクエストし、設定されたアドレスにアクセスするサンプルスキルです。
 
 
-より多くのサンプルについては、 `samples <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/README.rst#samples>`_ セクションを見てください。
+より多くのサンプルについては、 `samples <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/SAMPLE_SKILLS.html>`_ セクションを見てください。
 
 ------------
 

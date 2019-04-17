@@ -471,6 +471,19 @@ previous handler.
 Creating the Lambda handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+    For a custom skill, you can host your service in AWS Lambda or
+    as a web service hosted on your own endpoint.
+
+    Generally, hosting the skill code on AWS Lambda is the easiest way.
+    The below sections provide information on how to achieve this.
+
+    However, if you wish to host it with any other cloud hosting provider,
+    the SDK provides some support packages (``ask-sdk-webservice-support``,
+    ``flask-ask-sdk``, ``django-ask-sdk``). You can find more information
+    on this configuration `here <WEBSERVICE_SUPPORT.html>`__.
+
 The `Lambda handler <https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model-handler-types.html>`_
 is the entry point for your AWS Lambda function. The following code example
 creates a Lambda handler function to route all inbound requests to your skill.

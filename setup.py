@@ -29,6 +29,11 @@ packages = [
         os.path.join("ask-sdk*", "setup.py"))]
 
 for pkg in packages:
+    if pkg == "ask-sdk-webservice-support":
+        # Do not install webservice support, flask and django packages
+        # when installing the standard distribution
+        continue
+
     pkg_folder = os.path.join(here, pkg)
     pkg_setup_path = os.path.join(pkg_folder, "setup.py")
 
