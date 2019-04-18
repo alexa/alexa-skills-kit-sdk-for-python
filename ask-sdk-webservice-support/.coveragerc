@@ -1,0 +1,12 @@
+[run]
+branch = True
+
+[report]
+include =
+    ask_sdk_webservice_support/*
+omit =
+    ask_sdk_webservice_support/verifier_constants.py
+exclude_lines =
+    if typing.TYPE_CHECKING:
+    pass
+    raise NotImplementedError

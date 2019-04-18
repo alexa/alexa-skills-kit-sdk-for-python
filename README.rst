@@ -53,6 +53,24 @@ boiler-plate code.
 .. |Standard Downloads| image:: https://pepy.tech/badge/ask-sdk
     :target: https://pepy.tech/project/ask-sdk
     :alt: Downloads
+.. |Webservice Version| image:: http://img.shields.io/pypi/v/ask-sdk-webservice-support.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-webservice-support/
+    :alt: Version
+.. |Webservice Downloads| image:: https://pepy.tech/badge/ask-sdk-webservice-support
+    :target: https://pepy.tech/project/ask-sdk-webservice-support
+    :alt: Downloads
+.. |Flask Sdk Version| image:: http://img.shields.io/pypi/v/flask-ask-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/flask-ask-sdk/
+    :alt: Version
+.. |Flask Sdk Downloads| image:: https://pepy.tech/badge/flask-ask-sdk
+    :target: https://pepy.tech/project/flask-ask-sdk
+    :alt: Downloads
+.. |Django Sdk Version| image:: http://img.shields.io/pypi/v/django-ask-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/django-ask-sdk/
+    :alt: Version
+.. |Django Sdk Downloads| image:: https://pepy.tech/badge/django-ask-sdk
+    :target: https://pepy.tech/project/django-ask-sdk
+    :alt: Downloads
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
@@ -66,6 +84,9 @@ ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
+ask-sdk-webservice-support (Beta)      |Webservice Version| |Webservice Downloads|
+flask-ask-sdk (Beta)                   |Flask Sdk Version| |Flask Sdk Downloads|
+django-ask-sdk (Beta)                  |Django Sdk Version| |Django Sdk Downloads|
 ====================================   ==================
 
 
@@ -261,6 +282,23 @@ Preview
 * `Alexa Presentation Language <https://developer.amazon.com/docs/alexa-presentation-language/apl-overview.html>`__
 
 * `Name-free Interactions <https://developer.amazon.com/docs/custom-skills/understand-name-free-interaction-for-custom-skills.html>`_
+
+
+Hosting Skills on Non-Lambda Resources
+--------------------------------------
+
+SDK provides ``ask-sdk-webservice-support`` package, that allows hosting
+skills as custom web services. It also provides framework specific adapters
+under ``flask-ask-sdk`` and ``django-ask-sdk`` packages, to integrate
+skills on the respective frameworks and deploy as web service.
+
+More information on how to use these packages can be found on this
+`documentation link <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/WEBSERVICE_SUPPORT.html>`__.
+
+.. warning::
+
+    These features are currently in **Beta**. The interface might change when
+    the features are released as stable.
 
 
 Got Feedback?

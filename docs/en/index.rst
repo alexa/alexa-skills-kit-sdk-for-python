@@ -60,6 +60,8 @@ SDK Features
     ATTRIBUTES
     SERVICE_CLIENTS
     OUT_OF_SESSION_SERVICE_CLIENTS
+    SKILL_BUILDERS
+    WEBSERVICE_SUPPORT
 
 `Request Processing <REQUEST_PROCESSING.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,6 +96,11 @@ Covers how to use service clients in your skill to access Alexa APIs.
 Covers how to call Alexa APIs that work out of skill's session context
 (For example, to send notifications to skill users outside the normal
 skill flow etc.)
+
+`Hosting Skills as Webservice <WEBSERVICE_SUPPORT.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Covers how to host a skill as a web service.
 
 
 .. toctree::

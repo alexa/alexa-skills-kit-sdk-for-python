@@ -1,0 +1,12 @@
+[run]
+branch = True
+
+[report]
+include =
+    django_ask_sdk/*
+exclude_lines =
+    if typing.TYPE_CHECKING:
+    pass
+    raise NotImplementedError
+    SIGNATURE_CERT_CHAIN_URL_KEY
+    SIGNATURE_KEY
