@@ -59,6 +59,7 @@ SDK Features
     ATTRIBUTES
     SERVICE_CLIENTS
     SKILL_BUILDERS
+    WEBSERVICE_SUPPORT
 
 `Request Processing <REQUEST_PROCESSING.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -86,6 +87,11 @@ Covers how to use service clients in your skill to access Alexa APIs.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to configure and construct a skill instance.
+
+`Hosting Skills as Webservice <WEBSERVICE_SUPPORT.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Covers how to host a skill as a web service.
 
 
 .. toctree::

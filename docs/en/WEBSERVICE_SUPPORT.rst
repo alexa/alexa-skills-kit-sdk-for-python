@@ -34,12 +34,16 @@ Installation
 ~~~~~~~~~~~~
 
 You can install the ``ask-sdk-webservice-support`` package through `pip`.
-The package depends on the `cryptography <https://cryptography.io/en/latest/>`__
-package for request verification. The
-``cryptography`` package might have additional prerequisites depending
-on the operating system. For more information, see the
-`installation instructions <https://cryptography.io/en/latest/installation/>`__
-in the ``cryptography`` documentation.
+
+.. important::
+
+    The package has the `cryptography <https://cryptography.io/en/latest/>`__
+    package as a dependency for request verification. The
+    ``cryptography`` package might have additional prerequisites depending
+    on the operating system. For more information, see the
+    `installation instructions <https://cryptography.io/en/latest/installation/>`__
+    in the ``cryptography`` documentation.
+
 
 Generic Web Service Handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
