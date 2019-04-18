@@ -41,12 +41,12 @@ Interface
         def __init__(self):
             self.response = ....  # Response object
 
-        def speak(self, speech):
-            # type: (str) -> 'ResponseFactory'
+        def speak(self, speech, play_behavior=None):
+            # type: (str, ask_sdk_model.ui.play_behavior.PlayBehavior) -> 'ResponseFactory'
             ....
 
-        def ask(self, speech):
-            # type: (str) -> 'ResponseFactory'
+        def ask(self, speech, play_behavior=None):
+            # type: (str, ask_sdk_model.ui.play_behavior.PlayBehavior) -> 'ResponseFactory'
             ....
 
         def set_card(self, card):
@@ -59,6 +59,10 @@ Interface
 
         def set_should_end_session(self, end_session):
             # type: (bool) -> 'ResponseFactory'
+            ....
+
+        def set_can_fulfill_intent(self, can_fulfill_intent):
+            # type: (ask_sdk_model.canfulfill.can_fulfill_intent.CanFulfillIntent) -> 'ResponseFactory'
             ....
 
 ``response_builder``, an instance of the ``ResponseFactory`` class, is

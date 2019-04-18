@@ -15,6 +15,9 @@ Subpackages
     ask_sdk_model.services.monetization
     ask_sdk_model.services.reminder_management
     ask_sdk_model.services.ups
+    ask_sdk_model.services.proactive_events
+    ask_sdk_model.services.skill_messaging
+    ask_sdk_model.services.lwa
 
 Submodules
 ~~~~~~~~~~
@@ -61,6 +64,13 @@ ask\_sdk\_model.services.api\_configuration module
 --------------------------------------------------
 
 .. automodule:: ask_sdk_model.services.api_configuration
+    :members:
+    :show-inheritance:
+
+ask\_sdk\_model.services.authentication\_configuration module
+-------------------------------------------------------------
+
+.. automodule:: ask_sdk_model.services.authentication_configuration
     :members:
     :show-inheritance:
 

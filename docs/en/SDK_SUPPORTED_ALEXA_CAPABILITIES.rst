@@ -42,6 +42,12 @@ Stable
 
 * `Reminders <https://developer.amazon.com/docs/smapi/alexa-reminders-overview.html>`__
 
+* `Proactive Events <https://developer.amazon.com/docs/smapi/proactive-events-api.html>`__
+
+* `Dynamic Entities <https://developer.amazon.com/docs/custom-skills/use-dynamic-entities-for-customized-interactions.html>`__
+
+* `Skill Messaging <https://developer.amazon.com/docs/smapi/skill-messaging-api-reference.html>`__
+
 
 Preview
 -------

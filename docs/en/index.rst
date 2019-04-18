@@ -56,8 +56,10 @@ SDK Features
 
     REQUEST_PROCESSING
     RESPONSE_BUILDING
+    SKILL_BUILDERS
     ATTRIBUTES
     SERVICE_CLIENTS
+    OUT_OF_SESSION_SERVICE_CLIENTS
     SKILL_BUILDERS
     WEBSERVICE_SUPPORT
 
@@ -78,18 +80,25 @@ text, cards, and audio into a single response.
 
 Covers how to use skill attributes to store and retrieve skill data.
 
-`Alexa Service Clients <SERVICE_CLIENTS.html>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Covers how to use service clients in your skill to access Alexa APIs.
-
 `Skill Builders <SKILL_BUILDERS.html>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to configure and construct a skill instance.
 
+`Alexa Service Clients <SERVICE_CLIENTS.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Covers how to use service clients in your skill to access Alexa APIs.
+
+`Alexa Out-Of-Session Service Clients <OUT_OF_SESSION_SERVICE_CLIENTS.html>`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Covers how to call Alexa APIs that work out of skill's session context
+(For example, to send notifications to skill users outside the normal
+skill flow etc.)
+
 `Hosting Skills as Webservice <WEBSERVICE_SUPPORT.html>`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Covers how to host a skill as a web service.
 

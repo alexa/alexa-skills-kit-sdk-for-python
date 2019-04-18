@@ -25,12 +25,17 @@ exposes various entities useful in request processing, including:
 
     -  **request_envelope**: Contains the entire `request
        body <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-body-syntax>`_
-       sent to skill.
+       sent to skill, session information and some context information
+       about the input request.
+       Interface details: :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`
     -  **attributes_manager**: Provides access to request, session, and
        persistent attributes.
+       Interface details: :py:class:`ask_sdk_core.attributes_manager.AttributesManager`
     -  **service_client_factory**: Constructs service clients capable of
        calling Alexa APIs.
+       Interface details: :py:class:`ask_sdk_model.services.service_client_factory.ServiceClientFactory`
     -  **response_builder**: Contains helper function to build responses.
+       Interface details: :py:class:`ask_sdk_core.response_helper.ResponseFactory`
     -  **context**: Provides an optional, context object passed in by the
        host container. For example, for skills running on AWS Lambda, this
        is the `context
@@ -635,7 +640,7 @@ before returning it to the Alexa Service.
 
 
 Registering and Processing the Response Interceptors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Response interceptors are invoked immediately after execution of the request handler
 for an incoming request.
