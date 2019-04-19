@@ -106,7 +106,7 @@ a basic podcast skill that can play multiple, pre-recorded audio streams.
 
 This sample demonstrates 3 features of APL: the
 `Pager Component <https://developer.amazon.com/docs/alexa-presentation-language/apl-pager.html>`__,
-`SpeakItem Command <https://developer.amazon.com/docs/alexa-presentation-language/apl-commands-components.html>`__,
+`SpeakItem Command <https://developer.amazon.com/docs/alexa-presentation-language/apl-standard-commands.html#speakitem-command>`__,
 and accessing `device characteristics <https://developer.amazon.com/docs/alexa-presentation-language/apl-viewport-characteristics.html>`__
 in the skill code.
 
