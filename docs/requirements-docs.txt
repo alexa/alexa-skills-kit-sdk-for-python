@@ -1,2 +1,5 @@
 sphinx
 sphinx_tabs
+ask-sdk-webservice-support
+flask-ask-sdk
+django-ask-sdk
