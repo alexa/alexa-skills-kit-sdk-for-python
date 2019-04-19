@@ -7,3 +7,4 @@
   core
   dynamodb_persistence
   standard
+  webservice
