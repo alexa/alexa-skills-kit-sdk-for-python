@@ -81,7 +81,7 @@ class AbstractVerifier(object):
             instance of the input POST request
         :type deserialized_request_env:
             :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`
-        :raises :py:class:`VerificationException` if verification fails
+        :raises: :py:class:`VerificationException` if verification fails
         """
         raise NotImplementedError
 
@@ -182,7 +182,7 @@ class RequestVerifier(AbstractVerifier):
             instance of the input POST request
         :type deserialized_request_env:
             :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`
-        :raises :py:class:`VerificationException` if headers doesn't
+        :raises: :py:class:`VerificationException` if headers doesn't
             exist or verification fails
         """
         cert_url = headers.get(self._signature_cert_chain_url_key)
@@ -208,7 +208,7 @@ class RequestVerifier(AbstractVerifier):
         :type cert_url: str
         :return The certificate chain loaded from the URL
         :rtype cryptography.x509.Certificate
-        :raises :py:class:`VerificationException` if the URL is invalid,
+        :raises: :py:class:`VerificationException` if the URL is invalid,
             if the loaded certificate chain is invalid
         """
         self._validate_certificate_url(cert_url)
@@ -227,7 +227,7 @@ class RequestVerifier(AbstractVerifier):
 
         :param cert_url: URL for retrieving certificate chain
         :type cert_url: str
-        :raises :py:class:`VerificationException` if the URL is invalid
+        :raises: :py:class:`VerificationException` if the URL is invalid
         """
         parsed_url = urlparse(cert_url)
 
@@ -278,7 +278,7 @@ class RequestVerifier(AbstractVerifier):
             cryptography.hazmat.backends.interfaces.X509Backend
         :return: Certificate chain loaded from cache or URL
         :rtype cryptography.x509.Certificate
-        :raises :py:class:`VerificationException` if unable to load the
+        :raises: :py:class:`VerificationException` if unable to load the
             certificate
         """
         try:
@@ -308,7 +308,7 @@ class RequestVerifier(AbstractVerifier):
         :param cert_chain: Certificate chain to be validated
         :type cert_chain: cryptography.x509.Certificate
         :return: None
-        :raises :py:class:`VerificationException` if certificated is
+        :raises: :py:class:`VerificationException` if certificated is
             not valid
         """
         now = datetime.utcnow()
@@ -341,7 +341,7 @@ class RequestVerifier(AbstractVerifier):
         :type: str
         :param serialized_request_env: Raw request body
         :type: str
-        :raises :py:class:`VerificationException` if certificate is
+        :raises: :py:class:`VerificationException` if certificate is
             not valid
         """
         decoded_signature = base64.b64decode(signature)
@@ -393,7 +393,7 @@ class TimestampVerifier(AbstractVerifier):
         :param tolerance_in_millis: Tolerance value in milliseconds,
             to be used during verification
         :type tolerance_in_millis: float
-        :raises :py:class:`VerificationException` if tolerance value is
+        :raises: :py:class:`VerificationException` if tolerance value is
             invalid
         """
         if tolerance_in_millis > MAX_TIMESTAMP_TOLERANCE_IN_MILLIS:
@@ -426,7 +426,7 @@ class TimestampVerifier(AbstractVerifier):
             instance of the input POST request
         :type deserialized_request_env:
             :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`
-        :raises :py:class:`VerificationException` if difference between
+        :raises: :py:class:`VerificationException` if difference between
             local timestamp and input request timestamp is more than
             specific tolerance limit
         """

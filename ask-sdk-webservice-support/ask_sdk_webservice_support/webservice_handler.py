@@ -117,7 +117,7 @@ class WebserviceSkillHandler(object):
         :return: Serialized response object returned by the skill
             instance, when invoked with the input request
         :rtype: str
-        :raises :py:class:`ask_sdk_core.exceptions.AskSdkException`
+        :raises: :py:class:`ask_sdk_core.exceptions.AskSdkException`
             when skill deserialization, verification, invocation or
             serialization fails
         """

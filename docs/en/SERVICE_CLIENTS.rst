@@ -658,8 +658,10 @@ Interface
     class ask_sdk_model.services.TemparatureUnit(Enum):
         CELSIUS = "CELSIUS"
         FAHRENHEIT = "FAHRENHEIT"
+
 Code Sample
 ~~~~~~~~~~~
+
 **Alexa Customer Settings API**
  
 The Alexa Customer Settings API provides access to three pieces of information: preferred distance units, 
