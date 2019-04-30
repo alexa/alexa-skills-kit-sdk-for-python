@@ -19,7 +19,7 @@ __pip_package_name__ = 'ask-sdk-webservice-support'
 __description__ = ('The ASK SDK Webservice package provides support for '
                    'running skills, built using the Alexa Skills Kit '
                    'SDK, as web applications.')
-__url__ = 'https://github.com/alexa-labs/ask-sdk-python-playground'
+__url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
 __version__ = '0.1.1'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'

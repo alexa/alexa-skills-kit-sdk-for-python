@@ -128,8 +128,6 @@ class SkillAdapter(View):
                 "Invalid skill instance provided. Expected a custom "
                 "skill instance.")
 
-        self._skill.custom_user_agent += " django-ask-sdk"
-
         if verifiers is None:
             verifiers = []
 
@@ -146,6 +144,8 @@ class SkillAdapter(View):
             verify_timestamp=verify_timestamp,
             verifiers=self._verifiers
         )
+        self._webservice_handler._add_custom_user_agent("django-ask-sdk")
+
         super(SkillAdapter, self).__init__()
 
     @method_decorator(csrf_exempt)

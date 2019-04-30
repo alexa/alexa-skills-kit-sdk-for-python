@@ -37,7 +37,7 @@ class TestWebserviceSkillHandler(unittest.TestCase):
         self.mock_skill = mock.MagicMock(spec=CustomSkill)
         self.mock_serializer = mock.MagicMock(spec=DefaultSerializer)
         self.mock_skill.serializer = self.mock_serializer
-        self.mock_skill.custom_user_agent = ""
+        self.mock_skill.custom_user_agent = None
         self.mock_verifier = mock.MagicMock(spec=AbstractVerifier)
 
     def test_webservice_skill_handler_init_invalid_skill_raise_exception(self):
@@ -49,14 +49,24 @@ class TestWebserviceSkillHandler(unittest.TestCase):
             "Webservice skill handler didn't raise TypError on "
             "initialization when an invalid skill instance is provided")
 
-    def test_webservice_skill_handler_init_add_custom_user_agent(self):
+    def test_webservice_skill_handler_init_create_custom_user_agent(self):
         WebserviceSkillHandler(skill=self.mock_skill, verify_signature=False,
                                verify_timestamp=False)
 
         self.assertEqual(
-            self.mock_skill.custom_user_agent, " ask-webservice",
+            self.mock_skill.custom_user_agent, "ask-webservice",
+            "Webservice skill handler didn't create new custom user agent "
+            "value for a valid custom skill without a user agent")
+
+    def test_webservice_skill_handler_init_append_custom_user_agent(self):
+        self.mock_skill.custom_user_agent = "test-value"
+        WebserviceSkillHandler(skill=self.mock_skill, verify_signature=False,
+                               verify_timestamp=False)
+
+        self.assertEqual(
+            self.mock_skill.custom_user_agent, "test-value ask-webservice",
             "Webservice skill handler didn't update custom user agent "
-            "for a valid custom skill")
+            "for a valid custom skill with an existing user agent")
 
     def test_webservice_skill_handler_init_with_no_verifiers(self):
         test_webservice_skill_handler = WebserviceSkillHandler(

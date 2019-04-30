@@ -148,8 +148,6 @@ class SkillAdapter(object):
                 "Invalid skill instance provided. Expected a custom "
                 "skill instance.")
 
-        self._skill.custom_user_agent += " flask-ask-sdk"
-
         if app is not None:
             self.init_app(app)
 
@@ -209,6 +207,8 @@ class SkillAdapter(object):
             verify_timestamp=current_app.config.get(
                 VERIFY_TIMESTAMP_APP_CONFIG, True),
             verifiers=verifiers)
+
+        self._webservice_handler._add_custom_user_agent("flask-ask-sdk")
 
     def dispatch_request(self):
         # type: () -> Response

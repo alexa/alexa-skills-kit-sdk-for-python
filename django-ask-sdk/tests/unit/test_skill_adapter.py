@@ -41,7 +41,7 @@ class TestSkillAdapter(unittest.TestCase):
                 os.path.join(os.path.dirname(__file__), '..')))
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'unit.test_settings')
         self.mock_skill = mock.MagicMock(spec=CustomSkill)
-        self.mock_skill.custom_user_agent = ""
+        self.mock_skill.custom_user_agent = None
 
         test_http_request = mock.MagicMock(spec=HttpRequest)
         test_http_request.META = {}
@@ -60,14 +60,24 @@ class TestSkillAdapter(unittest.TestCase):
             "SkillAdapter constructor didn't throw exception for "
             "invalid skill input")
 
-    def test_add_custom_user_agent_to_valid_skill_initialization(self):
+    def test_create_custom_user_agent_to_valid_skill_initialization(self):
         SkillAdapter(skill=self.mock_skill, verify_signature=False,
                      verify_timestamp=False)
 
-        self.assertIn(
-            "django-ask-sdk", self.mock_skill.custom_user_agent,
+        self.assertEqual(
+            "ask-webservice django-ask-sdk", self.mock_skill.custom_user_agent,
             "SkillAdapter didn't update custom user agent "
-            "for a valid custom skill")
+            "for a valid custom skill without a user agent set")
+
+    def test_append_custom_user_agent_to_valid_skill_initialization(self):
+        self.mock_skill.custom_user_agent = "test-agent"
+        SkillAdapter(skill=self.mock_skill, verify_signature=False,
+                     verify_timestamp=False)
+
+        self.assertEqual(
+            "test-agent ask-webservice django-ask-sdk", self.mock_skill.custom_user_agent,
+            "SkillAdapter didn't update custom user agent "
+            "for a valid custom skill with a user agent set")
     
     def test_unset_verify_signature_on_init(self):
         test_skill_adapter = SkillAdapter(
