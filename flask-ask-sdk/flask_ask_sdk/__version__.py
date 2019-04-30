@@ -20,7 +20,7 @@ __description__ = ('The Flask ASK SDK package provides support '
                    'for using ASK SDK and Flask, to deploy custom '
                    'skills as webservice')
 __url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
