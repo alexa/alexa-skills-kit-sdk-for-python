@@ -2,6 +2,7 @@
 import os
 from subprocess import check_call
 import shutil
+import sys
 
 _dname = os.path.dirname
 
@@ -14,7 +15,11 @@ def run(command):
 
 sdk_packages = [
     "ask-sdk-runtime", "ask-sdk-core",
-    "ask-sdk-dynamodb-persistence-adapter", "ask-sdk"]
+    "ask-sdk-dynamodb-persistence-adapter", "ask-sdk",
+    "ask-sdk-webservice-support", "flask-ask-sdk"]
+
+if sys.version_info.major == 3:
+    sdk_packages.append("django-ask-sdk")
 
 run("pip install coverage")
 

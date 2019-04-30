@@ -19,7 +19,7 @@ __pip_package_name__ = 'django-ask-sdk'
 __description__ = ('The Django ASK SDK package provides support '
                    'for using ASK SDK and Django, to deploy custom '
                    'skills as webservice')
-__url__ = 'https://github.com/alexa-labs/ask-sdk-python-playground'
+__url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
 __version__ = '0.1.0'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'

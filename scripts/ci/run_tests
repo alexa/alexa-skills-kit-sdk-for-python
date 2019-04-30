@@ -11,7 +11,11 @@ _dname = os.path.dirname
 
 sdk_packages = [
     "ask-sdk-runtime", "ask-sdk-core",
-    "ask-sdk-dynamodb-persistence-adapter", "ask-sdk"]
+    "ask-sdk-dynamodb-persistence-adapter", "ask-sdk",
+    "ask-sdk-webservice-support", "flask-ask-sdk"]
+
+if sys.version_info.major == 3:
+    sdk_packages.append("django-ask-sdk")
 
 REPO_ROOT = _dname(_dname(_dname(os.path.abspath(__file__))))
 

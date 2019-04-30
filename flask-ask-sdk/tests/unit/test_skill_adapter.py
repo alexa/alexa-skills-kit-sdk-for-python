@@ -39,7 +39,7 @@ except ImportError:
 class TestSkillAdapter(unittest.TestCase):
     def setUp(self):
         self.mock_skill = mock.MagicMock(spec=CustomSkill)
-        self.mock_skill.custom_user_agent = ""
+        self.mock_skill.custom_user_agent = None
         self.skill_id = 12345
         self.test_app = Flask(__name__)
 
@@ -87,14 +87,6 @@ class TestSkillAdapter(unittest.TestCase):
             "SkillAdapter constructor didn't throw exception for "
             "invalid skill input")
 
-    def test_add_custom_user_agent_to_valid_skill_initialization(self):
-        SkillAdapter(skill=self.mock_skill, skill_id=None)
-
-        self.assertIn(
-            "flask-ask-sdk", self.mock_skill.custom_user_agent,
-            "SkillAdapter didn't update custom user agent "
-            "for a valid custom skill")
-
     def test_init_sets_no_config_when_no_app_provided(self):
         skill_adapter = mock.MagicMock(spec=SkillAdapter)
         self.assertFalse(
@@ -121,6 +113,25 @@ class TestSkillAdapter(unittest.TestCase):
         test_skill_adapter.init_app(self.test_app)
         self.check_config_set(self.test_app)
         self.check_extension_mapping_set(self.test_app)
+
+    def test_init_app_creates_user_agent_if_not_set(self):
+        test_skill_adapter = SkillAdapter(
+            skill=self.mock_skill, skill_id=self.skill_id, app=self.test_app)
+
+        self.assertIn("ask-webservice flask-ask-sdk",
+                      self.mock_skill.custom_user_agent,
+                      "SkillAdapter didn't update custom user agent "
+                      "for a valid custom skill without any user agent set")
+
+    def test_init_app_appends_user_agent_if_already_set(self):
+        self.mock_skill.custom_user_agent = "test-agent"
+        test_skill_adapter = SkillAdapter(
+            skill=self.mock_skill, skill_id=self.skill_id, app=self.test_app)
+
+        self.assertEqual("test-agent ask-webservice flask-ask-sdk",
+                         self.mock_skill.custom_user_agent,
+                         "SkillAdapter didn't update custom user agent "
+                         "for a valid custom skill with a user agent set")
 
     def test_init_app_sets_default_config_if_not_present(self):
         self.test_app.config[VERIFY_SIGNATURE_APP_CONFIG] = False

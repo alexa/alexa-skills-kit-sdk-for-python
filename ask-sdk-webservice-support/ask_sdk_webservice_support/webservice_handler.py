@@ -85,7 +85,7 @@ class WebserviceSkillHandler(object):
                 "Invalid skill instance provided. Expected a custom "
                 "skill instance.")
 
-        self._skill.custom_user_agent += " ask-webservice"
+        self._add_custom_user_agent("ask-webservice")
 
         if verify_signature:
             self._verifiers.append(RequestVerifier())
@@ -95,6 +95,23 @@ class WebserviceSkillHandler(object):
 
         if verifiers is not None:
             self._verifiers.extend(verifiers)
+
+    def _add_custom_user_agent(self, user_agent):
+        # type: (str) -> None
+        """Adds the user agent to the skill instance.
+
+        This method adds the passed in user_agent to the skill, which
+        is reflected in the skill's response envelope.
+
+        :param user_agent: Custom User Agent string provided by
+            the developer.
+        :type user_agent: str
+        :rtype: None
+        """
+        if self._skill.custom_user_agent is None:
+            self._skill.custom_user_agent = user_agent
+        else:
+            self._skill.custom_user_agent += " {}".format(user_agent)
 
     def verify_request_and_dispatch(
             self, http_request_headers, http_request_body):
