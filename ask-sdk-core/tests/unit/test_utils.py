@@ -652,8 +652,8 @@ class TestRequestUtils(unittest.TestCase):
         test_input = self._create_handler_input(
             request=self.test_launch_request)
         test_input.request_envelope.context.system.user = None
-        self.assertEqual(
-            get_user_id(handler_input=test_input), None,
+        self.assertIsNone(
+            get_user_id(handler_input=test_input),
             "get_user_id method returned incorrect user id from input request")
 
     def test_get_user_id(self):
