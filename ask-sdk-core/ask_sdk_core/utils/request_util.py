@@ -308,3 +308,22 @@ def is_new_session(handler_input):
         return session.new
 
     raise TypeError("The provided request doesn't have a session")
+
+
+def get_user_id(handler_input):
+    # type: (HandlerInput) -> Optional[AnyStr]
+    """Return the userId in the request.
+
+    The method retrieves the ``userId`` from the input request.
+    This value uniquely identifies the user and is generally used as input for
+    some Alexa-specific API calls.
+    More information about this can be found here:
+    https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#system-object
+    :param handler_input: The handler input instance that is generally
+        passed in the sdk's request and exception components
+    :type handler_input: ask_sdk_core.handler_input.HandlerInput
+    :return: Users userId or None if not available
+    :rtype: Optional[str]
+    """
+    user = handler_input.request_envelope.context.system.user
+    return user.user_id if user else None

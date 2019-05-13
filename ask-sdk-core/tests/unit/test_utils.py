@@ -30,7 +30,8 @@ from ask_sdk_core.utils import (
     is_canfulfill_intent_name, is_intent_name, is_request_type, viewport,
     get_slot, get_slot_value, get_account_linking_access_token,
     get_api_access_token, get_device_id, get_dialog_state, get_intent_name,
-    get_locale, get_request_type, is_new_session, get_supported_interfaces)
+    get_locale, get_request_type, is_new_session, get_supported_interfaces,
+    get_user_id)
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.exceptions import AskSdkException
 
@@ -414,6 +415,7 @@ class TestRequestUtils(unittest.TestCase):
         self.test_slot = Slot(
             name=self.test_slot_name, value=self.test_slot_value)
         self.test_api_access_token = "foo_api_access_token"
+        self.test_user_id = "foo_user_id"
         self.test_access_token = "foo_account_linking_access_token"
         self.test_device_id = "foo_device_id"
         self.test_supported_interfaces = SupportedInterfaces(
@@ -436,7 +438,8 @@ class TestRequestUtils(unittest.TestCase):
             session=Session(new=self.test_new_session),
             context=Context(
                 system=SystemState(
-                    user=User(access_token=self.test_access_token),
+                    user=User(access_token=self.test_access_token,
+                              user_id=self.test_user_id),
                     api_access_token=self.test_api_access_token,
                     device=Device(
                         device_id=self.test_device_id,
@@ -644,3 +647,19 @@ class TestRequestUtils(unittest.TestCase):
             self.test_new_session,
             "is_new_session method returned incorrect session information "
             "from input request when a session exists")
+
+    def test_get_user_id_with_no_user_info_returns_none(self):
+        test_input = self._create_handler_input(
+            request=self.test_launch_request)
+        test_input.request_envelope.context.system.user = None
+        self.assertIsNone(
+            get_user_id(handler_input=test_input),
+            "get_user_id method returned incorrect user id from input request")
+
+    def test_get_user_id(self):
+        test_input = self._create_handler_input(
+            request=self.test_launch_request)
+
+        self.assertEqual(
+            get_user_id(handler_input=test_input), self.test_user_id,
+            "get_user_id method returned incorrect user id from input request")
