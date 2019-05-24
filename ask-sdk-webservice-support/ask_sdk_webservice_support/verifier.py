@@ -19,6 +19,7 @@ from __future__ import division
 import os
 import base64
 import typing
+import pathlib
 
 from dateutil import tz
 from datetime import datetime
@@ -244,7 +245,7 @@ class RequestVerifier(AbstractVerifier):
                 "Signature Certificate URL has invalid hostname: {}. "
                 "Expecting {}".format(hostname, CERT_CHAIN_URL_HOSTNAME))
 
-        normalized_path = os.path.normpath(parsed_url.path)
+        normalized_path = pathlib.PureWindowsPath(os.path.normpath(parsed_url.path)).as_posix()
         if not normalized_path.startswith(CERT_CHAIN_URL_STARTPATH):
             raise VerificationException(
                 "Signature Certificate URL has invalid path: {}. "
