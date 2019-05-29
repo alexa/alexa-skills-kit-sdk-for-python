@@ -69,6 +69,7 @@ class Size(OrderedEnum):
 
 class ViewportProfile(Enum):
     HUB_ROUND_SMALL = "HUB_ROUND_SMALL"
+    HUB_LANDSCAPE_SMALL = "HUB_LANDSCAPE_SMALL"
     HUB_LANDSCAPE_MEDIUM = "HUB_LANDSCAPE_MEDIUM"
     HUB_LANDSCAPE_LARGE = "HUB_LANDSCAPE_LARGE"
     MOBILE_LANDSCAPE_SMALL = "MOBILE_LANDSCAPE_SMALL"
@@ -179,6 +180,13 @@ def get_viewport_profile(request_envelope):
                 and pixel_width_size_group is Size.XSMALL
                 and pixel_height_size_group is Size.XSMALL):
             return ViewportProfile.HUB_ROUND_SMALL
+
+        elif (shape is Shape.RECTANGLE
+                and orientation is Orientation.LANDSCAPE
+                and dpi_group is Density.LOW
+                and pixel_width_size_group <= Size.MEDIUM
+                and pixel_height_size_group <= Size.XSMALL):
+            return ViewportProfile.HUB_LANDSCAPE_SMALL
 
         elif (shape is Shape.RECTANGLE
                 and orientation is Orientation.LANDSCAPE
