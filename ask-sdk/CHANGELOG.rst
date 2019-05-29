@@ -107,3 +107,13 @@ This release contains the following changes :
 This release includes the following : 
 
 - Request utility methods which makes it easier to retrieve common properties from an incoming request.
+
+
+1.10.0
+~~~~~~~
+
+This release contains the following changes : 
+
+- Viewport Utils support for Echo Show 5 (HUB_LANDSCAPE_SMALL).
+- Add check for device information in 'get_device_id' utility function.
+- Add 'get_user_id' utility function.
