@@ -54,8 +54,8 @@ The functionality of these is identical and you can use **either**.
 Exception handlers
 ~~~~~~~~~~~~~~~~~~
 
-Sometimes things go wrong, and your skill code needs a way to handle the problem 
-gracefully. The ASK SDK for Python supports exception handling in a similar way 
+Sometimes things go wrong, and your skill code needs a way to handle the problem
+gracefully. The ASK SDK for Python supports exception handling in a similar way
 to handling requests. You have a choice of using `classes <#option-1-implementation-using-classes>`_ or `decorators <#option-2-implementation-using-decorators>`_.
 The following implementation sections explore how to implement exception handling.
 
@@ -189,7 +189,7 @@ previous handler.
             return handler_input.response_builder.response
 
 Similar to the previous handler, this handler matches an IntentRequest with
-the expected intent name. Basic help instructions are returned, and ``.ask(speech_text)`` 
+the expected intent name. Basic help instructions are returned, and ``.ask(speech_text)``
 causes the user's microphone to open up for the user to respond.
 
 CancelAndStopIntent handler
@@ -273,6 +273,19 @@ previous handler.
 
 Creating the Lambda handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    For a custom skill, you can host your service in AWS Lambda or
+    as a web service hosted on your own endpoint.
+
+    Generally, hosting the skill code on AWS Lambda is the easiest way.
+    The below sections provide information on how to achieve this.
+
+    However, if you wish to host it with any other cloud hosting provider,
+    the SDK provides some support packages (``ask-sdk-webservice-support``,
+    ``flask-ask-sdk``, ``django-ask-sdk``). You can find more information
+    on this configuration `here <WEBSERVICE_SUPPORT.html>`__.
 
 The `Lambda handler <https://docs.aws.amazon.com/lambda/latest/dg/python-programming-model-handler-types.html>`_
 is the entry point for your AWS Lambda function. The following code example
@@ -391,7 +404,7 @@ previous handler.
         return handler_input.response_builder.response
 
 Similar to the previous handler, this handler matches an IntentRequest with
-the expected intent name. Basic help instructions are returned, and ``.ask(speech_text)`` 
+the expected intent name. Basic help instructions are returned, and ``.ask(speech_text)``
 causes the user's microphone to open up for the user to respond.
 
 
@@ -496,7 +509,7 @@ the previous handler.
 .. code-block:: python
 
     handler = sb.lambda_handler()
-    
+
 When using decorators, your request handlers and exception handlers are
 automatically recognized by the Skill Builder object instantiated at
 the top of the code.
@@ -658,15 +671,15 @@ the skill with Alexa.
 
 * Next, configure the endpoint for the skill. To do this, follow these steps:
 
-  1. Under your skill, click the **Endpoint** tab, select AWS Lambda ARN, 
+  1. Under your skill, click the **Endpoint** tab, select AWS Lambda ARN,
      and copy the **Skill ID** of the skill you just created.
   2. Open the AWS Developer Console in a new tab.
   3. Navigate to the AWS Lambda function created in the previous step.
-  4. From the **Designer** menu, add the **Alexa Skills Kit** trigger menu, and 
-     scroll down to paste the skill ID into the **Skill ID Verification** configuration. 
+  4. From the **Designer** menu, add the **Alexa Skills Kit** trigger menu, and
+     scroll down to paste the skill ID into the **Skill ID Verification** configuration.
      Click **Add and save** once completed to update the AWS Lambda function.
-  5. Copy the AWS Lambda function **ARN** from the top right corner of the page. 
-     An ARN is a unique resource number that helps Alexa service identify the 
+  5. Copy the AWS Lambda function **ARN** from the top right corner of the page.
+     An ARN is a unique resource number that helps Alexa service identify the
      AWS Lambda function it needs to call during skill invocation.
   6. Navigate to the Alexa Skills Kit Developer Console, and click on your
      **HelloWorld** skill.
@@ -676,18 +689,18 @@ the skill with Alexa.
      Click **Save Endpoints**.
   9. Click **Invocation** tab, save and build the model.
 
-* At this point you can test the skill. In the top navigation, click **Test**. 
+* At this point you can test the skill. In the top navigation, click **Test**.
   Make sure that the **Test is enabled for this skill**
   option is enabled. You can use the Test page to simulate requests, in text
   and voice form.
 
-* Use the invocation name along with one of the sample utterances as a guide. 
+* Use the invocation name along with one of the sample utterances as a guide.
   For example, *tell greeter to say hello* should result
   in your skill responding with “Hello World” voice and "Hello World" card on
-  devices with display. You can also open the Alexa app on your phone or at 
+  devices with display. You can also open the Alexa app on your phone or at
   https://alexa.amazon.com) and see your skill listed under **Your Skills**.
 
 * Feel free to start experimenting with your intents as well as
   the corresponding request handlers in your skill's code. Once you're finished
-  iterating, optionally move on to getting your skill certified and published 
+  iterating, optionally move on to getting your skill certified and published
   so it can be used by customers worldwide.
