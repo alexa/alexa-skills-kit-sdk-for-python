@@ -97,16 +97,16 @@ class AbstractResponseInterceptor(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def process(self, handler_input, dispatch_output):
+    def process(self, handler_input, response):
         # type: (Input, Output) -> None
         """Process the input and the output after the Handler is run.
 
         :param handler_input: Generic input passed to the
             dispatcher.
         :type handler_input: Input
-        :param dispatch_output: Execution result of the Handler on
+        :param response: Execution result of the Handler on
             dispatch input.
-        :type dispatch_output: Union[None, Output]
+        :type response: Union[None, Output]
         :rtype: None
         """
         raise NotImplementedError
