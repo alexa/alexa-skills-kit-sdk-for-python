@@ -117,3 +117,12 @@ This release contains the following changes :
 - Viewport Utils support for Echo Show 5 (HUB_LANDSCAPE_SMALL).
 - Add check for device information in 'get_device_id' utility function.
 - Add 'get_user_id' utility function.
+
+
+1.10.1
+^^^^^^^
+
+This release contains the following : 
+
+- Fix the regression bug on `response_interceptors`.
+

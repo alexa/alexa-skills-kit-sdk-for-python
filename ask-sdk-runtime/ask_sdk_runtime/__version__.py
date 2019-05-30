@@ -20,7 +20,7 @@ __description__ = ('The ASK SDK Runtime package provides runtime components'
                    'that act as fundamental implementation layer for ASK SDK'
                    'packages')
 __url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
-__version__ = '1.10.0'
+__version__ = '1.10.1'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
