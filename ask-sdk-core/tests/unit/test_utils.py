@@ -252,6 +252,20 @@ class TestViewportProfile(unittest.TestCase):
                 is viewport.ViewportProfile.HUB_ROUND_SMALL), (
             "Viewport profile couldn't resolve HUB_ROUND_SMALL")
 
+    def test_viewport_map_to_hub_landscape_small(self):
+        viewport_state = ViewportState(
+            shape=Shape.RECTANGLE,
+            dpi=float(160),
+            current_pixel_width=float(960),
+            current_pixel_height=float(480))
+        test_request_env = RequestEnvelope(
+            context=Context(
+                viewport=viewport_state))
+
+        assert (viewport.get_viewport_profile(test_request_env)
+                is viewport.ViewportProfile.HUB_LANDSCAPE_SMALL), (
+            "Viewport profile couldn't resolve HUB_LANDSCAPE_SMALL")
+
     def test_viewport_map_to_hub_landscape_medium(self):
         viewport_state = ViewportState(
             shape=Shape.RECTANGLE,

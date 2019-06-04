@@ -190,6 +190,13 @@ ask\_sdk\_model.interfaces.alexa.presentation.apl.speak\_list\_command module
     :members:
     :show-inheritance:
 
+ask\_sdk\_model.interfaces.alexa.presentation.apl.set\_value\_command module
+----------------------------------------------------------------------------
+
+.. automodule:: ask_sdk_model.interfaces.alexa.presentation.apl.set_value_command
+    :members:
+    :show-inheritance:
+
 ask\_sdk\_model.interfaces.alexa.presentation.apl.video\_source module
 ----------------------------------------------------------------------
 

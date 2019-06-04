@@ -119,7 +119,7 @@ class GenericRequestDispatcher(AbstractRequestDispatcher):
 
             for response_interceptor in self.response_interceptors:
                 response_interceptor.process(
-                    handler_input=handler_input, dispatch_output=output)
+                    handler_input=handler_input, response=output)
 
             return output
         except Exception as e:
@@ -186,6 +186,6 @@ class GenericRequestDispatcher(AbstractRequestDispatcher):
             request_handler_chain.response_interceptors)
         for response_interceptor in local_response_interceptors:
             response_interceptor.process(
-                handler_input=handler_input, dispatch_output=output)
+                handler_input=handler_input, response=output)
 
         return output
