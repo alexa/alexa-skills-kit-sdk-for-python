@@ -78,7 +78,7 @@ class SkillBuilder(AbstractSkillBuilder):
         return CustomSkill(skill_configuration=skill_configuration)
 
     def lambda_handler(self):
-        # type: () -> Callable[[RequestEnvelope, T], Dict[str, T]]
+        # type: () -> Callable[[str, T], Dict[str, T]]
         """Create a handler function that can be used as handler in
         AWS Lambda console.
 
@@ -87,10 +87,21 @@ class SkillBuilder(AbstractSkillBuilder):
         lambda_handler output to a variable and set the variable as
         AWS Lambda Handler on the console.
 
+        As mentioned in the `AWS Lambda Handler docs <https://docs.aws.
+        amazon.com/lambda/latest/dg/python-programming-model-handler-types.html>`__,
+        the handler function receives the event attribute as a ``str``
+        representing the input request envelope JSON from Alexa service,
+        which is deserialized to
+        :py:class:`ask_sdk_model.request_envelope.RequestEnvelope`, before
+        invoking the skill. The output from the handler function would
+        be the serialized
+        :py:class:`ask_sdk_model.response_envelope.ResponseEnvelope` class
+        from the appropriate skill handler.
+
         :return: Handler function to tag on AWS Lambda console.
         """
         def wrapper(event, context):
-            # type: (RequestEnvelope, T) -> Dict[str, T]
+            # type: (str, T) -> Dict[str, T]
             skill = CustomSkill(skill_configuration=self.skill_configuration)
             request_envelope = skill.serializer.deserialize(
                 payload=json.dumps(event), obj_type=RequestEnvelope)
