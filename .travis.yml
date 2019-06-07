@@ -1,19 +1,17 @@
 language: python
 matrix:
   include:
-    - python: '2.7'
-    - python: '3.6'
-    - python: '3.7'
+    - python: 2.7
+      env:
+        - TOX_ENV=py27
+    - python: 3.6
+      env:
+        - TOX_ENV=py36
+    - python: 3.7
+      env:
+        - TOX_ENV=py37
       dist: xenial    # required for Python 3.7 (travis-ci/travis-ci#9069)
       sudo: required  # required for Python 3.7 (travis-ci/travis-ci#9069)
 install:
-  - python scripts/ci/sdk_install
-  - pip install flake8
-  - if [[ $TRAVIS_PYTHON_VERSION != '2.7' ]]; then pip install mypy; fi
-before_script: flake8 .
-script:
-  - python scripts/ci/run_tests
-  - if [[ $TRAVIS_PYTHON_VERSION != '2.7' ]]; then mypy --ignore-missing-imports --no-strict-optional ask-sdk/ask_sdk; fi
-  - if [[ $TRAVIS_PYTHON_VERSION != '2.7' ]]; then mypy --ignore-missing-imports --no-strict-optional ask-sdk-core/ask_sdk_core; fi
-  - if [[ $TRAVIS_PYTHON_VERSION != '2.7' ]]; then mypy --ignore-missing-imports --no-strict-optional ask-sdk-runtime/ask_sdk_runtime; fi
-  - if [[ $TRAVIS_PYTHON_VERSION != '2.7' ]]; then mypy --ignore-missing-imports --no-strict-optional ask-sdk-dynamodb-persistence-adapter/ask_sdk_dynamodb; fi
+  - pip install tox
+script: tox -e $TOX_ENV 
