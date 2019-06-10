@@ -1,17 +1,39 @@
 language: python
 matrix:
   include:
-    - python: 2.7
+    - os: linux
+      name: "Python 2.7 on Linux"
+      python: '2.7'
       env:
-        - TOX_ENV=py27
-    - python: 3.6
+      - TOX_ENV=py27-mylinux
+    - os: linux
+      name: "Python 3.6 on Linux"
+      python: '3.6'
       env:
-        - TOX_ENV=py36
-    - python: 3.7
-      env:
-        - TOX_ENV=py37
+      - TOX_ENV=py36-mylinux
+    - os: linux
+      name: "Python 3.7 on Xenial Linux"
+      python: '3.7'
       dist: xenial    # required for Python 3.7 (travis-ci/travis-ci#9069)
-      sudo: required  # required for Python 3.7 (travis-ci/travis-ci#9069)
+      env:
+      - TOX_ENV=py37-mylinux
+    - os: osx
+      name: "Python 3.6 on MacOs"
+      language: shell
+      python: '3.6'
+      env:
+      - TOX_ENV=py36-mymacos
+      before_install:
+      - set TRAVIS_PYTHON_VERSION='3.6'
+    - os: windows
+      language: sh
+      env:
+      - TOX_ENV=py37-mywin
+      before_install:
+      - choco install python3
+      - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+      - set TRAVIS_PYTHON_VERSION='3.6'
 install:
-  - pip install tox
-script: tox -e $TOX_ENV 
+  - pip install --upgrade tox
+script:
+  - tox -e $TOX_ENV
