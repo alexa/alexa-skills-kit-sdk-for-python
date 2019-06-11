@@ -110,8 +110,12 @@ AttributesManagerには、ハンドラーで取得や更新を行えるアトリ
 
         def save_persistent_attributes(self):
             # type: () -> None
-            # Persistence Attributes save
-            # Save the Persistence adapter to save the attributes
+            # Save the persistence attributes to the persistence layer
+            ....
+
+        def delete_persistent_attributes(self):
+            # type: () -> None
+            # Delete the persistence attributes from the persistence layer
             ....
 
 
@@ -129,3 +133,17 @@ AttributesManagerには、ハンドラーで取得や更新を行えるアトリ
             persistence_attr['foo'] = 'baz'
             handler_input.attributes_manager.save_persistent_attributes()
             return handler_input.response_builder.response
+
+.. note::
+
+    スキルのパフォーマンスを向上させるために、 `` AttributesManager``は永続的なオブジェクトをキャッシュします。
+    ローカルに属性。 `` persistent_attributes``セッターは
+    ローカルにキャッシュされた永続属性電話する必要があります
+    `` save_persistent_attributes（） ``に永続属性を保存する
+    永続層。
+
+.. note::
+
+    デフォルトの ``DynamoDbPersistenceAdapter``の`` delete_attributes``
+    実装はローカルキャッシュから永続属性を削除します
+    持続層（DynamoDbテーブル）からも同様です。
