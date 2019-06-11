@@ -132,8 +132,12 @@ Interface
 
         def save_persistent_attributes(self):
             # type: () -> None
-            # Persistence Attributes save
-            # Save the Persistence adapter to save the attributes
+            # Save the persistence attributes to the persistence layer
+            ....
+
+        def delete_persistent_attributes(self):
+            # type: () -> None
+            # Delete the persistence attributes from the persistence layer
             ....
 
 
@@ -161,6 +165,12 @@ attributes.
     locally cached persistent attributes. You need to call
     ``save_persistent_attributes()`` to save persistent attributes to the
     persistence layer.
+
+.. note::
+
+    The ``delete_attributes`` on the default ``DynamoDbPersistenceAdapter``
+    implementation will delete the persistence attributes from local cache
+    as well as from the persistence layer (DynamoDb table).
 
 
 PersistenceAdapter

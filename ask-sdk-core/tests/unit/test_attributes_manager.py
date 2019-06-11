@@ -263,22 +263,3 @@ class TestAttributesManager(unittest.TestCase):
         assert attributes_manager._persistence_adapter.attributes == {}, (
             "AttributesManager fails to delete persistent attributes via "
             "persistence adapter")
-
-    def test_delete_persistent_attributes_with_calling_delete_persistent_attributes_multiple_times(self):
-        session = Session()
-        request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
-        attributes_manager = AttributesManager(
-            request_envelope=request_envelope,
-            persistence_adapter=MockPersistenceAdapter())
-
-        attributes_manager.persistent_attributes = {"key": "value"}
-
-        attributes_manager.delete_persistent_attributes()
-        attributes_manager.delete_persistent_attributes()
-        attributes_manager.delete_persistent_attributes()
-        attributes_manager.delete_persistent_attributes()
-
-        assert attributes_manager._persistence_adapter.del_count == 1, (
-            "AttributesManager should make only 1 delete_attributes call "
-            "during multiple delete_persistent_attributes calls")

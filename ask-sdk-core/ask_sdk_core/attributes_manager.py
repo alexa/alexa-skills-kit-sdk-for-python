@@ -222,6 +222,7 @@ class AttributesManager(object):
     def delete_persistent_attributes(self):
         # type: () -> None
         """Deletes the persistent attributes from the persistence layer.
+
         :rtype: None
         :raises: :py:class: `ask_sdk_core.exceptions.AttributesManagerException`
             if trying to delete persistence attributes without persistence adapter
@@ -230,8 +231,8 @@ class AttributesManager(object):
             raise AttributesManagerException(
                 "Cannot delete PersistentAttributes without "
                 "persistence adapter!")
-        if self._persistent_attributes_set:
-            self._persistence_adapter.delete_attributes(
-                request_envelope=self._request_envelope)
-            self._persistence_attributes = {}
-            self._persistent_attributes_set = False
+
+        self._persistence_adapter.delete_attributes(
+            request_envelope=self._request_envelope)
+        self._persistence_attributes = {}
+        self._persistent_attributes_set = False
