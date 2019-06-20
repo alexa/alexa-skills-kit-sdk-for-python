@@ -126,3 +126,12 @@ This release contains the following :
 
 - Fix the regression bug on `response_interceptors`.
 
+
+
+1.10.2
+^^^^^^^
+
+This release contains the following changes : 
+
+- `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/99>`__ on delete persistence attributes, to delete attributes without checking if they are set. 
+- Fix `type hints <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/95>`__ on lambda_handler.
