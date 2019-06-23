@@ -54,6 +54,13 @@ class TestResponseFactory(unittest.TestCase):
             "The speak method of ResponseFactory fails to set play behavior "
             "on output speech")
 
+    def test_speak_randomly(self):
+        response_factory = self.response_factory.speak_randomly(speeches=[None, "Hello World"])
+
+        assert response_factory.response.output_speech in [SsmlOutputSpeech(ssml="<speak></speak>"),
+                                                           SsmlOutputSpeech(ssml="<speak>Hello World</speak>")], (
+            "The speak_randomly method of ResponseFactory fails to set one of the given speeches")
+
     def test_ask(self):
         response_factory = self.response_factory.ask(reprompt=None)
 

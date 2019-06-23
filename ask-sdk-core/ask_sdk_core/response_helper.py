@@ -16,6 +16,7 @@
 # License.
 #
 
+import random
 import typing
 from ask_sdk_model import Response
 from ask_sdk_model.ui import SsmlOutputSpeech, Reprompt
@@ -23,7 +24,7 @@ from ask_sdk_model.interfaces.display import (
     TextContent, PlainText, RichText)
 
 if typing.TYPE_CHECKING:
-    from typing import Union
+    from typing import Union, List
     from ask_sdk_model import Directive
     from ask_sdk_model.ui import Card
     from ask_sdk_model.canfulfill import CanFulfillIntent
@@ -70,6 +71,22 @@ class ResponseFactory(object):
         self.response.output_speech = SsmlOutputSpeech(
             ssml=ssml, play_behavior=play_behavior)
         return self
+
+    def speak_randomly(self, speeches, play_behavior=None):
+        # type: (List[str], PlayBehavior) -> 'ResponseFactory'
+        """Say the randomly one of the provided speeches to the user.
+
+        :param speeches: the possible output speeches to sent back to the user.
+        :type speeches: List[str]
+        :param play_behavior: attribute to control alexa's speech
+            interruption
+        :type play_behavior: ask_sdk_model.ui.play_behavior.PlayBehavior
+        :return: response factory with partial response being built and
+            access from self.response.
+        :rtype: ResponseFactory
+        """
+        speech = random.choice(speeches)
+        return self.speak(speech, play_behavior)
 
     def ask(self, reprompt, play_behavior=None):
         # type: (str, PlayBehavior) -> 'ResponseFactory'
