@@ -47,14 +47,14 @@ SDKでサポートされているAlexaの機能
 
 -  `スキルメッセージ <https://developer.amazon.com/docs/smapi/skill-messaging-api-reference.html>`__
 
+-  `Connections <https://developer.amazon.com/blogs/alexa/post/7b332b32-893e-4cad-be07-a5877efcbbb4/skill-connections-preview-now-skills-can-work-together-to-help-customers-get-more-done>`__
+
 プレビュー版
 -------
 
 .. note::
 
     以下の機能は、プレビュー版としてリリースされています。インターフェースは正式版リリースの際に変更される可能性があります。
-
--  `Connections <https://developer.amazon.com/blogs/alexa/post/7b332b32-893e-4cad-be07-a5877efcbbb4/skill-connections-preview-now-skills-can-work-together-to-help-customers-get-more-done>`__
 
 -  `Alexa Presentation Language <https://developer.amazon.com/docs/alexa-presentation-language/apl-overview.html>`__
 
