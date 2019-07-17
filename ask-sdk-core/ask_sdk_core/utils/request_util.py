@@ -230,7 +230,6 @@ def get_slot_value(handler_input, slot_name):
     found here :
     https://developer.amazon.com/docs/custom-skills/request-types-reference.html#slot-object
 
-    If there is no such slot, then a :py:class:`ValueError` is raised.
     If the input request is not an
     :py:class:`ask_sdk_model.intent_request.IntentRequest`, a
     :py:class:`TypeError` is raised.
@@ -242,17 +241,14 @@ def get_slot_value(handler_input, slot_name):
     :type slot_name: str
     :return: Slot value for the provided slot if it exists
     :rtype: str
-    :raises: TypeError if the input is not an IntentRequest. ValueError is
-        slot doesn't exist
+    :raises: TypeError if the input is not an IntentRequest.
     """
     slot = get_slot(handler_input=handler_input, slot_name=slot_name)
 
     if slot is not None:
         return slot.value
 
-    raise ValueError(
-        "Provided slot {} doesn't exist in the input request".format(
-            slot_name))
+    return None
 
 
 def get_supported_interfaces(handler_input):

@@ -612,15 +612,14 @@ class TestRequestUtils(unittest.TestCase):
             get_slot_value(
                 handler_input=test_input, slot_name=self.test_slot_name)
 
-    def test_get_slot_value_throws_exception_for_non_existent_slot(self):
+    def test_get_slot_value_returns_null_for_non_existent_slot(self):
         test_input = self._create_handler_input(
             request=self.test_intent_request)
 
-        with self.assertRaises(
-                ValueError,
-                msg="get_slot_value method didn't throw ValueError when an "
-                    "invalid slot name is passed"):
-            get_slot_value(handler_input=test_input, slot_name="some_slot")
+        slot_value = get_slot_value(
+            handler_input=test_input, slot_name="some_slot")
+        self.assertIsNone(slot_value, "get_slot_value didn't return null for"
+                                      "non existent slot value in request")
 
     def test_get_slot_value(self):
         test_input = self._create_handler_input(
