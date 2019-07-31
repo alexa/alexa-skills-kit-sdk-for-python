@@ -218,7 +218,7 @@ to register it as an endpoint in a Django app called ``example``:
 .. code-block:: python
 
     import skill
-    from django_ask_sdk.skill_response import SkillAdapter
+    from django_ask_sdk.skill_adapter import SkillAdapter
 
     view = SkillAdapter.as_view(skill=skill.sb.create())
 
