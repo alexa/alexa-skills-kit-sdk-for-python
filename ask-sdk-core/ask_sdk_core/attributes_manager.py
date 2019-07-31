@@ -22,7 +22,7 @@ from copy import deepcopy
 from .exceptions import AttributesManagerException
 
 if typing.TYPE_CHECKING:
-    from typing import Dict
+    from typing import Dict, Optional
     from ask_sdk_model import RequestEnvelope
 
 
@@ -103,11 +103,10 @@ class AttributesManager(object):
         self._persistence_attributes = {}  # type: Dict
         self._request_attributes = {}  # type: Dict
         if not self._request_envelope.session:
-            raise AttributesManagerException(
-                "Cannot get SessionAttributes from out of session request!")
+            self._session_attributes = None  # type: Optional[Dict]
         else:
             if not self._request_envelope.session.attributes:
-                self._session_attributes = {}  # type: Dict
+                self._session_attributes = {}
             else:
                 self._session_attributes = deepcopy(
                     request_envelope.session.attributes)

@@ -196,6 +196,42 @@ class TestSkillBuilder(unittest.TestCase):
             "Response Envelope from lambda handler invocation has incorrect "
             "response than built by skill")
 
+    def test_out_of_session_lambda_handler_invocation(self):
+        mock_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
+        mock_request_handler.can_handle.return_value = True
+        mock_response = Response()
+        mock_response.output_speech = "test output speech"
+        mock_request_handler.handle.return_value = mock_response
+        self.sb.add_request_handler(request_handler=mock_request_handler)
+
+        mock_request_envelope_payload = {
+            "context": {
+                "System": {
+                    "application": {
+                        "applicationId": "test"
+                    }
+                }
+            }
+        }
+
+        self.sb.skill_id = "test"
+        lambda_handler = self.sb.lambda_handler()
+
+        response_envelope = lambda_handler(
+            event=mock_request_envelope_payload, context=None)
+
+        assert response_envelope["version"] == RESPONSE_FORMAT_VERSION, (
+            "Response Envelope from lambda handler invocation has version "
+            "different than expected")
+        assert response_envelope["userAgent"] == user_agent_info(
+            sdk_version=__version__,
+            custom_user_agent=None), (
+            "Response Envelope from lambda handler invocation has user agent "
+            "info different than expected")
+        assert response_envelope["response"]["outputSpeech"] == "test output speech", (
+            "Response Envelope from lambda handler invocation has incorrect "
+            "response than built by skill")
+
 
 class TestCustomSkillBuilder(unittest.TestCase):
     def test_custom_persistence_adapter_default_null(self):
