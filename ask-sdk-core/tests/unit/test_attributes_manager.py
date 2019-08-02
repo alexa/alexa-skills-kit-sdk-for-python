@@ -74,9 +74,8 @@ class TestAttributesManager(unittest.TestCase):
             "new session request envelope")
 
     def test_get_session_attributes_from_out_of_session_request_envelope(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
@@ -143,9 +142,8 @@ class TestAttributesManager(unittest.TestCase):
             "AttributesManager fails to set the session attributes")
 
     def test_set_session_attributes_to_out_of_session_request_envelope(self):
-        session = Session()
         request_envelope = RequestEnvelope(
-            version=None, session=session, context=None, request=None)
+            version=None, session=None, context=None, request=None)
         attributes_manager = AttributesManager(
             request_envelope=request_envelope)
 
