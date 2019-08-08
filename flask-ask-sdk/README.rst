@@ -25,6 +25,7 @@ only need to do the following, to set this up in your flask app:
 
     from flask import Flask
     from ask_sdk_core.skill_builder import SkillBuilder
+    from flask_ask_sdk.skill_adapter import SkillAdapter
 
     sb = SkillBuilder()
     # Register all handlers, interceptors etc.
