@@ -133,6 +133,7 @@ class AbstractSkillBuilder(object):
                 (AbstractRequestHandler,), class_attributes)
 
             self.add_request_handler(request_handler=request_handler_class())
+            return handle_func
         return wrapper
 
     def exception_handler(self, can_handle_func):
