@@ -93,20 +93,8 @@ django-ask-sdk (Beta)                  |Django Sdk Version| |Django Sdk Download
 Technical Documentation
 -----------------------
 
-========================================================================== ======
-Language                                                                   Docs
-========================================================================== ======
-`English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_ |English Docs|
-`日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`_   |Japanese Docs|
-========================================================================== ======
-
-.. |English Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk/badge/?version=latest
-    :target: https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/?badge=latest
-    :alt: Read the docs english
-    
-.. |Japanese Docs| image:: https://readthedocs.org/projects/alexa-skills-kit-python-sdk-japanese/badge/?version=latest
-    :target: https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/?badge=latest
-    :alt: Read the docs japanese
+- `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`__
+- `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`__
 
 `Models <https://github.com/alexa/alexa-apis-for-python>`__
 -------
@@ -115,7 +103,7 @@ The SDK works on model classes rather than native Alexa JSON requests and
 responses. These model classes are generated using the Request, Response JSON
 schemas from the `developer docs <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>`__.
 
-The documentation for the model classes can be found `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>`__.
+The documentation for the model classes can be found `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/legacy/models/ask_sdk_model.html>`__.
 
 Samples
 -------
