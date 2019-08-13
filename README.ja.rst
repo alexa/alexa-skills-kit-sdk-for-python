@@ -9,9 +9,9 @@ ASK SDK for Python
 .. |Build Status| image:: https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat
     :target: https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python
     :alt: Build Status
-.. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
-    :target: https://alexa-skills-kit-python-sdk.readthedocs.io
-    :alt: Read the docs
+.. |Docs|
+    :target: https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html
+    :alt: Technical documentation
 .. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-runtime/
     :alt: Version
@@ -78,7 +78,7 @@ SDKの使用をより迅速に開始するには、次のリソースを参照�
 技術文書
 -------
 
-- `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`__
+- `English <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`__
 - `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`__
 
 モデル
@@ -86,7 +86,7 @@ SDKの使用をより迅速に開始するには、次のリソースを参照�
 
 SDKはネイティブのAlexa JSONリクエストおよびレスポンスではなく、モデルクラスで動作します。これらのモデルクラスは、 `開発者向けドキュメント <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>` __のRequest、Response JSONスキーマを使用して生成されます。モデルクラスのソースコードは `ここに <https://github.com/alexa/alexa-apis-for-python>` __にあります。
 
-モデルクラスのドキュメントは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/legacy/models/ask_sdk_model.html>` __にあります。
+モデルクラスのドキュメントは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>` __にあります。
 
 サンプル
 ----

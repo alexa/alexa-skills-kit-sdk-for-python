@@ -55,7 +55,7 @@ Usage and Getting Started
 -------------------------
 
 Getting started guides, SDK Features, API references, samples etc. can
-be found at `Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_
+be found in the `technical documentation <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`_
 
 
 Got Feedback?

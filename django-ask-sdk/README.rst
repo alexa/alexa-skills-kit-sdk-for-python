@@ -3,7 +3,7 @@ Django ASK SDK - Extending ASK SDK to work with Django
 ======================================================
 
 **django-ask-sdk** is the extension package, that will let skill developers
-use `ASK SDK <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`__
+use `ASK SDK <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`__
 package in their Django application. It provides an easy way to register and
 use `skills as custom webservices <https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html>`__.
 
@@ -72,7 +72,7 @@ Are you planning to deploy your skill on AWS Lambda? Then, you don't even
 need this package. The `ASK SDK` provides a `lambda_handler` that can be
 directly used in your lambda console.
 
-More code examples can be found `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/SAMPLE_SKILLS.html>`__.
+More code examples can be found `here <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/sample-skills.html>`__.
 
 Features
 --------
@@ -122,7 +122,7 @@ SDK Usage and Getting Started
 -----------------------------
 
 Getting started guides, SDK Features, API references, samples etc. can
-be found at `Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_
+be found in the `technical documentation <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`_
 
 
 Got Feedback?

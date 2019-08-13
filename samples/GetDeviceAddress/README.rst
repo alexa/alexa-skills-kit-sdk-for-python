@@ -36,7 +36,7 @@ This sample shows how to create a Lambda function for handling Alexa
 Skill requests that:
 
 -  Use service clients in SDK, to call the Alexa APIs.
-   More on `service clients here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/SERVICE_CLIENTS.html#>`__
+   More on `service clients here <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/call-alexa-service-apis.html>`__
 -  Use ``AskForPermissionsConsentCard`` for asking for location consent
 
 Setup
@@ -50,8 +50,8 @@ Prerequisites
 ~~~~~~~~~~~~~
 
 Please follow the
-`prerequisites <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/GETTING_STARTED.html#prerequisites>`_ section and the
-`adding ASK SDK <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/GETTING_STARTED.html#adding-the-ask-sdk-for-python-to-your-project>`_
+`prerequisites <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/set-up-the-sdk.html#prerequisites>`_ section and the
+`adding ASK SDK <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/set-up-the-sdk.html#adding-the-ask-sdk-for-python-to-your-project>`_
 section in
 Getting Started documentation. For this sample skill, you need
 the ``ASK SDK Core`` package.
@@ -184,5 +184,5 @@ Tutorials & Guides
 Documentation
 ~~~~~~~~~~~~~
 
--  `Official Alexa Skills Kit Python SDK Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_
+-  `Official Alexa Skills Kit Python SDK Docs <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`_
 -  `Official Alexa Skills Kit Docs <https://developer.amazon.com/docs/ask-overviews/build-skills-with-the-alexa-skills-kit.html>`_

@@ -7,7 +7,7 @@
           <h1 align="center">Alexa Skills Kit SDK for Python</h1>
           <p align="center">
             <a href="https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
-            <a href="https://alexa-skills-kit-python-sdk.readthedocs.io"><img src="https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat"></a>
+            <a href="https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html">Docs</a>
             <a href="https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
             <a href="https://pypi.python.org/pypi/ask-sdk/"><img src="http://img.shields.io/pypi/v/ask-sdk.svg?style=flat"></a>
             <a href="https://pypi.org/project/ask-sdk-core/"><img src="https://pepy.tech/badge/ask-sdk-core"></a>
@@ -26,9 +26,9 @@ boiler-plate code.
 .. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
     :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
     :alt: Build Status
-.. |Docs| image:: https://img.shields.io/readthedocs/alexa-skills-kit-python-sdk.svg?style=flat
-    :target: https://alexa-skills-kit-python-sdk.readthedocs.io
-    :alt: Read the docs
+.. |Docs|
+    :target: https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html
+    :alt: Technical documentation
 .. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-runtime/
     :alt: Version
@@ -74,7 +74,7 @@ boiler-plate code.
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
-    
+
 Package Versions
 ----------------
 ====================================   ==================
@@ -93,7 +93,7 @@ django-ask-sdk (Beta)                  |Django Sdk Version| |Django Sdk Download
 Technical Documentation
 -----------------------
 
-- `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`__
+- `English <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`__
 - `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`__
 
 `Models <https://github.com/alexa/alexa-apis-for-python>`__
@@ -103,7 +103,7 @@ The SDK works on model classes rather than native Alexa JSON requests and
 responses. These model classes are generated using the Request, Response JSON
 schemas from the `developer docs <https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html>`__.
 
-The documentation for the model classes can be found `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/legacy/models/ask_sdk_model.html>`__.
+The documentation for the model classes can be found `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>`__.
 
 Samples
 -------
@@ -117,7 +117,7 @@ Alexa Skills Kit and AWS Lambda.
 
 This sample shows how to create a skill
 using the Request Handler classes. For more information, check the
-`Request Processing <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/REQUEST_PROCESSING.html>`_ documentation.
+`Request Processing <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/handle-requests.html>`_ documentation.
 
 `Hello World (using Decorators) <https://github.com/alexa/skill-sample-python-helloworld-decorators>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -128,7 +128,7 @@ Alexa Skills Kit and AWS Lambda.
 
 This sample shows how to create a skill
 using the Request Handler Decorators. For more information, check the
-`Request Processing <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/REQUEST_PROCESSING.html>`_ documentation.
+`Request Processing <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/handle-requests.html>`_ documentation.
 
 `Color Picker <https://github.com/alexa/skill-sample-python-colorpicker>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,7 +166,7 @@ Sample skill that shows how to request and access the configured address in
 the user’s device settings.
 
 Demonstrates how to use the alexa APIs using the SDK. For more information,
-check the documentation on `Alexa Service Clients <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/SERVICE_CLIENTS.html>`_
+check the documentation on `Alexa Service Clients <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/call-alexa-service-apis.html>`_
 
 `Fact with In-Skill Purchases <https://github.com/alexa/skill-sample-python-fact-in-skill-purchases>`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -280,7 +280,7 @@ under ``flask-ask-sdk`` and ``django-ask-sdk`` packages, to integrate
 skills on the respective frameworks and deploy as web service.
 
 More information on how to use these packages can be found on this
-`documentation link <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/WEBSERVICE_SUPPORT.html>`__.
+`documentation link <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/host-web-service.html>`__.
 
 .. warning::
 
