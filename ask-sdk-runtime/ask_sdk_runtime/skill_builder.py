@@ -133,6 +133,7 @@ class AbstractSkillBuilder(object):
                 (AbstractRequestHandler,), class_attributes)
 
             self.add_request_handler(request_handler=request_handler_class())
+            return handle_func
         return wrapper
 
     def exception_handler(self, can_handle_func):
@@ -177,6 +178,7 @@ class AbstractSkillBuilder(object):
 
             self.add_exception_handler(
                 exception_handler=exception_handler_class())
+            return handle_func
         return wrapper
 
     def global_request_interceptor(self):
@@ -211,6 +213,7 @@ class AbstractSkillBuilder(object):
 
             self.add_global_request_interceptor(
                 request_interceptor=request_interceptor())
+            return process_func
         return wrapper
 
     def global_response_interceptor(self):
@@ -247,6 +250,7 @@ class AbstractSkillBuilder(object):
 
             self.add_global_response_interceptor(
                 response_interceptor=response_interceptor())
+            return process_func
         return wrapper
 
     @abstractmethod

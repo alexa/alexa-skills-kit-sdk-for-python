@@ -289,7 +289,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_handle(input):
             return "something"
 
-        self.sb.request_handler(can_handle_func=test_can_handle)(
+        returned_request_handler = self.sb.request_handler(can_handle_func=test_can_handle)(
             handle_func=test_handle)
 
         options = self.sb.runtime_configuration_builder
@@ -306,6 +306,9 @@ class TestSkillBuilder(unittest.TestCase):
         assert actual_request_handler.handle(None) == "something", (
             "Request Handler decorator created Request Handler with incorrect "
             "handle function")
+        assert returned_request_handler == test_handle, (
+            "Request Handler wrapper returned incorrect function"
+        )
 
     def test_exception_handler_decorator_creation(self):
         exception_handler_wrapper = self.sb.exception_handler(
@@ -352,7 +355,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_handle(input, exc):
             return "something"
 
-        self.sb.exception_handler(can_handle_func=test_can_handle)(
+        returned_exception_handler = self.sb.exception_handler(can_handle_func=test_can_handle)(
             handle_func=test_handle)
 
         options = self.sb.runtime_configuration_builder
@@ -368,6 +371,9 @@ class TestSkillBuilder(unittest.TestCase):
         assert actual_exception_handler.handle(None, None) == "something", (
             "Exception Handler decorator created Exception Handler with "
             "incorrect handle function")
+        assert returned_exception_handler == test_handle, (
+            "Exception Handler wrapper returned incorrect function"
+        )
 
     def test_global_request_interceptor_decorator_creation(self):
         request_interceptor_wrapper = self.sb.global_request_interceptor()
@@ -398,7 +404,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_process(input):
             return "something"
 
-        self.sb.global_request_interceptor()(process_func=test_process)
+        returned_process_func = self.sb.global_request_interceptor()(process_func=test_process)
 
         options = self.sb.runtime_configuration_builder
         actual_global_request_interceptor = options.global_request_interceptors[0]
@@ -406,6 +412,9 @@ class TestSkillBuilder(unittest.TestCase):
         assert (actual_global_request_interceptor.__class__.__name__
                 == "RequestInterceptorTestProcess")
         assert actual_global_request_interceptor.process(None) == "something"
+        assert returned_process_func == test_process, (
+            "Request Interceptor wrapper returned incorrect function"
+        )
 
     def test_global_response_interceptor_decorator_creation(self):
         response_interceptor_wrapper = self.sb.global_response_interceptor()
@@ -438,7 +447,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_process(input, response):
             return "something"
 
-        self.sb.global_response_interceptor()(process_func=test_process)
+        returned_process_func = self.sb.global_response_interceptor()(process_func=test_process)
 
         options = self.sb.runtime_configuration_builder
         actual_global_response_interceptor = options.global_response_interceptors[0]
@@ -447,3 +456,7 @@ class TestSkillBuilder(unittest.TestCase):
                 == "ResponseInterceptorTestProcess")
         assert actual_global_response_interceptor.process(None, None) == (
             "something")
+        assert returned_process_func == test_process, (
+            "Response Interceptor wrapper returned incorrect function"
+        )
+
