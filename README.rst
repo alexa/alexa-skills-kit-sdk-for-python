@@ -84,9 +84,9 @@ ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
-ask-sdk-webservice-support (Beta)      |Webservice Version| |Webservice Downloads|
-flask-ask-sdk (Beta)                   |Flask Sdk Version| |Flask Sdk Downloads|
-django-ask-sdk (Beta)                  |Django Sdk Version| |Django Sdk Downloads|
+ask-sdk-webservice-support             |Webservice Version| |Webservice Downloads|
+flask-ask-sdk                          |Flask Sdk Version| |Flask Sdk Downloads|
+django-ask-sdk                         |Django Sdk Version| |Django Sdk Downloads|
 ====================================   ==================
 
 
@@ -281,11 +281,6 @@ skills on the respective frameworks and deploy as web service.
 
 More information on how to use these packages can be found on this
 `documentation link <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/host-web-service.html>`__.
-
-.. warning::
-
-    These features are currently in **Beta**. The interface might change when
-    the features are released as stable.
 
 
 Got Feedback?
