@@ -20,7 +20,7 @@ __description__ = ('The ASK SDK Webservice package provides support for '
                    'running skills, built using the Alexa Skills Kit '
                    'SDK, as web applications.')
 __url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
-__version__ = '0.1.2'
+__version__ = '1.0.0'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
