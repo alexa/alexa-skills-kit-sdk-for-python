@@ -17,14 +17,6 @@ webservice development, you can install the `django-ask-sdk` package.
 Quick Start
 -----------
 
-.. warning::
-
-    These features are currently in beta. You can view the source
-    code in the
-    `Ask Python Sdk <https://github.com/alexa/alexa-skills-kit-sdk-for-python>`__
-    repo on GitHub. The interface might change when the features are released as
-    stable.
-
 Installation
 ~~~~~~~~~~~~~
 

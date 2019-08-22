@@ -67,9 +67,9 @@ ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
-ask-sdk-webservice-support (Beta)      |Webservice Version| |Webservice Downloads|
-flask-ask-sdk (Beta)                   |Flask Sdk Version| |Flask Sdk Downloads|
-django-ask-sdk (Beta)                  |Django Sdk Version| |Django Sdk Downloads|
+ask-sdk-webservice-support             |Webservice Version| |Webservice Downloads|
+flask-ask-sdk                          |Flask Sdk Version| |Flask Sdk Downloads|
+django-ask-sdk                         |Django Sdk Version| |Django Sdk Downloads|
 ====================================   ==================
 
 
@@ -233,11 +233,6 @@ SDKはホスティングを可能にする `` ask-sdk-webservice-support``パッ
 
 これらのパッケージの使用方法に関する詳細はこちらにあります。
 `ドキュメントのリンク<https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/WEBSERVICE_SUPPORT.html>` __。
-
-..警告::
-
-    これらの機能は現在** Beta **にあります。インタフェースはいつ変わるか
-    機能は安定版としてリリースされています。
 
 
 フィードバック

@@ -10,14 +10,6 @@ use `skills as custom webservices <https://developer.amazon.com/docs/custom-skil
 Quick Start
 -----------
 
-.. warning::
-
-    These features are currently in beta. You can view the source
-    code in the
-    `Ask Python Sdk <https://github.com/alexa/alexa-skills-kit-sdk-for-python>`__
-    repo on GitHub. The interface might change when the features are released as
-    stable.
-
 If you already have a skill built using the ASK SDK skill builders, then you
 only need to do the following, to set this up in your flask app:
 
