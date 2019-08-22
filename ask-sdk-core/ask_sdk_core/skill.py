@@ -27,6 +27,7 @@ from ask_sdk_runtime.exceptions import AskSdkException
 from .serialize import DefaultSerializer
 from .handler_input import HandlerInput
 from .attributes_manager import AttributesManager
+from .view_resolvers import TemplateFactory
 from .utils import RESPONSE_FORMAT_VERSION, user_agent_info
 from .__version__ import __version__
 
@@ -137,6 +138,8 @@ class CustomSkill(AbstractSkill):
         self.serializer = DefaultSerializer()
         self.skill_id = skill_configuration.skill_id
         self.custom_user_agent = skill_configuration.custom_user_agent
+        self.loaders = skill_configuration.loaders
+        self.renderer = skill_configuration.renderer
 
         self.request_dispatcher = GenericRequestDispatcher(
             options=skill_configuration
@@ -185,6 +188,10 @@ class CustomSkill(AbstractSkill):
         else:
             factory = None
 
+        template_factory = TemplateFactory(
+            template_loaders=self.loaders,
+            template_renderer=self.renderer)
+
         attributes_manager = AttributesManager(
             request_envelope=request_envelope,
             persistence_adapter=self.persistence_adapter)
@@ -193,7 +200,8 @@ class CustomSkill(AbstractSkill):
             request_envelope=request_envelope,
             attributes_manager=attributes_manager,
             context=context,
-            service_client_factory=factory)
+            service_client_factory=factory,
+            template_factory=template_factory)
 
         response = self.request_dispatcher.dispatch(
             handler_input=handler_input)

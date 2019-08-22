@@ -25,9 +25,11 @@ from ask_sdk_runtime.skill_builder import AbstractSkillBuilder
 from .skill import CustomSkill, SkillConfiguration
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, TypeVar, Dict
+    from typing import Callable, TypeVar, Dict, List
     from ask_sdk_model.services import ApiClient
     from .attributes_manager import AbstractPersistenceAdapter
+    from ask_sdk_runtime.view_resolvers import (
+        AbstractTemplateLoader, AbstractTemplateRenderer)
     T = TypeVar('T')
 
 
@@ -39,7 +41,7 @@ class SkillBuilder(AbstractSkillBuilder):
     def __init__(self):
         # type: () -> None
         super(SkillBuilder, self).__init__()
-        self.custom_user_agent = None
+        self.custom_user_agent = None  # type: str
         self.skill_id = None
 
     @property
@@ -109,6 +111,32 @@ class SkillBuilder(AbstractSkillBuilder):
                 request_envelope=request_envelope, context=context)
             return skill.serializer.serialize(response_envelope)  # type:ignore
         return wrapper
+
+    def add_custom_user_agent(self, user_agent):
+        # type: (str) -> None
+        """Adds the user agent to the skill instance.
+
+        This method adds the passed in user_agent to the skill, which is
+        reflected in the skill's response envelope.
+
+        :param user_agent: Custom User Agent string provided by the developer.
+        :type user_agent: str
+        :rtype: None
+        """
+        if self.custom_user_agent is None:
+            self.custom_user_agent = user_agent
+        else:
+            self.custom_user_agent += " {}".format(user_agent)
+
+    def add_renderer(self, renderer):
+        # type: (AbstractTemplateRenderer) -> None
+        """Register renderer to generate template responses.
+
+        :param renderer: Renderer to render the template
+        :type renderer:  :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateRenderer`
+        """
+        super(SkillBuilder, self).add_renderer(renderer)
+        self.add_custom_user_agent("templateResolver")
 
 
 class CustomSkillBuilder(SkillBuilder):

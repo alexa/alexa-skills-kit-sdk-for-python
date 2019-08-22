@@ -103,7 +103,7 @@ class AbstractResponseInterceptor(GenericResponseInterceptor):
         :type handler_input: HandlerInput
         :param response: Execution result of the Handler on
             handler input.
-        :type response: Union[None, :py:class:`ask_sdk_model.Response`]
+        :type response: Union[None, :py:class:`ask_sdk_model.response.Response`]
         :rtype: None
         """
         raise NotImplementedError

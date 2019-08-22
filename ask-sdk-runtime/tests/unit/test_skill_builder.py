@@ -24,6 +24,8 @@ from ask_sdk_runtime.dispatch_components import (
     AbstractRequestHandler, AbstractExceptionHandler,
     AbstractRequestInterceptor, AbstractResponseInterceptor,
     GenericExceptionMapper)
+from ask_sdk_runtime.view_resolvers import (
+    AbstractTemplateLoader, AbstractTemplateRenderer)
 from ask_sdk_runtime.exceptions import (
     RuntimeConfigException, SkillBuilderException)
 
@@ -176,6 +178,81 @@ class TestSkillBuilder(unittest.TestCase):
             "interceptor to Skill Builder "
             "Response Interceptors list")
 
+    def test_add_valid_loader(self):
+        mock_loader = mock.MagicMock(spec=AbstractTemplateLoader)
+
+        self.sb.add_loader(loader=mock_loader)
+        options = self.sb.runtime_configuration_builder
+
+        assert (options.loaders[0] == mock_loader), (
+            "Add loader method didn't add valid loader to Skill Builder"
+            "Loaders list"
+        )
+
+    def test_add_valid_loaders(self):
+        mock_loader = mock.MagicMock(spec=AbstractTemplateLoader)
+        mock_loader_1 = mock.MagicMock(spec=AbstractTemplateLoader)
+
+        self.sb.add_loaders(loaders=[mock_loader, mock_loader_1])
+        options = self.sb.runtime_configuration_builder
+
+        assert (options.loaders[0] == mock_loader), (
+            "Add loader method didn't add valid loader to Skill Builder"
+            "Loaders list"
+        )
+        assert (options.loaders[1] == mock_loader_1), (
+            "Add loader method didn't add valid loader to Skill Builder"
+            "Loaders list")
+
+    def test_add_invalid_loader_throw_error(self):
+        invalid_mock_loader = mock.MagicMock()
+
+        with self.assertRaises(RuntimeConfigException) as exc:
+            self.sb.add_loader(loader=invalid_mock_loader)
+
+        assert "{} should be a AbstractTemplateLoader instance".format(
+            invalid_mock_loader) in str(exc.exception), (
+            "Add loader method didn't throw exception "
+            "when an invalid loader is added")
+
+    def test_add_null_loader_throw_error(self):
+        with self.assertRaises(RuntimeConfigException) as exc:
+            self.sb.add_loader(loader=None)
+
+        assert "Valid Loader instance to be provided" in str(exc.exception), (
+            "Add loader method didn't throw exception when an null loader "
+            "is added")
+
+    def test_add_valid_renderer(self):
+        mock_renderer = mock.MagicMock(spec=AbstractTemplateRenderer)
+
+        self.sb.add_renderer(renderer=mock_renderer)
+        options = self.sb.runtime_configuration_builder
+
+        assert (options.renderer == mock_renderer), (
+            "Add Renderer method didn't add valid renderer to Skill Builder"
+        )
+
+    def test_add_invalid_renderer_throw_error(self):
+        invalid_mock_renderer = mock.MagicMock()
+
+        with self.assertRaises(RuntimeConfigException) as exc:
+            self.sb.add_renderer(renderer=invalid_mock_renderer)
+
+        assert "Input should be a AbstractTemplateRenderer instance" in str(
+            exc.exception), (
+            "Add renderer method didn't throw exception when an invalid "
+            "renderer is added")
+
+    def test_add_null_renderer_throw_error(self):
+        with self.assertRaises(RuntimeConfigException) as exc:
+            self.sb.add_renderer(renderer=None)
+
+        assert "Valid Renderer instance to be provided" in str(
+            exc.exception), (
+            "Add renderer method didn't throw exception when an null "
+            "renderer is added")
+
     def test_skill_configuration_getter_no_registered_components(self):
         actual_config = self.sb.runtime_configuration_builder.get_runtime_configuration()
 
@@ -289,7 +366,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_handle(input):
             return "something"
 
-        returned_request_handler = self.sb.request_handler(can_handle_func=test_can_handle)(
+        self.sb.request_handler(can_handle_func=test_can_handle)(
             handle_func=test_handle)
 
         options = self.sb.runtime_configuration_builder
@@ -306,9 +383,6 @@ class TestSkillBuilder(unittest.TestCase):
         assert actual_request_handler.handle(None) == "something", (
             "Request Handler decorator created Request Handler with incorrect "
             "handle function")
-        assert returned_request_handler == test_handle, (
-            "Request Handler wrapper returned incorrect function"
-        )
 
     def test_exception_handler_decorator_creation(self):
         exception_handler_wrapper = self.sb.exception_handler(
@@ -355,7 +429,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_handle(input, exc):
             return "something"
 
-        returned_exception_handler = self.sb.exception_handler(can_handle_func=test_can_handle)(
+        self.sb.exception_handler(can_handle_func=test_can_handle)(
             handle_func=test_handle)
 
         options = self.sb.runtime_configuration_builder
@@ -371,9 +445,6 @@ class TestSkillBuilder(unittest.TestCase):
         assert actual_exception_handler.handle(None, None) == "something", (
             "Exception Handler decorator created Exception Handler with "
             "incorrect handle function")
-        assert returned_exception_handler == test_handle, (
-            "Exception Handler wrapper returned incorrect function"
-        )
 
     def test_global_request_interceptor_decorator_creation(self):
         request_interceptor_wrapper = self.sb.global_request_interceptor()
@@ -404,7 +475,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_process(input):
             return "something"
 
-        returned_process_func = self.sb.global_request_interceptor()(process_func=test_process)
+        self.sb.global_request_interceptor()(process_func=test_process)
 
         options = self.sb.runtime_configuration_builder
         actual_global_request_interceptor = options.global_request_interceptors[0]
@@ -412,9 +483,6 @@ class TestSkillBuilder(unittest.TestCase):
         assert (actual_global_request_interceptor.__class__.__name__
                 == "RequestInterceptorTestProcess")
         assert actual_global_request_interceptor.process(None) == "something"
-        assert returned_process_func == test_process, (
-            "Request Interceptor wrapper returned incorrect function"
-        )
 
     def test_global_response_interceptor_decorator_creation(self):
         response_interceptor_wrapper = self.sb.global_response_interceptor()
@@ -447,7 +515,7 @@ class TestSkillBuilder(unittest.TestCase):
         def test_process(input, response):
             return "something"
 
-        returned_process_func = self.sb.global_response_interceptor()(process_func=test_process)
+        self.sb.global_response_interceptor()(process_func=test_process)
 
         options = self.sb.runtime_configuration_builder
         actual_global_response_interceptor = options.global_response_interceptors[0]
@@ -456,7 +524,3 @@ class TestSkillBuilder(unittest.TestCase):
                 == "ResponseInterceptorTestProcess")
         assert actual_global_response_interceptor.process(None, None) == (
             "something")
-        assert returned_process_func == test_process, (
-            "Response Interceptor wrapper returned incorrect function"
-        )
-

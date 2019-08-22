@@ -24,10 +24,12 @@ from .dispatch_components import (
     AbstractRequestHandler, AbstractRequestInterceptor,
     AbstractResponseInterceptor, AbstractExceptionHandler)
 from .exceptions import SkillBuilderException
+from .view_resolvers import (
+    AbstractTemplateLoader, AbstractTemplateRenderer)
 
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, TypeVar
+    from typing import Callable, TypeVar, List
     from .skill import AbstractSkill
     T = TypeVar('T')
     Input = TypeVar('Input')
@@ -93,6 +95,33 @@ class AbstractSkillBuilder(object):
         """
         self.runtime_configuration_builder.add_global_response_interceptor(
             response_interceptor)
+
+    def add_loaders(self, loaders):
+        # type: (List[AbstractTemplateLoader]) -> None
+        """Register input to the loaders list.
+
+        :param loaders: List of loaders
+        :type loaders:  :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateLoader`
+        """
+        self.runtime_configuration_builder.add_loaders(loaders)
+
+    def add_loader(self, loader):
+        # type: (AbstractTemplateLoader) -> None
+        """Register input to loaders list.
+
+        :param loader: Loader to load template from a specific data source
+        :type loader: :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateLoader`
+        """
+        self.runtime_configuration_builder.add_loader(loader)
+
+    def add_renderer(self, renderer):
+        # type: (AbstractTemplateRenderer) -> None
+        """Register renderer to generate template responses.
+
+        :param renderer: Renderer to render the template
+        :type renderer:  :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateRenderer`
+        """
+        self.runtime_configuration_builder.add_renderer(renderer)
 
     def request_handler(self, can_handle_func):
         # type: (Callable[[Input], bool]) -> Callable

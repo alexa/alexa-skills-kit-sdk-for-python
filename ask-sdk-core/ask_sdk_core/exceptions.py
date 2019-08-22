@@ -39,3 +39,13 @@ class PersistenceException(AskSdkException):
 class ApiClientException(AskSdkException):
     """Exception class for ApiClient Adapter processing."""
     pass
+
+
+class TemplateLoaderException(AskSdkException):
+    """Exception class for Template Loaders"""
+    pass
+
+
+class TemplateRendererException(AskSdkException):
+    """Exception class for Template Renderer"""
+    pass

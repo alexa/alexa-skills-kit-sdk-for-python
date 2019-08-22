@@ -24,9 +24,11 @@ from .dispatch_components import (
     AbstractResponseInterceptor, AbstractExceptionHandler,
     GenericRequestHandlerChain, GenericRequestMapper,
     GenericHandlerAdapter, GenericExceptionMapper)
+from .view_resolvers import (
+    AbstractTemplateLoader, AbstractTemplateRenderer)
 
 if typing.TYPE_CHECKING:
-    from typing import List, TypeVar
+    from typing import List, TypeVar, Any
     T = TypeVar('T')
     SkillInput = TypeVar('SkillInput')
     SkillOutput = TypeVar('SkillOutput')
@@ -53,8 +55,8 @@ class RuntimeConfiguration(object):
     def __init__(
             self, request_mappers, handler_adapters,
             request_interceptors=None, response_interceptors=None,
-            exception_mapper=None):
-        # type: (List[GenericRequestMapper], List[GenericHandlerAdapter], List[AbstractRequestInterceptor], List[AbstractResponseInterceptor], GenericExceptionMapper) -> None
+            exception_mapper=None, loaders=None, renderer=None):
+        # type: (List[GenericRequestMapper], List[GenericHandlerAdapter], List[AbstractRequestInterceptor], List[AbstractResponseInterceptor], GenericExceptionMapper, List[AbstractTemplateLoader], AbstractTemplateRenderer) -> None
         """Configuration object that represents standard components
         needed for building :py:class:`Skill`.
 
@@ -70,6 +72,10 @@ class RuntimeConfiguration(object):
         :type response_interceptors: list(AbstractResponseInterceptor)
         :param exception_mapper: Exception mapper instance.
         :type exception_mapper: GenericExceptionMapper
+        :param loaders: List of loaders instance.
+        :type loaders: list(AbstractTemplateLoader)
+        :param renderer: Renderer instance.
+        :type renderer: AbstractTemplateRenderer
         """
         if request_mappers is None:
             request_mappers = []
@@ -89,6 +95,12 @@ class RuntimeConfiguration(object):
 
         self.exception_mapper = exception_mapper
 
+        if loaders is None:
+            loaders = []
+        self.loaders = loaders
+
+        self.renderer = renderer
+
 
 class RuntimeConfigurationBuilder(object):
     """Builder class for creating a runtime configuration object, from
@@ -100,10 +112,12 @@ class RuntimeConfigurationBuilder(object):
         """Builder class for creating a runtime configuration object,
         from base dispatch components.
         """
-        self.request_handler_chains = [] # type: List
+        self.request_handler_chains = []  # type: List
         self.global_request_interceptors = []  # type: List
         self.global_response_interceptors = []  # type: List
         self.exception_handlers = []  # type: List
+        self.loaders = []  # type: List
+        self.renderer = None  # type: Any
 
     def add_request_handler(self, request_handler):
         # type: (AbstractRequestHandler) -> None
@@ -194,6 +208,50 @@ class RuntimeConfigurationBuilder(object):
 
         self.global_response_interceptors.append(response_interceptor)
 
+    def add_loader(self, loader):
+        # type: (AbstractTemplateLoader) -> None
+        """Register input to the loaders list.
+
+        :param loader: Loader to load the template
+        :type loader:  :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateLoader`
+        """
+        if loader is None:
+            raise RuntimeConfigException(
+                "Valid Loader instance to be provided")
+
+        if not isinstance(loader, AbstractTemplateLoader):
+            raise RuntimeConfigException(
+                "{} should be a AbstractTemplateLoader instance".format(loader))
+
+        self.loaders.append(loader)
+
+    def add_loaders(self, loaders):
+        # type: (List[AbstractTemplateLoader]) -> None
+        """Register input to the loaders list.
+
+        :param loaders: List of loaders
+        :type loaders:  :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateLoader`
+        """
+        for loader in loaders:
+            self.add_loader(loader)
+
+    def add_renderer(self, renderer):
+        # type: (AbstractTemplateRenderer) -> None
+        """Register input to the renderer.
+
+        :param renderer: Renderer to render the template
+        :type renderer:  :py:class:`ask_sdk_runtime.view_resolvers.AbstractTemplateRenderer`
+        """
+        if renderer is None:
+            raise RuntimeConfigException(
+                "Valid Renderer instance to be provided")
+
+        if not isinstance(renderer, AbstractTemplateRenderer):
+            raise RuntimeConfigException(
+                "Input should be a AbstractTemplateRenderer instance")
+
+        self.renderer = renderer
+
     def get_runtime_configuration(self):
         # type: () -> RuntimeConfiguration
         """Build the runtime configuration object from the registered
@@ -213,7 +271,9 @@ class RuntimeConfigurationBuilder(object):
             handler_adapters=[handler_adapter],
             exception_mapper=exception_mapper,
             request_interceptors=self.global_request_interceptors,
-            response_interceptors=self.global_response_interceptors)
+            response_interceptors=self.global_response_interceptors,
+            loaders=self.loaders,
+            renderer=self.renderer)
 
         return runtime_configuration
 

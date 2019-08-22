@@ -17,10 +17,12 @@
 #
 import typing
 from .response_helper import ResponseFactory
+from .view_resolvers import TemplateFactory
 
 if typing.TYPE_CHECKING:
-    from typing import Any
+    from typing import Any, Dict
     from ask_sdk_model import RequestEnvelope
+    from ask_sdk_model.response import Response
     from ask_sdk_model.services import ServiceClientFactory
     from .attributes_manager import AttributesManager
 
@@ -48,11 +50,13 @@ class HandlerInput(object):
         for calling Alexa services
     :type service_client_factory:
         ask_sdk_model.services.service_client_factory.ServiceClientFactory
+    :param template_factory: Template Factory to chain loaders and renderer
+    :type template_factory: :py:class:`ask_sdk_core.view_resolver.TemplateFactory`
     """
     def __init__(
             self, request_envelope, attributes_manager=None,
-            context=None, service_client_factory=None):
-        # type: (RequestEnvelope, AttributesManager, Any, ServiceClientFactory) -> None
+            context=None, service_client_factory=None, template_factory=None):
+        # type: (RequestEnvelope, AttributesManager, Any, ServiceClientFactory, TemplateFactory) -> None
         """Input to Request Handler, Exception Handler and Interceptors.
 
         :param request_envelope: Request Envelope passed from Alexa
@@ -68,12 +72,15 @@ class HandlerInput(object):
             for calling Alexa services
         :type service_client_factory:
             ask_sdk_model.services.service_client_factory.ServiceClientFactory
+        :param template_factory: Template Factory to chain loaders and renderer
+        :type template_factory: :py:class:`ask_sdk_core.view_resolver.TemplateFactory`
         """
         self.request_envelope = request_envelope
         self.context = context
         self.service_client_factory = service_client_factory
         self.attributes_manager = attributes_manager
         self.response_builder = ResponseFactory()
+        self.template_factory = template_factory
 
     @property
     def service_client_factory(self):
@@ -98,3 +105,19 @@ class HandlerInput(object):
             ServiceClientFactory
         """
         self._service_client_factory = service_client_factory
+
+    def generate_template_response(self, template_name, data_map, **kwargs):
+        # type: (str, Dict, Any) -> Response
+        """Generate response using skill response template and injecting data.
+
+        :param template_name: name of response template
+        :type template_name: str
+        :param data_map: map contains injecting data
+        :type data_map: Dict[str, object]
+        :param kwargs: Additional keyword arguments for loader and renderer.
+        :return: Skill Response output
+        :rtype: :py:class:`ask_sdk_model.response.Response`
+        """
+        return self.template_factory.process_template(
+            template_name=template_name, data_map=data_map, handler_input=self,
+            **kwargs)
