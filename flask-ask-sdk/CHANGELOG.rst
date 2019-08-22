@@ -9,7 +9,7 @@ CHANGELOG
 
 
 0.1.1
-^^^^^^^
+-----
 
 This release contains the following changes :
 
