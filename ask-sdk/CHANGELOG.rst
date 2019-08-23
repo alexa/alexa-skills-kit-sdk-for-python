@@ -135,3 +135,14 @@ This release contains the following changes :
 
 - `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/99>`__ on delete persistence attributes, to delete attributes without checking if they are set. 
 - Fix `type hints <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/95>`__ on lambda_handler.
+
+
+1.11.0
+~~~~~~~
+
+This release contains the following changes : 
+- `Template Resolvers <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/114>`__ used to generate responses using templates to handle ASK SDK requests.
+- `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/99>`__ Delete persistence attributes without checking setter.
+- `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/109>`__ Allow out-of-session requests.
+- `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/107>`__ Change get_slot_value function to return None when slot is not present.
+- `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/110>`__ Change decorator returned by request_handler to return the handler function.
