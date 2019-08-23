@@ -1,0 +1,10 @@
+[run]
+branch = True
+
+[report]
+include =
+    ask_sdk_jinja_renderer/*
+exclude_lines =
+    if typing.TYPE_CHECKING:
+    pass
+    raise NotImplementedError

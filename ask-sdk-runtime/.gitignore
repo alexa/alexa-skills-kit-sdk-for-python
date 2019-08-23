@@ -65,3 +65,7 @@ target/
 
 # IntelliJ configs
 *.iml
+
+#Pycharm
+.idea/
+.mypy_cache/
