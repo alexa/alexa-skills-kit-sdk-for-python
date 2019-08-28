@@ -12,7 +12,8 @@ _dname = os.path.dirname
 sdk_packages = [
     "ask-sdk-runtime", "ask-sdk-core",
     "ask-sdk-dynamodb-persistence-adapter", "ask-sdk",
-    "ask-sdk-webservice-support", "flask-ask-sdk"]
+    "ask-sdk-webservice-support", "flask-ask-sdk",
+    "ask-sdk-s3-persistence-adapter", "ask-sdk-jinja-renderer"]
 
 if sys.version_info.major == 3:
     sdk_packages.append("django-ask-sdk")
@@ -23,6 +24,8 @@ for pkg in sdk_packages:
     os.chdir(os.path.join(REPO_ROOT, pkg, "tests"))
     if pkg == "ask-sdk-dynamodb-persistence-adapter":
         pip_pkg_name = "ask_sdk_dynamodb"
+    elif pkg == "ask-sdk-s3-persistence-adapter":
+        pip_pkg_name = "ask_sdk_s3"
     else:
         pip_pkg_name = pkg.replace("-", "_")
     check_call(

@@ -1,0 +1,2 @@
+boto3
+ask-sdk-core>=1.1.0
