@@ -8,3 +8,4 @@
   dynamodb_persistence
   standard
   webservice
+  s3_persistence
