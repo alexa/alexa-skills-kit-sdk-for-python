@@ -8,8 +8,8 @@ for connecting the Skill to the AWS S3.
 
 Note
 -----
-Because Amazon S3 provides `eventual consistency <https://docs.aws.amazon.com/AmazonS3/latest/dev/Introduction.html>` for updates to existing objects, we recommend using
-`ask-sdk-dynamodb-persistence-adapter <https://github.com/alexa/alexa-skills-kit-sdk-for-python/tree/master/ask-sdk-dynamodb-persistence-adapter>` for persistent attributes if your skill requires read-after-write consistency.
+Because Amazon S3 provides `eventual consistency <https://docs.aws.amazon.com/AmazonS3/latest/dev/Introduction.html>`_ for updates to existing objects, we recommend using
+`ask-sdk-dynamodb-persistence-adapter <https://github.com/alexa/alexa-skills-kit-sdk-for-python/tree/master/ask-sdk-dynamodb-persistence-adapter>`_ for persistent attributes if your skill requires read-after-write consistency.
 
 
 Quick Start
