@@ -1,6 +1,7 @@
 import unittest
 
 import json
+import os
 from boto3.exceptions import ResourceNotExistsError
 from ask_sdk_model import RequestEnvelope
 from ask_sdk_core.exceptions import PersistenceException
@@ -101,7 +102,7 @@ class TestS3Adapter(unittest.TestCase):
     def test_save_attributes_to_existing_bucket(self):
         self.object_keygen.return_value = "test_object_key"
         json_data = json.dumps(_MOCK_DATA)
-        generated_key = "test_key/test_object_key"
+        generated_key = os.path.join("test_key", "test_object_key")
 
         test_s3_adapter = S3Adapter(bucket_name=self.bucket_name, path_prefix=self.bucket_key,
                                     s3_client=self.s3_client, object_keygen=self.object_keygen)
@@ -143,7 +144,7 @@ class TestS3Adapter(unittest.TestCase):
         self.object_keygen.assert_called_once_with(self.request_envelope)
         self.s3_client.delete_object.assert_called_once_with(
                                                           Bucket=self.bucket_name,
-                                                          Key="test_key/test_object_key")
+                                                          Key=os.path.join("test_key", "test_object_key"))
 
     def test_delete_attributes_to_existing_bucket_delete_object_fails(self):
         self.object_keygen.return_value = "test_object_key"
