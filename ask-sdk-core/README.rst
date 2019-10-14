@@ -40,13 +40,13 @@ Usage and Getting Started
 -------------------------
 
 Getting started guides, SDK Features, API references, samples etc. can
-be found at `Read The Docs <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>`_
+be found at ``Read The Docs`` <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/>
 
 
 Got Feedback?
 -------------
 
 - We would like to hear about your bugs, feature requests, questions or quick feedback.
-  Please search for the `existing issues <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>`_ before opening a new one. It would also be helpful
-  if you follow the templates for issue and pull request creation. Please follow the `contributing guidelines <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_!!
-- Request and vote for `Alexa features <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`_!
+  Please search for the ``existing issues`` <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues> before opening a new one. It would also be helpful
+  if you follow the templates for issue and pull request creation. Please follow the ``contributing guidelines`` <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>!
+- Request and vote for ``Alexa features`` <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>!
