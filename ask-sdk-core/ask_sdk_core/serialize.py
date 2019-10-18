@@ -59,7 +59,7 @@ class DefaultSerializer(Serializer):
     }
 
     def serialize(self, obj):  # type: ignore
-        # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, int, float, None]
+        # type: (Any) -> Union[Dict[str, Any], List, Tuple, str, int, float, bytes, None]
         """Builds a serialized object.
 
         * If obj is None, return None.
@@ -79,7 +79,7 @@ class DefaultSerializer(Serializer):
         :param obj: The data to serialize.
         :type obj: object
         :return: The serialized form of data.
-        :rtype: Union[Dict[str, Any], List, Tuple, str, int, float, None]
+        :rtype: Union[Dict[str, Any], List, Tuple, str, int, float, bytes, None]
         """
         if obj is None:
             return None
