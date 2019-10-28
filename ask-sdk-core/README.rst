@@ -1,4 +1,4 @@
- ====================================================
+====================================================
 ASK SDK Core - Base components of Python ASK SDK
 ====================================================
 
@@ -48,5 +48,5 @@ Got Feedback?
 
 - We would like to hear about your bugs, feature requests, questions or quick feedback.
   Please search for the `existing issues <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>`_ before opening a new one. It would also be helpful
-  if you follow the templates for issue and pull request creation. Please follow the `contributing guidelines <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_!!
+  if you follow the templates for issue and pull request creation. Please follow the `contributing guidelines <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`_!
 - Request and vote for `Alexa features <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`_!
