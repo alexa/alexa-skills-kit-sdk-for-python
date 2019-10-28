@@ -396,6 +396,23 @@ class TestTimestampVerifier(unittest.TestCase):
 
         self.assertIn("Timestamp verification failed", str(exc.exception))
 
+    def test_timestamp_verification_with_valid_future_server_timestamp(self):
+        valid_tolerance = int(DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS / 2 / 1000)
+        valid_future_datetime = datetime.now(tzutc()) + timedelta(seconds=valid_tolerance)
+        test_request_envelope = RequestEnvelope(
+            request=IntentRequest(
+                timestamp=valid_future_datetime))
+        self.timestamp_verifier = TimestampVerifier()
+        try:
+            self.timestamp_verifier.verify(
+                headers={},
+                serialized_request_env="",
+                deserialized_request_env=test_request_envelope)
+        except:
+            # Should never reach here
+            raise self.fail(
+                "Timestamp verification failed for a valid input request")
+
     def test_timestamp_verification_with_valid_timestamp(self):
         test_request_envelope = RequestEnvelope(
             request=IntentRequest(

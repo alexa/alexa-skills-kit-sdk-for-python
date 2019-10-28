@@ -432,6 +432,6 @@ class TimestampVerifier(AbstractVerifier):
         """
         local_now = datetime.now(tz.tzutc())
         request_timestamp = deserialized_request_env.request.timestamp
-        if (abs((local_now - request_timestamp).seconds) >
+        if (abs((local_now - request_timestamp).total_seconds()) >
                 (self._tolerance_in_millis / 1000)):
             raise VerificationException("Timestamp verification failed")
