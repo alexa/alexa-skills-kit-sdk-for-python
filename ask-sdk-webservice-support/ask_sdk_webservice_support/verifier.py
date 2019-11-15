@@ -19,6 +19,7 @@ from __future__ import division
 import os
 import base64
 import typing
+import six
 
 from dateutil import tz
 from datetime import datetime
@@ -32,6 +33,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
 from cryptography.hazmat.primitives.hashes import SHA1
 from cryptography.exceptions import InvalidSignature
+from contextlib import closing
 
 from .verifier_constants import (
     SIGNATURE_CERT_CHAIN_URL_HEADER, SIGNATURE_HEADER,
@@ -285,12 +287,16 @@ class RequestVerifier(AbstractVerifier):
             if cert_url in self._cert_cache:
                 return self._cert_cache.get(cert_url)
             else:
-                with urlopen(cert_url) as cert_response:
-                    cert_data = cert_response.read()
-                    x509_certificate = load_pem_x509_certificate(
-                        cert_data, x509_backend)
-                    self._cert_cache[cert_url] = x509_certificate
-                    return x509_certificate
+                if six.PY2:
+                    with closing(urlopen(cert_url)) as cert_response:
+                        cert_data = cert_response.read()
+                else:
+                    with urlopen(cert_url) as cert_response:
+                        cert_data = cert_response.read()
+                x509_certificate = load_pem_x509_certificate(
+                    cert_data, x509_backend)
+                self._cert_cache[cert_url] = x509_certificate
+                return x509_certificate
         except ValueError as e:
             raise VerificationException(
                 "Unable to load certificate from URL", e)
