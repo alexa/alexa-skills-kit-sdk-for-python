@@ -146,3 +146,13 @@ This release contains the following changes :
 - `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/109>`__ Allow out-of-session requests.
 - `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/107>`__ Change get_slot_value function to return None when slot is not present.
 - `Bug fix <https://github.com/alexa/alexa-skills-kit-sdk-for-python/pull/110>`__ Change decorator returned by request_handler to return the handler function.
+
+
+1.12.0
+~~~~~~~
+
+This release contains the following changes : 
+
+- `person_id` as partition key generator, when storing persistence attributes in dynamo tables.
+- `py.typed` files for `ask-sdk-core`. Fixes #121.
+- Minor doc fix in `ask-sdk-core` readme.
