@@ -17,11 +17,12 @@
 #
 import unittest
 
-from ask_sdk_model import RequestEnvelope, Context, User, Device
+from ask_sdk_model import RequestEnvelope, Context, User, Device, Person
 from ask_sdk_model.interfaces.system import SystemState
 from ask_sdk_core.exceptions import PersistenceException
 from ask_sdk_dynamodb.partition_keygen import (
-    user_id_partition_keygen, device_id_partition_keygen)
+    user_id_partition_keygen, device_id_partition_keygen,
+    person_id_partition_keygen)
 
 
 class TestPartitionKeyGenerators(unittest.TestCase):
@@ -31,6 +32,7 @@ class TestPartitionKeyGenerators(unittest.TestCase):
         self.system = SystemState()
         self.user = User()
         self.device = Device()
+        self.person = Person()
 
     def test_valid_user_id_partition_keygen(self):
         self.user.user_id = "123"
@@ -136,6 +138,74 @@ class TestPartitionKeyGenerators(unittest.TestCase):
             exc.exception), (
             "Device Id Partition Key Generation didn't throw exception when "
             "null device provided in context.system of "
+            "request envelope")
+
+    def test_valid_person_id_partition_keygen(self):
+        self.person.person_id = "123"
+        self.system.person = self.person
+        self.context.system = self.system
+        self.request_envelope.context = self.context
+
+        assert person_id_partition_keygen(self.request_envelope) == "123", (
+            "Person Id Partition Key Generation retrieved wrong person id from "
+            "valid person object in request envelope")
+
+    def test_person_id_partition_keygen_return_user_id_when_person_null(self):
+        self.person = None
+        self.system.person = self.person
+        self.user.user_id = "123"
+        self.system.user = self.user
+        self.context.system = self.system
+        self.request_envelope.context = self.context
+
+        assert person_id_partition_keygen(self.request_envelope) == "123", (
+            "Person Id Partition Key Generation retrieved wrong id from "
+            "request envelope when person is none and user id exists")
+
+    def test_person_id_partition_keygen_raise_error_when_person_null_user_null(
+            self):
+        self.context.system = self.system
+        self.request_envelope.context = self.context
+        with self.assertRaises(PersistenceException) as exc:
+            person_id_partition_keygen(request_envelope=self.request_envelope)
+
+        assert ("Couldn't retrieve person id or user id from request "
+                "envelope") in str(
+            exc.exception), (
+            "Person Id Partition Key Generation didn't throw exception when "
+            "person and user are null in request envelope")
+
+    def test_person_id_partition_keygen_raise_error_when_request_envelope_null(self):
+        with self.assertRaises(PersistenceException) as exc:
+            person_id_partition_keygen(request_envelope=None)
+
+        assert ("Couldn't retrieve person id or user id from request "
+                "envelope") in str(
+            exc.exception), (
+            "Person Id Partition Key Generation didn't throw exception when "
+            "null request envelope is provided")
+
+    def test_person_id_partition_keygen_raise_error_when_context_null(self):
+        with self.assertRaises(PersistenceException) as exc:
+            person_id_partition_keygen(request_envelope=self.request_envelope)
+
+        assert ("Couldn't retrieve person id or user id from request "
+                "envelope") in str(
+            exc.exception), (
+            "Person Id Partition Key Generation didn't throw exception when "
+            "null context provided in request envelope")
+
+    def test_person_id_partition_keygen_raise_error_when_system_null(self):
+        self.request_envelope.context = self.context
+
+        with self.assertRaises(PersistenceException) as exc:
+            person_id_partition_keygen(request_envelope=self.request_envelope)
+
+        assert ("Couldn't retrieve person id or user id from request "
+                "envelope") in str(
+            exc.exception), (
+            "Partition Id Partition Key Generation didn't throw exception when "
+            "null system provided in context of "
             "request envelope")
 
     def tearDown(self):
