@@ -72,7 +72,7 @@ def person_id_partition_keygen(request_envelope):
     :param request_envelope: Request Envelope passed during skill
         invocation
     :type request_envelope: ask_sdk_model.RequestEnvelope
-    :return: Person Id retrieved from request envelope if exists, else
+    :return: person Id retrieved from request envelope if exists, else
         fall back on User Id
     :rtype: str
     :raises: :py:class:`ask_sdk_core.exceptions.PersistenceException`
