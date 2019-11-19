@@ -24,3 +24,11 @@ This release contains the following changes :
 - Move the webservice adapters to GA.
  
  
+
+1.1.0
+~~~~~~~
+
+This release contains the following changes : 
+
+- Timestamp verifier checks the total number of seconds between request timestamp and server timestamp.
+- Add context management to urlopen method used in request verification.
