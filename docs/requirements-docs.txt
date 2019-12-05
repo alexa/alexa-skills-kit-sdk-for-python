@@ -1,4 +1,5 @@
 sphinx
+sphinx_rtd_theme
 sphinx_tabs
 ask-sdk-webservice-support
 flask-ask-sdk

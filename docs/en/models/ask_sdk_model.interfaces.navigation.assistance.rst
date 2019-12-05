@@ -1,5 +1,5 @@
-ask\_sdk\_model.interfaces.messaging package
-============================================
+ask\_sdk\_model.interfaces.navigation.assistance package
+========================================================
 
 Submodules
 ----------
@@ -15,10 +15,10 @@ Submodules
     ``from a.b import C``.
 
 
-ask\_sdk\_model.interfaces.messaging.message\_received\_request module
-----------------------------------------------------------------------
+ask\_sdk\_model.interfaces.navigation.assistance.announce\_road\_regulation module
+----------------------------------------------------------------------------------
 
-.. automodule:: ask_sdk_model.interfaces.messaging.message_received_request
+.. automodule:: ask_sdk_model.interfaces.navigation.assistance.announce_road_regulation
    :members:
    :undoc-members:
    :show-inheritance:

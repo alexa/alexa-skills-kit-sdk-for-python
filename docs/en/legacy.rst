@@ -13,6 +13,17 @@ The SDK documentation has been moved to developer docs. Please check `here <http
    :caption: SDK API Reference
 
    api/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Model Runtime API Reference
+
+   models_runtime/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: SDK Models API Reference
+
    models/index
 
 

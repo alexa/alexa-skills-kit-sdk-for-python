@@ -1,4 +1,4 @@
-ask\_sdk\_model.services.lwa package
+ask\_sdk\_model\_runtime.lwa package
 ====================================
 
 Submodules
@@ -15,42 +15,42 @@ Submodules
     ``from a.b import C``.
 
 
-ask\_sdk\_model.services.lwa.access\_token module
+ask\_sdk\_model\_runtime.lwa.access\_token module
 -------------------------------------------------
 
-.. automodule:: ask_sdk_model.services.lwa.access_token
+.. automodule:: ask_sdk_model_runtime.lwa.access_token
    :members:
    :undoc-members:
    :show-inheritance:
 
-ask\_sdk\_model.services.lwa.access\_token\_request module
+ask\_sdk\_model\_runtime.lwa.access\_token\_request module
 ----------------------------------------------------------
 
-.. automodule:: ask_sdk_model.services.lwa.access_token_request
+.. automodule:: ask_sdk_model_runtime.lwa.access_token_request
    :members:
    :undoc-members:
    :show-inheritance:
 
-ask\_sdk\_model.services.lwa.access\_token\_response module
+ask\_sdk\_model\_runtime.lwa.access\_token\_response module
 -----------------------------------------------------------
 
-.. automodule:: ask_sdk_model.services.lwa.access_token_response
+.. automodule:: ask_sdk_model_runtime.lwa.access_token_response
    :members:
    :undoc-members:
    :show-inheritance:
 
-ask\_sdk\_model.services.lwa.error module
+ask\_sdk\_model\_runtime.lwa.error module
 -----------------------------------------
 
-.. automodule:: ask_sdk_model.services.lwa.error
+.. automodule:: ask_sdk_model_runtime.lwa.error
    :members:
    :undoc-members:
    :show-inheritance:
 
-ask\_sdk\_model.services.lwa.lwa\_client module
+ask\_sdk\_model\_runtime.lwa.lwa\_client module
 -----------------------------------------------
 
-.. automodule:: ask_sdk_model.services.lwa.lwa_client
+.. automodule:: ask_sdk_model_runtime.lwa.lwa_client
    :members:
    :undoc-members:
    :show-inheritance:

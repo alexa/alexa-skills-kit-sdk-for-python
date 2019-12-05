@@ -5,13 +5,8 @@ Subpackages
 -----------
 
 .. toctree::
-    :maxdepth: 1
 
-    ask_sdk_model.interfaces.alexa.presentation.apl
+   ask_sdk_model.interfaces.alexa.presentation.apl
+   ask_sdk_model.interfaces.alexa.presentation.aplt
+   ask_sdk_model.interfaces.alexa.presentation.html
 
-Module contents
----------------
-
-.. automodule:: ask_sdk_model.interfaces.alexa.presentation
-    :members:
-    :show-inheritance:

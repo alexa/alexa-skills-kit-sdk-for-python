@@ -5,6 +5,6 @@ Subpackages
 -----------
 
 .. toctree::
-    :maxdepth: 1
 
-    ask_sdk_model.slu.entityresolution
+   ask_sdk_model.slu.entityresolution
+

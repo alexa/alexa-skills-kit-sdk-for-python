@@ -5,6 +5,6 @@ Subpackages
 -----------
 
 .. toctree::
-  :maxdepth: 1
 
-  ask_sdk_model.events.skillevents
+   ask_sdk_model.events.skillevents
+
