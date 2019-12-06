@@ -104,7 +104,6 @@ List Skills
     except Exception as e:
         print(e.message)
 
-==================
 Get Skill Manifest
 ==================
 .. code-block:: python
