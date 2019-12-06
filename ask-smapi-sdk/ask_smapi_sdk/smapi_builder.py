@@ -112,12 +112,12 @@ class StandardSmapiClientBuilder(SmapiClientBuilder):
             invocations.
         :rtype: :py:class:`ask_smapi_model.services.skill_management.SkillManagementServiceClient`
         """
-        if self._api_endpoint is None:
-            self._api_endpoint = DEFAULT_API_ENDPOINT
+        if self.api_endpoint is None:
+            self.api_endpoint = DEFAULT_API_ENDPOINT
 
         api_configuration = ApiConfiguration(serializer=DefaultSerializer(),
                                              api_client=DefaultApiClient(),
-                                             api_endpoint=self._api_endpoint)
+                                             api_endpoint=self.api_endpoint)
 
         authentication_configuration = AuthenticationConfiguration(
             client_id=self.client_id, client_secret=self.client_secret,
@@ -166,13 +166,6 @@ class CustomSmapiClientBuilder(SmapiClientBuilder):
         self.serializer = serializer
         self.api_client = api_client
 
-        if self.serializer is None:
-            self.serializer = DefaultSerializer()
-        if self.api_client is None:
-            self.api_client = DefaultApiClient()
-        if self._api_endpoint is None:
-            self._api_endpoint = DEFAULT_API_ENDPOINT
-
     def client(self):
         # type: () -> SkillManagementServiceClient
         """Creates the smapi client object using AuthenticationConfiguration
@@ -182,9 +175,16 @@ class CustomSmapiClientBuilder(SmapiClientBuilder):
             invocations.
         :rtype: :py:class:`ask_smapi_model.services.skill_management.SkillManagementServiceClient`
         """
+        if self.serializer is None:
+            self.serializer = DefaultSerializer()
+        if self.api_client is None:
+            self.api_client = DefaultApiClient()
+        if self.api_endpoint is None:
+            self.api_endpoint = DEFAULT_API_ENDPOINT
+
         api_configuration = ApiConfiguration(serializer=self.serializer,
                                              api_client=self.api_client,
-                                             api_endpoint=self._api_endpoint)
+                                             api_endpoint=self.api_endpoint)
 
         authentication_configuration = AuthenticationConfiguration(
             client_id=self.client_id, client_secret=self.client_secret,
