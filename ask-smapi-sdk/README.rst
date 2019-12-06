@@ -9,7 +9,6 @@ and test Alexa skills and related resources such as
 interaction models. More information on SMAPI can be
 found at `Alexa Developer Documentation <https://developer.amazon.com/docs/smapi/smapi-overview.html>`__.
 
------------
 Quick Start
 -----------
 
