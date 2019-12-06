@@ -1,0 +1,2 @@
+ASK SMAPI SDK for Python
+Copyright 2019 Amazon.com, Inc. or its affiliates. All Rights Reserved. 

@@ -1,0 +1,8 @@
+include README.rst
+include CHANGELOG.rst
+include LICENSE
+include NOTICE.txt
+include THIRD-PARTY.txt
+include requirements.txt
+recursive-exclude tests *
+recursive-include ask-smapi-sdk py.typed
