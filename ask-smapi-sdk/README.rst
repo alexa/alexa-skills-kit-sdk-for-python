@@ -12,42 +12,20 @@ found at `Alexa Developer Documentation <https://developer.amazon.com/docs/smapi
 Quick Start
 -----------
 
-Install ASK SMAPI SDK
-=====================
-
-Installation from PyPI
-----------------------
-
-Assuming that you have Python and ``virtualenv`` installed, you can
-install the package and it's dependencies (``ask-smapi-model``) from PyPI
-as follows:
+Install SMAPI SDK
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: sh
 
-    $ virtualenv venv
-    $ . venv/bin/activate
     $ pip install ask-smapi-sdk
 
-
-Installation from Github
-------------------------
-
-.. code-block:: sh
-
-    $ git clone https://github.com/alexa/alexa-skills-kit-sdk-for-python.git
-    $ cd alexa-skills-kit-sdk-for-python/ask-smapi-sdk
-    $ virtualenv venv
-    ...
-    $ . venv/bin/activate
-    $ python setup.py install
-
-Install NPM and the ASK CLI
-===========================
-- Install NPM using the instructions provided here: `get-npm <https://www.npmjs.com/get-npm>`__.
+Install NPM and ASK CLI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Install NPM using the instructions provided `here <https://www.npmjs.com/get-npm>`__.
 - This is needed to get started with the ASK CLI, which will be used to generate
   Login with Amazon tokens you will need to access SMAPI.
 
-Assuming that you have ``npm`` installed, you can install the package
+Assuming that you have ``npm`` installed, you can install the CLI
 from NPM as follows:
 
 .. code-block:: sh
@@ -55,9 +33,9 @@ from NPM as follows:
     $ npm install ask-cli -g
 
 Generate Login with Amazon Keys
-===============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Create a new security profile for your Amazon Developer account by following the instructions
-  provided here: `Generate LWA Keys <https://developer.amazon.com/docs/smapi/ask-cli-command-reference.html#generate-lwa-tokens>`__.
+  provided `here <https://developer.amazon.com/docs/smapi/ask-cli-command-reference.html#generate-lwa-tokens>`__.
 - This will generate ``Client ID`` and ``Client Secret`` keys.
 - Using the ASK CLI, run: ask util generate-lwa-tokens. You will be asked to provide the ``Client ID``
   and ``Client Secret`` keys from the previous step. This will return the following JSON with a ``Refresh Token``:
@@ -74,42 +52,38 @@ Generate Login with Amazon Keys
 
 
 Configure SMAPI Client
-======================
-- Import StandardSmapiBuilder from ask_smapi_sdk.
-- Create an instance of StandardSmapiBuilder passing clientId, clientSecret and refreshToken as parameters.
-- Create a smapiClient instance by invoking client method on builder instance.
-- You can invoke SMAPI method call using the smapi_client instance and passing parameters corresponding to the method signatures.
+~~~~~~~~~~~~~~~~~~~~~~
+Using the ``Client ID``, ``Client Secret``, and ``Refresh Token`` retrieved in the previous step to configure a new SMAPI client:
+
+.. code-block:: python
+
+    from ask_smapi_sdk import StandardSmapiBuilder
+    smapi_client = StandardSmapiBuilder(client_id='Client ID', client_secret='Client Secret Key', refresh_token='Refresh Token').client()
 
 
----------------
 Usage Examples
 ---------------
 
 For the complete list of functions, please see the ASK SMAPI SDK documentation.
 
 List Skills
-===========
+~~~~~~~~~~~
 .. code-block:: python
 
-    from ask_smapi_sdk import StandardSmapiBuilder
-
-    smapi_client = StandardSmapiBuilder(client_id='Client ID', client_secret='Client Secret Key', refresh_token='Refresh Token').client()
     try:
-        result = smapi_client.list_skills_for_vendor_v1(vendor_id='Vemdor ID', full_response=True)
+        result = smapi_client.list_skills_for_vendor_v1(vendor_id='Vendor ID', full_response=True)
         print("==========================================")
         print(result.headers)
         print(result.body)
         print("==========================================")
     except Exception as e:
         print(e.message)
+        print(e.body)
 
 Get Skill Manifest
-==================
+~~~~~~~~~~~~~~~~~~
 .. code-block:: python
 
-    from ask_smapi_sdk import StandardSmapiBuilder
-
-    smapi_client = StandardSmapiBuilder(client_id='Client ID', client_secret='Client Secret Key', refresh_token='Refresh Token').client()
     try:
         result = smapi_client.get_skill_manifest_v1(skill_id='SKILL ID', stage='SKILL STAGE')
         print("==========================================")
@@ -117,15 +91,15 @@ Get Skill Manifest
         print("==========================================")
     except Exception as e:
         print(e.message)
+        print(e.body)
 
--------------
 Documentation
 -------------
 
 - SMAPI SDK Reference Documentation.
 - `SMAPI Documentation <https://developer.amazon.com/docs/smapi/smapi-overview.html>`__
 
--------------
+
 Got Feedback?
 -------------
 
