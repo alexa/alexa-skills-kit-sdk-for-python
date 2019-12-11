@@ -12,20 +12,20 @@ found at `Alexa Developer Documentation <https://developer.amazon.com/docs/smapi
 Quick Start
 -----------
 
-Install SMAPI SDK
-~~~~~~~~~~~~~~~~~
+Install ASK SMAPI SDK
+~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: sh
 
     $ pip install ask-smapi-sdk
 
 Install NPM and ASK CLI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 - Install NPM using the instructions provided `here <https://www.npmjs.com/get-npm>`__.
 - This is needed to get started with the ASK CLI, which will be used to generate
   Login with Amazon tokens you will need to access SMAPI.
 
-Assuming that you have ``npm`` installed, you can install the CLI
+Assuming that you have ``npm`` installed, you can install the ASK CLI
 from NPM as follows:
 
 .. code-block:: sh
@@ -37,7 +37,7 @@ Generate Login with Amazon Keys
 - Create a new security profile for your Amazon Developer account by following the instructions
   provided `here <https://developer.amazon.com/docs/smapi/ask-cli-command-reference.html#generate-lwa-tokens>`__.
 - This will generate ``Client ID`` and ``Client Secret`` keys.
-- Using the ASK CLI, run: ask util generate-lwa-tokens. You will be asked to provide the ``Client ID``
+- Using the ASK CLI, run: ``ask util generate-lwa-tokens``. You will be asked to provide the ``Client ID``
   and ``Client Secret`` keys from the previous step. This will return the following JSON with a ``Refresh Token``:
 
 .. code-block:: json
@@ -53,7 +53,7 @@ Generate Login with Amazon Keys
 
 Configure SMAPI Client
 ~~~~~~~~~~~~~~~~~~~~~~
-Using the ``Client ID``, ``Client Secret``, and ``Refresh Token`` retrieved in the previous step to configure a new SMAPI client:
+Use the ``Client ID``, ``Client Secret`` and ``Refresh Token`` retrieved in the previous step to configure a new SMAPI client:
 
 .. code-block:: python
 
@@ -62,7 +62,7 @@ Using the ``Client ID``, ``Client Secret``, and ``Refresh Token`` retrieved in t
 
 
 Usage Examples
----------------
+--------------
 
 For the complete list of functions, please see the ASK SMAPI SDK documentation.
 
