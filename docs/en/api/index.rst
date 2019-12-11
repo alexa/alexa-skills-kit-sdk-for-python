@@ -9,3 +9,4 @@
   standard
   webservice
   s3_persistence
+  smapi
