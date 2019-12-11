@@ -7,3 +7,4 @@ ask-sdk-model-runtime
 ask-sdk-webservice-support
 flask-ask-sdk
 django-ask-sdk
+ask-smapi-sdk

@@ -26,6 +26,12 @@ The SDK documentation has been moved to developer docs. Please check `here <http
 
    models/index
 
+.. toctree::
+   :maxdepth: 1
+   :caption: ASK SMAPI Models API Reference
+
+   smapi_models/index
+
 
 Got Feedback?
 -------------
