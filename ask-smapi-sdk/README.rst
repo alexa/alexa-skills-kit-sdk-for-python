@@ -78,8 +78,7 @@ List Skills
         print(result.body)
         print("==========================================")
     except Exception as e:
-        print(e.message)
-        print(e.body)
+        print(e.body if hasattr(e, 'body') else e)
 
 Get Skill Manifest
 ~~~~~~~~~~~~~~~~~~
@@ -91,8 +90,7 @@ Get Skill Manifest
         print(result)
         print("==========================================")
     except Exception as e:
-        print(e.message)
-        print(e.body)
+        print(e.body if hasattr(e, 'body') else e)
 
 Documentation
 -------------
