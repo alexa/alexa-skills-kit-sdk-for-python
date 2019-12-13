@@ -22,6 +22,9 @@ The **ASK SDK for Python** makes it easier for you to build highly engaging skil
 by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
 
+The **ASK SMAPI SDK for Python** provides developers a library for easily interacting
+with all Skill Management APIs (SMAPI), including interaction model, intent request
+history, and in-skill purchasing APIs.
 
 .. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
     :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
@@ -107,8 +110,14 @@ ask-smapi-sdk                          |Smapi Sdk Version| |Smapi Sdk Downloads|
 Technical Documentation
 -----------------------
 
+ASK SDK
+~~~~~~~
 - `English <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`__
 - `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`__
+
+ASK SMAPI SDK
+~~~~~~~~~~~~~
+- `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/api/smapi.html>`__
 
 `Models <https://github.com/alexa/alexa-apis-for-python>`__
 -------
