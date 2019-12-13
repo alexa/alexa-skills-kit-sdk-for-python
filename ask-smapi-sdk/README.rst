@@ -57,8 +57,9 @@ Use the ``Client ID``, ``Client Secret`` and ``Refresh Token`` retrieved in the 
 
 .. code-block:: python
 
-    from ask_smapi_sdk import StandardSmapiBuilder
-    smapi_client = StandardSmapiBuilder(client_id='Client ID', client_secret='Client Secret Key', refresh_token='Refresh Token').client()
+    from ask_smapi_sdk import StandardSmapiClientBuilder
+    smapi_client_builder = StandardSmapiClientBuilder(client_id='Client ID', client_secret='Client Secret Key', refresh_token='Refresh Token')
+    smapi_client = smapi_client_builder.client()
 
 
 Usage Examples
