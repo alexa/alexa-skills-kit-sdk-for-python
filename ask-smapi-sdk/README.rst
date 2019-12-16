@@ -65,7 +65,7 @@ Use the ``Client ID``, ``Client Secret`` and ``Refresh Token`` retrieved in the 
 Usage Examples
 --------------
 
-For the complete list of functions, please see the ASK SMAPI SDK documentation.
+For the complete list of functions, please see the ASK SMAPI Models documentation.
 
 List Skills
 ~~~~~~~~~~~
@@ -95,7 +95,8 @@ Get Skill Manifest
 Documentation
 -------------
 
-- SMAPI SDK Reference Documentation.
+- `SMAPI SDK Reference Documentation <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/api/smapi.html>`__
+- `ASK SMAPI Models Documentation <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/smapi_models/ask_smapi_model.html>`__
 - `SMAPI Documentation <https://developer.amazon.com/docs/smapi/smapi-overview.html>`__
 
 

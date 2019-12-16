@@ -22,6 +22,9 @@ The **ASK SDK for Python** makes it easier for you to build highly engaging skil
 by allowing you to spend more time on implementing features and less on writing
 boiler-plate code.
 
+The **ASK SMAPI SDK for Python** provides developers a library for easily interacting
+with all Skill Management APIs (SMAPI), including interaction model, intent request
+history, and in-skill purchasing APIs.
 
 .. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
     :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
@@ -71,6 +74,18 @@ boiler-plate code.
 .. |Django Sdk Downloads| image:: https://pepy.tech/badge/django-ask-sdk
     :target: https://pepy.tech/project/django-ask-sdk
     :alt: Downloads
+.. |Jinja Renderer SDK Version| image:: http://img.shields.io/pypi/v/ask-sdk-jinja-renderer.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-jinja-renderer/
+    :alt: Version
+.. |Jinja Renderer SDK Downloads| image:: https://pepy.tech/badge/ask-sdk-jinja-renderer
+    :target: https://pepy.tech/project/ask-sdk-jinja-renderer
+    :alt: Downloads
+.. |Smapi Sdk Version| image:: http://img.shields.io/pypi/v/ask-smapi-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-smapi-sdk/
+    :alt: Version
+.. |Smapi Sdk Downloads| image:: https://pepy.tech/badge/ask-smapi-sdk
+    :target: https://pepy.tech/project/ask-smapi-sdk
+    :alt: Downloads
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
@@ -87,14 +102,22 @@ ask-sdk                                |Standard Version| |Standard Downloads|
 ask-sdk-webservice-support             |Webservice Version| |Webservice Downloads|
 flask-ask-sdk                          |Flask Sdk Version| |Flask Sdk Downloads|
 django-ask-sdk                         |Django Sdk Version| |Django Sdk Downloads|
+ask-sdk-jinja-renderer                 |Jinja Renderer Sdk Version| |Jinja Renderer Sdk Downloads|
+ask-smapi-sdk                          |Smapi Sdk Version| |Smapi Sdk Downloads|
 ====================================   ==================
 
 
 Technical Documentation
 -----------------------
 
+ASK SDK
+~~~~~~~
 - `English <https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html>`__
 - `日本語 <https://alexa-skills-kit-python-sdk.readthedocs.io/ja/latest/>`__
+
+ASK SMAPI SDK
+~~~~~~~~~~~~~
+- `English <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/api/smapi.html>`__
 
 `Models <https://github.com/alexa/alexa-apis-for-python>`__
 -------

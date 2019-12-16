@@ -30,7 +30,7 @@ matrix:
       env:
       - TOX_ENV=py37-mywin
       before_install:
-      - choco install python3 --version 3.7.4
+      - choco install python3 --version=3.7.4
       - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
       - set TRAVIS_PYTHON_VERSION='3.7'
 install:

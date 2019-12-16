@@ -13,7 +13,8 @@ sdk_packages = [
     "ask-sdk-runtime", "ask-sdk-core",
     "ask-sdk-dynamodb-persistence-adapter", "ask-sdk",
     "ask-sdk-webservice-support", "flask-ask-sdk",
-    "ask-sdk-s3-persistence-adapter", "ask-sdk-jinja-renderer"]
+    "ask-sdk-s3-persistence-adapter", "ask-sdk-jinja-renderer",
+    "ask-smapi-sdk"]
 
 if sys.version_info.major == 3:
     sdk_packages.append("django-ask-sdk")
