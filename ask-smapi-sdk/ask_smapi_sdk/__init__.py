@@ -17,6 +17,10 @@
 #
 from __future__ import absolute_import
 
-from .smapi_builder import (
-    SmapiClientBuilder, StandardSmapiClientBuilder, CustomSmapiClientBuilder)
+from .smapi_builder import SmapiClientBuilder
+
+from .standard_smapi_client_builder import StandardSmapiClientBuilder
+
+from .custom_smapi_client_builder import CustomSmapiClientBuilder
+
 from .utils import get_header_value
