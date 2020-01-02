@@ -187,8 +187,13 @@ class RequestVerifier(AbstractVerifier):
         :raises: :py:class:`VerificationException` if headers doesn't
             exist or verification fails
         """
-        cert_url = headers.get(self._signature_cert_chain_url_key)
-        signature = headers.get(self._signature_key)
+        cert_url = None
+        signature = None
+        for header_key, header_value in six.iteritems(headers):
+            if header_key.lower() == self._signature_cert_chain_url_key.lower():
+                cert_url = header_value
+            elif header_key.lower() == self._signature_key.lower():
+                signature = header_value
 
         if cert_url is None or signature is None:
             raise VerificationException(
