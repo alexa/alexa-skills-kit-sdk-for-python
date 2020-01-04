@@ -15,16 +15,13 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import typing
-
 from abc import ABCMeta, abstractmethod
+from typing import Optional, TypeVar, Generic
 
-if typing.TYPE_CHECKING:
-    from typing import Optional
-    from ask_sdk_core.view_resolvers import TemplateContent
+TemplateContent = TypeVar('TemplateContent')
 
 
-class AbstractTemplateCache(object):
+class AbstractTemplateCache(Generic[TemplateContent]):
     """Cache Interface for template caching."""
     __metaclass__ = ABCMeta
 

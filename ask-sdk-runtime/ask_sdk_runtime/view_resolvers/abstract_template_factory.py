@@ -15,16 +15,12 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import typing
-
 from abc import ABCMeta, abstractmethod
+from typing import Dict, Generic, TypeVar
 
-if typing.TYPE_CHECKING:
-    from typing import Dict
-    from ask_sdk_model import Response
+Output = TypeVar('Output')
 
-
-class AbstractTemplateFactory(object):
+class AbstractTemplateFactory(Generic[Output]):
     """Template Factory interface to process template and data to generate
     skill response.
     """
@@ -32,7 +28,7 @@ class AbstractTemplateFactory(object):
 
     @abstractmethod
     def process_template(self, template_name, data_map):
-        # type: (str, Dict) -> Response
+        # type: (str, Dict) -> Output
         """Process response template and data to generate skill response.
 
         :param template_name: Template name
@@ -40,6 +36,6 @@ class AbstractTemplateFactory(object):
         :param data_map: Map of template content slot values
         :type data_map: Dict[str, object]
         :return: Skill Response output
-        :rtype: :py:class:`ask_sdk_model.response.Response`
+        :rtype: Output
         """
         pass

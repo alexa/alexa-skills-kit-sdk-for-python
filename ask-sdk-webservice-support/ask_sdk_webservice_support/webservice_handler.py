@@ -78,7 +78,7 @@ class WebserviceSkillHandler(object):
             ask_sdk_webservice_support.verifiers.AbstractVerifier]
         """
         self._skill = skill
-        self._verifiers = []
+        self._verifiers = []  # type: List[AbstractVerifier]
 
         if not isinstance(skill, CustomSkill):
             raise TypeError(
@@ -150,4 +150,4 @@ class WebserviceSkillHandler(object):
         response_envelope = self._skill.invoke(
             request_envelope=request_envelope, context=None)
 
-        return self._skill.serializer.serialize(response_envelope)
+        return self._skill.serializer.serialize(response_envelope)  # type: ignore

@@ -26,6 +26,7 @@ from ask_smapi_model.services.skill_management import (
 
 if typing.TYPE_CHECKING:
     from ask_sdk_model_runtime import ApiClient, Serializer
+    from typing import Optional
 
 DEFAULT_API_ENDPOINT = "https://api.amazonalexa.com"
 
@@ -43,11 +44,11 @@ class SmapiClientBuilder(object):
         :py:class:`ask_smapi_model.services.skill_management.SkillManagementServiceClient`
         object.
         """
-        self._api_endpoint = None  # type: str
+        self._api_endpoint = None  # type: Optional[str]
 
     @property
     def api_endpoint(self):
-        # type: () -> str
+        # type: () -> Optional[str]
         """Returns the Endpoint to hit by the SMAPI Service.
 
         :return: Endpoint to hit by the SMAPI service client.

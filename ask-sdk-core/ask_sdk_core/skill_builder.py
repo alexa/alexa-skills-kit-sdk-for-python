@@ -50,7 +50,8 @@ class SkillBuilder(AbstractSkillBuilder):
         """Create the skill configuration object using the
         registered components.
         """
-        self.runtime_configuration = self.runtime_configuration_builder.get_runtime_configuration()
+        self.runtime_configuration = self.runtime_configuration_builder.get_runtime_configuration() 
+        self.runtime_configuration = typing.cast(SkillConfiguration, self.runtime_configuration)
         self.runtime_configuration.custom_user_agent = self.custom_user_agent
         self.runtime_configuration.skill_id = self.skill_id
         self.runtime_configuration = self.__populate_missing_attributes(

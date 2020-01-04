@@ -34,7 +34,7 @@ from .__version__ import __version__
 if typing.TYPE_CHECKING:
     from typing import List, Dict, Any
     from ask_sdk_model.services import ApiClient
-    from ask_sdk_model import RequestEnvelope
+    from ask_sdk_model import RequestEnvelope, Response
     from ask_sdk_runtime.dispatch_components import (
         GenericRequestMapper, GenericHandlerAdapter, GenericExceptionMapper,
         AbstractRequestInterceptor, AbstractResponseInterceptor)
@@ -204,7 +204,7 @@ class CustomSkill(AbstractSkill):
             template_factory=template_factory)
 
         response = self.request_dispatcher.dispatch(
-            handler_input=handler_input)
+            handler_input=handler_input)  # type: Response
         session_attributes = None
 
         if request_envelope.session is not None:

@@ -14,33 +14,28 @@
 # OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the
 # License.
-
-import typing
 from abc import ABCMeta, abstractmethod
+from typing import Dict, Any, TypeVar, Generic
 
-if typing.TYPE_CHECKING:
-    from typing import Dict, Any
-    from ask_sdk_core.view_resolvers.template_content import TemplateContent
-    from ask_sdk_model import Response
+Input = TypeVar('Input')
+Output = TypeVar('Output')
 
 
-class AbstractTemplateRenderer(object):
+class AbstractTemplateRenderer(Generic[Input, Output]):
     """Render interface for template rendering and response conversion."""
     __metaclass__ = ABCMeta
 
     @abstractmethod
     def render(self, template_content, data_map, **kwargs):
-        # type: (TemplateContent, Dict, Any) -> Response
-        """Template Renderer is used to render the template content data
-        loaded from the Loader along with the response object data map to
-        generate a skill :py:class:`ask_sdk_model.response.Response` output.
+        # type: (Input, Dict, Any) -> Output
+        """Map data map into template content and render output.
         
         :param template_content: Template Content data
-        :type template_content: :py:class:`ask_sdk_core.view_resolvers.TemplateContent`
+        :type template_content: Input
         :param data_map: Map of template content slot values
         :type data_map: Dict[str, object]
         :param **kwargs: Optional arguments that renderer takes.
         :return: Skill Response output
-        :rtype: :py:class:`ask_sdk_model.response.Response`
+        :rtype: Response
         """
         pass

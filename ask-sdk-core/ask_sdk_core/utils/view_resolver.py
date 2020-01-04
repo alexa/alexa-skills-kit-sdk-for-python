@@ -22,11 +22,11 @@ import os
 import re
 
 if typing.TYPE_CHECKING:
-    from typing import Any, Sequence
+    from typing import Any, Sequence, Optional
 
 
 def split_locale(locale):
-    # type: (str) -> Sequence[str]
+    # type: (str) -> Sequence[Optional[str]]
     """Function to extract language and country codes from the locale.
 
     :param locale: A string indicating the user’s locale. For example: en-US.

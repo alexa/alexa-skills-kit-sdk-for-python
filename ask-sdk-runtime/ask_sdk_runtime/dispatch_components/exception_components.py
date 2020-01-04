@@ -15,18 +15,16 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import typing
 from abc import ABCMeta, abstractmethod
+from typing import TypeVar, Generic, Union, List
 
 from ..exceptions import DispatchException
 
-if typing.TYPE_CHECKING:
-    from typing import Union, List, TypeVar
-    Input = TypeVar('Input')
-    Output = TypeVar('Output')
+Input = TypeVar('Input')
+Output = TypeVar('Output')
 
 
-class AbstractExceptionHandler(object):
+class AbstractExceptionHandler(Generic[Input, Output]):
     """Handles exception types and optionally produce an output.
 
     The abstract class is similar to Request Handler, with methods
@@ -68,7 +66,7 @@ class AbstractExceptionHandler(object):
         raise NotImplementedError
 
 
-class AbstractExceptionMapper(object):
+class AbstractExceptionMapper(Generic[Input]):
     """Mapper to register custom Exception Handler instances.
 
     The exception mapper is used by

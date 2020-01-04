@@ -41,7 +41,8 @@ except NameError:
     long = int
 
 if typing.TYPE_CHECKING:
-    from typing import TypeVar, Dict, List, Tuple, Union, Any
+    from typing import (
+        TypeVar, Dict, List, Tuple, Union, Any, Optional)
     T = TypeVar('T')
 
 
@@ -125,7 +126,7 @@ class DefaultSerializer(Serializer):
         return {key: self.serialize(val) for key, val in iteritems(obj_dict)}
 
     def deserialize(self, payload, obj_type):
-        # type: (str, Union[T, str]) -> Any
+        # type: (Optional[str], Union[T, str]) -> Any
         """Deserializes payload into an instance of provided ``obj_type``.
 
         The ``obj_type`` parameter can be a primitive type, a generic
@@ -169,7 +170,7 @@ class DefaultSerializer(Serializer):
         return self.__deserialize(payload, obj_type)
 
     def __deserialize(self, payload, obj_type):
-        # type: (str, Union[T, str]) -> Any
+        # type: (Optional[str], Union[T, str]) -> Any
         """Deserializes payload into a model object.
 
         :param payload: data to be deserialized.

@@ -15,22 +15,19 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import typing
-
 from abc import ABCMeta, abstractmethod
+from typing import Iterator, Generic, TypeVar
 
-if typing.TYPE_CHECKING:
-    from typing import Iterator
-    from ask_sdk_core.handler_input import HandlerInput
+Input = TypeVar('Input')
 
 
-class AbstractTemplateEnumerator(object):
+class AbstractTemplateEnumerator(Generic[Input]):
     """Enumerator to enumerate template name based on specific property."""
     __metaclass__ = ABCMeta
 
     @abstractmethod
     def generate_combinations(self, handler_input, template_name):
-        # type: (HandlerInput, str) -> Iterator[str]
+        # type: (Input, str) -> Iterator[str]
         """Generate string combinations of template name and other properties.
 
         This method has to be implemented, to enumerate on different
@@ -38,9 +35,8 @@ class AbstractTemplateEnumerator(object):
         (eg: locale, attributes etc.), that is checked during loading the
         template.
 
-        :param handler_input: Handler Input instance with
-            Request Envelope containing Request.
-        :type  handler_input: :py:class:`ask_sdk_core.handler_input.HandlerInput`
+        :param handler_input: Input instance containing request metadata.
+        :type  handler_input: Input
         :param template_name: Template name which needs to be loaded
         :type template_name: str
         :return: Generator object which returns relative paths of the template

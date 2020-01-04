@@ -15,8 +15,7 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import typing
-
+from typing import List, TypeVar, Any, Generic
 from abc import ABCMeta, abstractmethod
 from .exceptions import RuntimeConfigException
 from .dispatch_components import (
@@ -27,11 +26,10 @@ from .dispatch_components import (
 from .view_resolvers import (
     AbstractTemplateLoader, AbstractTemplateRenderer)
 
-if typing.TYPE_CHECKING:
-    from typing import List, TypeVar, Any
-    T = TypeVar('T')
-    SkillInput = TypeVar('SkillInput')
-    SkillOutput = TypeVar('SkillOutput')
+
+T = TypeVar('T')
+SkillInput = TypeVar('SkillInput')
+SkillOutput = TypeVar('SkillOutput')
 
 
 class RuntimeConfiguration(object):
@@ -278,7 +276,7 @@ class RuntimeConfigurationBuilder(object):
         return runtime_configuration
 
 
-class AbstractSkill(object):
+class AbstractSkill(Generic[SkillInput, SkillOutput, T]):
     """Abstract class that acts as entry level container for skill
     invocation.
 
