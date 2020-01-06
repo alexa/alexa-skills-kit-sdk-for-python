@@ -149,6 +149,6 @@ class DefaultApiClient(ApiClient):
             for key, values in six.iteritems(headers_dict):
                 for value in values.split(","):
                     value = value.strip()
-                    if value is not None and value is not '':
+                    if value is not None and value != '':
                         headers_list.append((key, value.strip()))
         return headers_list
