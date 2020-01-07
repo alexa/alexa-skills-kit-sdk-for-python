@@ -42,7 +42,7 @@ class LocaleTemplateEnumerator(AbstractTemplateEnumerator):
     __instance = None
 
     def __new__(cls):
-        # type: (Type[object]) -> AbstractTemplateEnumerator
+        # type: (Type[object]) -> LocaleTemplateEnumerator
         """Creating a singleton class to re-use same enumerator instance for
         different locale and template values.
         """

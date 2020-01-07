@@ -27,7 +27,7 @@ from ask_sdk_model.services import ApiClient, ApiClientResponse
 from .exceptions import ApiClientException
 
 if typing.TYPE_CHECKING:
-    from typing import Callable, Dict, List, Tuple
+    from typing import Callable, Dict, List, Tuple, Optional
     from ask_sdk_model.services import ApiClientRequest
 
 
@@ -66,6 +66,7 @@ class DefaultApiClient(ApiClient):
                 raise ApiClientException(
                     "Requests against non-HTTPS endpoints are not allowed.")
 
+            raw_data = None  # type: Optional[str]
             if request.body:
                 body_content_type = http_headers.get("Content-type", None)
                 if (body_content_type is not None and
@@ -73,8 +74,6 @@ class DefaultApiClient(ApiClient):
                     raw_data = json.dumps(request.body)
                 else:
                     raw_data = request.body
-            else:
-                raw_data = None
 
             http_response = http_method(
                 url=request.url, headers=http_headers, data=raw_data)
@@ -101,7 +100,11 @@ class DefaultApiClient(ApiClient):
             if invalid http request method is being called
         """
         try:
-            return getattr(requests, request.method.lower())
+            if request.method is not None:
+                return getattr(requests, request.method.lower())
+            else:
+                raise ApiClientException(
+            "Invalid request method: {}".format(request.method))
         except AttributeError:
             raise ApiClientException(
                 "Invalid request method: {}".format(request.method))

@@ -29,7 +29,7 @@ from ask_sdk_core.skill import CustomSkill
 from flask import Flask
 
 if typing.TYPE_CHECKING:
-    from typing import List
+    from typing import List, Optional
 
 #: Extension name used for saving extension instance in app.extensions
 EXTENSION_NAME = "ASK_SDK_SKILL_ADAPTER"
@@ -136,7 +136,7 @@ class SkillAdapter(object):
         """
         self._skill_id = skill_id
         self._skill = skill
-        self._webservice_handler = None
+        self._webservice_handler = None  # type: Optional[WebserviceSkillHandler]
 
         if verifiers is None:
             verifiers = []
@@ -232,11 +232,15 @@ class SkillAdapter(object):
         if flask_request.method != "POST":
             raise exceptions.MethodNotAllowed()
 
+        if self._webservice_handler is None:
+            raise AskSdkException("app not configured with skill handlers")
+
         try:
             content = flask_request.data.decode(
                 verifier_constants.CHARACTER_ENCODING)
             response = self._webservice_handler.verify_request_and_dispatch(
-                http_request_headers=flask_request.headers,
+                http_request_headers=typing.cast(
+                    typing.Dict[str, typing.Any], flask_request.headers),
                 http_request_body=content)
 
             return jsonify(response)

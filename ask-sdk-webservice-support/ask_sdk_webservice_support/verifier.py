@@ -28,7 +28,8 @@ from ask_sdk_runtime.exceptions import AskSdkException
 from six.moves.urllib.parse import urlparse
 from six.moves.urllib.request import urlopen
 from cryptography.x509 import (
-    load_pem_x509_certificate, ExtensionOID, DNSName)
+    load_pem_x509_certificate, ExtensionOID, DNSName, 
+    SubjectAlternativeName)
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
 from cryptography.hazmat.primitives.hashes import SHA1
@@ -44,13 +45,14 @@ from .verifier_constants import (
     DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS)
 
 if typing.TYPE_CHECKING:
-    from typing import Dict, Any
+    from typing import Dict, Any, Optional
     from ask_sdk_model import RequestEnvelope
     from cryptography.x509 import Certificate
     from cryptography.hazmat.backends.interfaces import X509Backend
     from cryptography.hazmat.primitives.asymmetric.padding import (
         AsymmetricPadding)
     from cryptography.hazmat.primitives.hashes import HashAlgorithm
+    from cryptography.hazmat.backends.openssl import rsa
 
 
 class VerificationException(AskSdkException):
@@ -162,7 +164,7 @@ class RequestVerifier(AbstractVerifier):
         self._signature_key = signature_key
         self._padding = padding
         self._hash_algorithm = hash_algorithm
-        self._cert_cache = {}
+        self._cert_cache = {}  # type: Dict[str, Certificate]
 
     def verify(
             self, headers, serialized_request_env, deserialized_request_env):
@@ -290,7 +292,7 @@ class RequestVerifier(AbstractVerifier):
         """
         try:
             if cert_url in self._cert_cache:
-                return self._cert_cache.get(cert_url)
+                return self._cert_cache[cert_url]
             else:
                 if six.PY2:
                     with closing(urlopen(cert_url)) as cert_response:
@@ -329,7 +331,8 @@ class RequestVerifier(AbstractVerifier):
 
         ext = cert_chain.extensions.get_extension_for_oid(
             ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
-        if CERT_CHAIN_DOMAIN not in ext.value.get_values_for_type(
+        ext_value = typing.cast(SubjectAlternativeName, ext.value)
+        if CERT_CHAIN_DOMAIN not in ext_value.get_values_for_type(
                 DNSName):
             raise VerificationException(
                 "{} domain missing in Signature Certificate Chain".format(
@@ -356,7 +359,7 @@ class RequestVerifier(AbstractVerifier):
             not valid
         """
         decoded_signature = base64.b64decode(signature)
-        public_key = cert_chain.public_key()
+        public_key = cert_chain.public_key()  # type: rsa._RSAPublicKey
         request_env_bytes = serialized_request_env.encode(CHARACTER_ENCODING)
 
         try:
@@ -442,7 +445,11 @@ class TimestampVerifier(AbstractVerifier):
             specific tolerance limit
         """
         local_now = datetime.now(tz.tzutc())
-        request_timestamp = deserialized_request_env.request.timestamp
-        if (abs((local_now - request_timestamp).total_seconds()) >
-                (self._tolerance_in_millis / 1000)):
+        if (deserialized_request_env.request is None or 
+        deserialized_request_env.request.timestamp is None):
             raise VerificationException("Timestamp verification failed")
+        else:
+            request_timestamp = deserialized_request_env.request.timestamp
+            if (abs((local_now - request_timestamp).total_seconds()) >
+                    (self._tolerance_in_millis / 1000)):
+                raise VerificationException("Timestamp verification failed")

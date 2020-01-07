@@ -22,7 +22,7 @@ from copy import deepcopy
 from .exceptions import AttributesManagerException
 
 if typing.TYPE_CHECKING:
-    from typing import Dict, Optional
+    from typing import Dict, Optional, Any
     from ask_sdk_model import RequestEnvelope
 
 
@@ -102,14 +102,13 @@ class AttributesManager(object):
         self._persistence_adapter = persistence_adapter
         self._persistence_attributes = {}  # type: Dict
         self._request_attributes = {}  # type: Dict
-        if not self._request_envelope.session:
-            self._session_attributes = None  # type: Optional[Dict]
+        if request_envelope.session is None:
+            self._session_attributes = None  # type: Optional[Dict[str, Any]]
+        elif request_envelope.session.attributes is None:
+            self._session_attributes = {}
         else:
-            if not self._request_envelope.session.attributes:
-                self._session_attributes = {}
-            else:
-                self._session_attributes = deepcopy(
-                    request_envelope.session.attributes)
+            self._session_attributes = deepcopy(
+                request_envelope.session.attributes)
         self._persistent_attributes_set = False
 
     @property
@@ -134,7 +133,7 @@ class AttributesManager(object):
 
     @property
     def session_attributes(self):
-        # type: () -> Dict[str, object]
+        # type: () -> Optional[Dict[str, Any]]
         """Attributes stored at the Session level of the skill lifecycle.
 
         :return: session attributes extracted from request envelope

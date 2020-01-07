@@ -15,18 +15,16 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import typing
 from abc import ABCMeta, abstractmethod
+from typing import Union, List, TypeVar, Generic, Optional
 
 from ..exceptions import DispatchException
 
-if typing.TYPE_CHECKING:
-    from typing import Union, List, TypeVar
-    Input = TypeVar('Input')
-    Output = TypeVar('Output')
+Input = TypeVar('Input')
+Output = TypeVar('Output')
 
 
-class AbstractRequestHandler(object):
+class AbstractRequestHandler(Generic[Input, Output]):
     """Request Handlers are responsible for processing dispatch inputs
     and generating output.
 
@@ -66,7 +64,7 @@ class AbstractRequestHandler(object):
         raise NotImplementedError
 
 
-class AbstractRequestInterceptor(object):
+class AbstractRequestInterceptor(Generic[Input]):
     """Interceptor that runs before the handler is called.
 
     The ``process`` method has to be implemented, to run custom logic on
@@ -87,7 +85,7 @@ class AbstractRequestInterceptor(object):
         raise NotImplementedError
 
 
-class AbstractResponseInterceptor(object):
+class AbstractResponseInterceptor(Generic[Input, Output]):
     """Interceptor that runs after the handler is called.
 
     The ``process`` method has to be implemented, to run custom logic on
@@ -190,7 +188,13 @@ class GenericRequestHandlerChain(AbstractRequestHandlerChain):
             ask_sdk_runtime.dispatch_components.request_components.AbstractResponseInterceptor)
         """
         self.request_handler = request_handler
+        
+        if request_interceptors is None:
+            request_interceptors = []
         self.request_interceptors = request_interceptors
+
+        if response_interceptors is None:
+            response_interceptors = []
         self.response_interceptors = response_interceptors
 
     @property
@@ -259,7 +263,7 @@ class AbstractRequestMapper(object):
 
     @abstractmethod
     def get_request_handler_chain(self, handler_input):
-        # type: (Input) -> AbstractRequestHandlerChain
+        # type: (Input) -> Optional[AbstractRequestHandlerChain]
         """Get the handler chain that can process the handler input.
 
         :param handler_input: Generic input passed to the

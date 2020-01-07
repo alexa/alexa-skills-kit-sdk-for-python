@@ -68,13 +68,14 @@ class JinjaTemplateRenderer(AbstractTemplateRenderer):
         :param output_type: resolved class name for deserialized object
         :type output_type: Union[object, str]
         """
+        if serializer is None:
+            serializer = DefaultSerializer()
+        
+        if output_type is None:
+            output_type = 'ask_sdk_model.response.Response'
+
         self.serializer = serializer
         self.output_type = output_type
-
-        if self.serializer is None:
-            self.serializer = DefaultSerializer()
-        if self.output_type is None:
-            self.output_type = 'ask_sdk_model.response.Response'
 
     def render(self, template_content, data_map, **kwargs):
         # type: (TemplateContent, Dict, Any) -> Any
