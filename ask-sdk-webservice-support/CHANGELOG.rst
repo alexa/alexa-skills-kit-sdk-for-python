@@ -32,3 +32,11 @@ This release contains the following changes :
 
 - Timestamp verifier checks the total number of seconds between request timestamp and server timestamp.
 - Add context management to urlopen method used in request verification.
+
+
+1.2.0
+~~~~~
+
+This release contains the following changes : 
+
+- Case-insensitive header value retrieval for request verification. `136 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues/136>`__
