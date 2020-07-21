@@ -86,6 +86,12 @@ history, and in-skill purchasing APIs.
 .. |Smapi Sdk Downloads| image:: https://pepy.tech/badge/ask-smapi-sdk
     :target: https://pepy.tech/project/ask-smapi-sdk
     :alt: Downloads
+.. |Ask Sdk Local Debug Version| image:: http://img.shields.io/pypi/v/ask-sdk-local-debug.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-local-debug/
+    :alt: Version
+.. |Ask Sdk Local Debug Downloads| image:: https://pepy.tech/badge/ask-sdk-local-debug
+    :target: https://pepy.tech/project/ask-sdk-local-debug
+    :alt: Downloads
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
@@ -99,6 +105,7 @@ ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
+ask-sdk-local-debug                    |Ask Sdk Local Debug Version| |Ask Sdk Local Debug Downloads|
 ask-sdk-webservice-support             |Webservice Version| |Webservice Downloads|
 flask-ask-sdk                          |Flask Sdk Version| |Flask Sdk Downloads|
 django-ask-sdk                         |Django Sdk Version| |Django Sdk Downloads|

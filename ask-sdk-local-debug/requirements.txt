@@ -1,0 +1,4 @@
+ask-sdk-model>=1.23.1
+ask-sdk-model-runtime
+requests
+autobahn[twisted,encryption]>=20.4.3

@@ -1,0 +1,6 @@
+include README.rst
+include CHANGELOG.rst
+include LICENSE
+include requirements.txt
+recursive-exclude tests *
+recursive-include ask_sdk_local_debug py.typed
