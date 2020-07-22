@@ -25,3 +25,4 @@ from .invalid_model_object import InvalidModelObject
 from .model_abstract_parent_object import ModelAbstractParentObject
 from .model_child_objects import ModelChildObject1
 from .model_child_objects import ModelChildObject2
+from .invalid_slot_object import InvalidSlotValue

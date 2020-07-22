@@ -50,7 +50,7 @@ class ResponseFactory(object):
         self.response = Response(
             output_speech=None, card=None, reprompt=None,
             directives=None, should_end_session=None,
-            can_fulfill_intent=None)
+            can_fulfill_intent=None, api_response=None)
 
     def speak(self, speech, play_behavior=None):
         # type: (str, PlayBehavior) -> 'ResponseFactory'
@@ -161,6 +161,24 @@ class ResponseFactory(object):
         :rtype: ResponseFactory
         """
         self.response.can_fulfill_intent = can_fulfill_intent
+        return self
+
+    def set_api_response(self, api_response):
+        # type: (object) -> 'ResponseFactory'
+        """Sets the API Response object in the response.
+
+        The `api_response` object is serialized using
+        `ask_sdk_core.serialize.DefaultSerializer.serialize` method. Any custom
+        object instance should contain `deserialized_types` map for successful
+        serialization.
+
+        :param api_response: APIResponse object sent back in response
+        :type api_response: object
+        :return: response factory with partial response being built and
+            access from self.response.
+        :rtype: ResponseFactory
+        """
+        self.response.api_response = api_response
         return self
 
     def __trim_outputspeech(self, speech_output=None):

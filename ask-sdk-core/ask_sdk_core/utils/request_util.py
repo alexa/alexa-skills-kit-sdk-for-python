@@ -16,14 +16,19 @@
 # License.
 #
 import typing
+import warnings
 
 from ask_sdk_model.intent_request import IntentRequest
 from ask_sdk_model.supported_interfaces import SupportedInterfaces
+from ask_sdk_model.list_slot_value import ListSlotValue
+from ask_sdk_model.simple_slot_value import SimpleSlotValue
+from functools import reduce
 
 if typing.TYPE_CHECKING:
     from ..handler_input import HandlerInput
-    from typing import Optional, Union
+    from typing import Optional, Union, List
     from ask_sdk_model.slot import Slot
+    from ask_sdk_model.slot_value import SlotValue
     from ask_sdk_model.dialog_state import DialogState
     AnyStr = Union[str, bytes]
 
@@ -222,7 +227,7 @@ def get_slot(handler_input, slot_name):
 
 
 def get_slot_value(handler_input, slot_name):
-    # type: (HandlerInput, str) -> AnyStr
+    # type: (HandlerInput, str) -> Optional[AnyStr]
     """Return the slot value from intent request.
 
     The method retrieves the slot value from the input intent request
@@ -243,12 +248,84 @@ def get_slot_value(handler_input, slot_name):
     :rtype: str
     :raises: TypeError if the input is not an IntentRequest.
     """
+    warnings.warn(
+        "Deprecated method. Please use one of the following methods : "
+        "\n - `get_slot_value_v2`: get slotValue object"
+        "\n - `get_simple_slot_values`: get list of simple slotValue instances",
+        DeprecationWarning, stacklevel=2)
     slot = get_slot(handler_input=handler_input, slot_name=slot_name)
 
     if slot is not None:
         return slot.value
 
     return None
+
+
+def get_slot_value_v2(handler_input, slot_name):
+    # type: (HandlerInput, str) -> Optional[SlotValue]
+    """Return the slotValue object from intent request.
+
+    The method retrieves the slotValue from the input intent request
+    for the given ``slot_name``. SlotValue will exist for slots using multiple
+    slot value feature. More information on the slots can be found here :
+    https://developer.amazon.com/docs/custom-skills/request-types-reference.html#slot-object
+
+    Use `get_simple_slot_values` method, to retrieve all slot values from the
+    slotValue instance.
+
+    If the slot or slot.slotValue does not exist in the input request, `None`
+    will be returned. If the input request is not an
+    :py:class:`ask_sdk_model.intent_request.IntentRequest`, a
+    :py:class:`TypeError` is raised.
+
+    :param handler_input: The handler input instance that is generally
+        passed in the sdk's request and exception components
+    :type handler_input: ask_sdk_core.handler_input.HandlerInput
+    :param slot_name: Name of the slot for which the value has to be retrieved
+    :type slot_name: str
+    :return: slotValue object for the provided slot if it exists
+    :rtype: ask_sdk_model.SlotValue
+    :raises: TypeError if the input is not an IntentRequest.
+    """
+    slot = get_slot(handler_input=handler_input, slot_name=slot_name)
+
+    if slot is not None:
+        return slot.slot_value
+
+    return None
+
+
+def get_simple_slot_values(slot_value):
+    # type: (SlotValue) -> Optional[List[SimpleSlotValue]]
+    """Return all SimpleSlotValues from given SlotValue instance.
+
+    The method retrieves the list of SimpleSlotValues from the
+    given `slot_value` instance. If the given slot_value type is a
+    :py:class:`ask_sdk_model.list_slot_value.ListSlotValue`, then loop through
+    all values to return the list of SimpleSlotValues.
+    More information on the slots can be found here :
+    https://developer.amazon.com/docs/custom-skills/request-types-reference.html#slot-object
+
+    :param slot_value: The SlotValue object instance that is based on multiple
+        slot value feature.
+    :type slot_value: ask_sdk_model.slot_value.SlotValue
+    :return: List of SimpleSlotValue instances
+    :rtype: List[ask_sdk_model.simple_slot_value.SimpleSlotValue]
+    """
+    if isinstance(slot_value, SimpleSlotValue):
+        return [slot_value]
+    elif isinstance(slot_value, ListSlotValue):
+        if slot_value.values is None:
+            return []
+        else:
+            return list(
+                reduce(
+                    lambda value_1, value_2: value_1 + value_2, map(
+                        lambda value: get_simple_slot_values(value), slot_value.values)
+                )
+            )
+    else:
+        return []
 
 
 def get_supported_interfaces(handler_input):

@@ -174,6 +174,15 @@ class TestResponseFactory(unittest.TestCase):
             "The set_can_fulfill_intent method of ResponseFactory fails to "
             "set can_fulfill_intent value")
 
+    def test_set_api_response(self):
+        test_api_response = {"arg1": "value1"}
+        response_factory = self.response_factory.set_api_response(
+            api_response=test_api_response)
+
+        assert response_factory.response.api_response == test_api_response, (
+            "The set_api_response method of ResponseFactory fails to "
+            "set api_response value")
+
 
 class TestTextHelper(unittest.TestCase):
     def test_build_primary_text_default(self):

@@ -25,7 +25,7 @@ from .request_util import (
     get_slot, get_slot_value, get_account_linking_access_token,
     get_api_access_token, get_device_id, get_dialog_state, get_intent_name,
     get_locale, get_request_type, is_new_session, get_supported_interfaces,
-    get_user_id)
+    get_user_id, get_slot_value_v2, get_simple_slot_values)
 
 
 SDK_VERSION = __version__

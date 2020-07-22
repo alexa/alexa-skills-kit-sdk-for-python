@@ -21,7 +21,7 @@ import random
 from ask_sdk_model import (
     IntentRequest, RequestEnvelope, Intent, SessionEndedRequest, Context,
     LaunchRequest, DialogState, Slot, Session, User, Device,
-    SupportedInterfaces)
+    SupportedInterfaces, SimpleSlotValue, ListSlotValue, SlotValue)
 from ask_sdk_model.canfulfill import CanFulfillIntentRequest
 from ask_sdk_model.interfaces.viewport import ViewportState, Shape
 from ask_sdk_model.interfaces.system import SystemState
@@ -31,9 +31,11 @@ from ask_sdk_core.utils import (
     get_slot, get_slot_value, get_account_linking_access_token,
     get_api_access_token, get_device_id, get_dialog_state, get_intent_name,
     get_locale, get_request_type, is_new_session, get_supported_interfaces,
-    get_user_id)
+    get_user_id, get_slot_value_v2, get_simple_slot_values)
 from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_core.exceptions import AskSdkException
+
+from .data.invalid_slot_object import InvalidSlotValue
 
 
 def test_is_canfulfill_intent_name_match():
@@ -426,8 +428,15 @@ class TestRequestUtils(unittest.TestCase):
         self.test_intent_name = "foo_intent"
         self.test_slot_name = "foo_slot"
         self.test_slot_value = "foo_slot_value"
+        self.test_slot_value_1 = "foo_slot_value_1"
         self.test_slot = Slot(
             name=self.test_slot_name, value=self.test_slot_value)
+        self.test_simple_slot = SimpleSlotValue(value=self.test_slot_value)
+        self.test_simple_slot_1 = SimpleSlotValue(value=self.test_slot_value_1)
+        self.test_list_slot = ListSlotValue(
+            values=[self.test_simple_slot, self.test_simple_slot_1])
+        self.test_nested_list_slot = ListSlotValue(
+            values=[self.test_list_slot, self.test_simple_slot])
         self.test_api_access_token = "foo_api_access_token"
         self.test_user_id = "foo_user_id"
         self.test_access_token = "foo_account_linking_access_token"
@@ -676,3 +685,113 @@ class TestRequestUtils(unittest.TestCase):
         self.assertEqual(
             get_user_id(handler_input=test_input), self.test_user_id,
             "get_user_id method returned incorrect user id from input request")
+
+    def test_get_slot_value_v2(self):
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = self.test_list_slot
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        actual_slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name=self.test_slot_name)
+        self.assertIsInstance(
+            actual_slot_value, SlotValue,
+            "get_slot_value_v2 method returned incorrect slotValue type "
+            "when a valid slot name is passed")
+
+    def test_get_slot_value_v2_invalid_slot_name(self):
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = self.test_list_slot
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        actual_slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name='invalid_slot')
+        self.assertIsNone(
+            actual_slot_value,
+            "get_slot_value_v2 method returned slotValue type "
+            "when an invalid slot name is passed")
+
+    def test_get_simple_slot_values_for_invalid_slot_type(self):
+        invalid_slot = InvalidSlotValue(value='something')
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = invalid_slot
+
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name=self.test_slot_name)
+        actual_slot_value_list = get_simple_slot_values(slot_value=slot_value)
+        expected_slot_value_list = []
+        self.assertListEqual(
+            actual_slot_value_list, expected_slot_value_list,
+            "get_simple_slot_values method returned incorrect list of "
+            "simple slot values, when the slotValue passed was of an "
+            "invalid slot type")
+
+    def test_get_simple_slot_values_for_simple_slot(self):
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = self.test_simple_slot
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name=self.test_slot_name)
+        actual_slot_value_list = get_simple_slot_values(slot_value=slot_value)
+        expected_slot_value_list = [self.test_simple_slot]
+        self.assertListEqual(
+            actual_slot_value_list, expected_slot_value_list,
+            "get_simple_slot_values method returned incorrect list of "
+            "simple slot values, when the slotValue passed in had a "
+            "simple slot value")
+
+    def test_get_simple_slot_values_for_list_slot_empty_values(self):
+        list_slot_value = ListSlotValue()
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = list_slot_value
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name=self.test_slot_name)
+        actual_slot_value_list = get_simple_slot_values(slot_value=slot_value)
+        expected_slot_value_list = []
+        self.assertListEqual(
+            actual_slot_value_list, expected_slot_value_list,
+            "get_simple_slot_values method returned incorrect list of "
+            "simple slot values, when the slotValue passed in had a "
+            "list slot containing empty values")
+
+    def test_get_simple_slot_values_for_list_slot_of_simple_slots(self):
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = self.test_list_slot
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name=self.test_slot_name)
+        actual_slot_value_list = get_simple_slot_values(slot_value=slot_value)
+        expected_slot_value_list = [self.test_simple_slot, self.test_simple_slot_1]
+        self.assertListEqual(
+            actual_slot_value_list, expected_slot_value_list,
+            "get_simple_slot_values method returned incorrect list of "
+            "simple slot values, when the slotValue passed in had a "
+            "list slot containing simple slot values")
+
+    def test_get_simple_slot_values_for_list_slot_of_nested_slots(self):
+        self.test_intent_request.intent.slots[
+            self.test_slot_name].slot_value = self.test_nested_list_slot
+        test_input = self._create_handler_input(
+            request=self.test_intent_request)
+
+        slot_value = get_slot_value_v2(
+                handler_input=test_input, slot_name=self.test_slot_name)
+        actual_slot_value_list = get_simple_slot_values(slot_value=slot_value)
+        expected_slot_value_list = [
+            self.test_simple_slot, self.test_simple_slot_1, self.test_simple_slot]
+        self.assertListEqual(
+            actual_slot_value_list, expected_slot_value_list,
+            "get_simple_slot_values method returned incorrect list of "
+            "simple slot values, when the slotValue passed in had a "
+            "list slot containing nested slot values")
