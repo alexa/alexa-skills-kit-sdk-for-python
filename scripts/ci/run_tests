@@ -10,7 +10,7 @@ from subprocess import check_call
 _dname = os.path.dirname
 
 sdk_packages = [
-    "ask-sdk-runtime", "ask-sdk-core",
+    "ask-sdk-core", "ask-sdk-runtime",
     "ask-sdk-dynamodb-persistence-adapter", "ask-sdk",
     "ask-sdk-webservice-support", "flask-ask-sdk",
     "ask-sdk-s3-persistence-adapter", "ask-sdk-jinja-renderer",
@@ -30,5 +30,5 @@ for pkg in sdk_packages:
     else:
         pip_pkg_name = pkg.replace("-", "_")
     check_call(
-        ['nosetests', '--with-coverage', '--cover-erase',
+        ['nosetests', '--with-coverage', '--cover-inclusive', '--cover-erase',
          '--cover-package', pip_pkg_name])
