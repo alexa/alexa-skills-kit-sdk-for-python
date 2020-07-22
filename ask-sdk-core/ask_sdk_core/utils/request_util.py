@@ -318,12 +318,10 @@ def get_simple_slot_values(slot_value):
         if slot_value.values is None:
             return []
         else:
-            return list(
-                reduce(
-                    lambda value_1, value_2: value_1 + value_2, map(
-                        lambda value: get_simple_slot_values(value), slot_value.values)
-                )
-            )
+            all_slot_values = []
+            for nested_slot_value in slot_value.values:
+                all_slot_values.extend(get_simple_slot_values(nested_slot_value))
+            return all_slot_values
     else:
         return []
 
