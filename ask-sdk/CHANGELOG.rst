@@ -165,3 +165,11 @@ This release contains the following changes :
 
 - py.typed files added to sdk packages, as per `PEP 561 <https://www.python.org/dev/peps/pep-0561/>`__. Fixes `121 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues/121>`__.
 - Fixes the literal check bug in api client, that fails in Python 3.8 `127 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues/127>`__
+
+
+1.14.0
+~~~~~~
+
+This release contains the following changes : 
+
+- general bug fixes and updates
