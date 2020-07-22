@@ -318,12 +318,10 @@ def get_simple_slot_values(slot_value):
         if slot_value.values is None:
             return []
         else:
-            return list(
-                reduce(
-                    lambda value_1, value_2: value_1 + value_2, map(
-                        lambda value: get_simple_slot_values(value), slot_value.values)
-                )
-            )
+            all_slot_values = []  # type: List[SimpleSlotValue]
+            for nested_slot_value in slot_value.values:
+                all_slot_values.extend(get_simple_slot_values(nested_slot_value))
+            return all_slot_values
     else:
         return []
 
@@ -351,7 +349,7 @@ def get_supported_interfaces(handler_input):
     """
     return (
         handler_input.request_envelope.context.system.device.
-        supported_interfaces)
+            supported_interfaces)
 
 
 def is_new_session(handler_input):
