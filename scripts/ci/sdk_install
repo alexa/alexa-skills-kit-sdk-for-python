@@ -21,7 +21,7 @@ sdk_packages = [
     "ask-smapi-sdk"]
 
 if sys.version_info.major == 3:
-    sdk_packages.append("django-ask-sdk")
+    sdk_packages.extend(["django-ask-sdk", "ask-sdk-local-debug"])
 
 run("pip install coverage")
 
