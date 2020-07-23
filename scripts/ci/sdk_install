@@ -12,7 +12,6 @@ REPO_ROOT = _dname(_dname(_dname(os.path.abspath(__file__))))
 def run(command):
     return check_call(command, shell=True)
 
-
 sdk_packages = [
     "ask-sdk-runtime", "ask-sdk-core",
     "ask-sdk-dynamodb-persistence-adapter", "ask-sdk",
@@ -21,7 +20,7 @@ sdk_packages = [
     "ask-smapi-sdk"]
 
 if sys.version_info.major == 3:
-    sdk_packages.append("django-ask-sdk")
+    sdk_packages.extend(["django-ask-sdk", "ask-sdk-local-debug"])
 
 run("pip install coverage")
 

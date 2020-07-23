@@ -3,7 +3,7 @@ branch = True
 
 [report]
 include =
-    flask_ask_sdk/*
+    ask_sdk_local_debug/*
 exclude_lines =
     if typing.TYPE_CHECKING:
     pass
