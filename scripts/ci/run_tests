@@ -22,7 +22,7 @@ if sys.version_info.major == 3:
 REPO_ROOT = _dname(_dname(_dname(os.path.abspath(__file__))))
 
 for pkg in sdk_packages:
-    os.chdir(os.path.join(REPO_ROOT, pkg, "tests"))
+    os.chdir(os.path.join(REPO_ROOT, pkg))
     if pkg == "ask-sdk-dynamodb-persistence-adapter":
         pip_pkg_name = "ask_sdk_dynamodb"
     elif pkg == "ask-sdk-s3-persistence-adapter":
@@ -30,5 +30,5 @@ for pkg in sdk_packages:
     else:
         pip_pkg_name = pkg.replace("-", "_")
     check_call(
-        ['nosetests', '--with-coverage', '--cover-inclusive', '--cover-erase',
-         '--cover-package', pip_pkg_name])
+        ['nosetests', 'tests', '--with-coverage', '--cover-inclusive', '--cover-erase',
+         '--cover-package', pip_pkg_name], shell=True)

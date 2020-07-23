@@ -19,4 +19,4 @@ import os
 import sys
 sys.path.insert(
     0, os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', 'flask_ask_sdk')))
+        os.path.join(os.path.dirname(__file__), '..', 'ask_smapi_sdk')))
