@@ -35,6 +35,9 @@ from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
 from cryptography.hazmat.primitives.hashes import SHA1
 from cryptography.exceptions import InvalidSignature
 from contextlib import closing
+from asn1crypto import pem
+from certvalidator import CertificateValidator
+from certvalidator.errors import PathValidationError
 
 from .verifier_constants import (
     SIGNATURE_CERT_CHAIN_URL_HEADER, SIGNATURE_HEADER,
@@ -164,7 +167,7 @@ class RequestVerifier(AbstractVerifier):
         self._signature_key = signature_key
         self._padding = padding
         self._hash_algorithm = hash_algorithm
-        self._cert_cache = {}  # type: Dict[str, Certificate]
+        self._cert_cache = {}  # type: Dict[str, bytes]
 
     def verify(
             self, headers, serialized_request_env, deserialized_request_env):
@@ -206,15 +209,27 @@ class RequestVerifier(AbstractVerifier):
         self._valid_request_body(
             cert_chain, signature, serialized_request_env)
 
-    def _retrieve_and_validate_certificate_chain(self, cert_url):
-        # type: (str) -> Certificate
+    def _retrieve_and_validate_certificate_chain(
+            self, cert_url, x509_backend=default_backend()):
+        # type: (str, X509Backend) -> Certificate
         """Retrieve and validate certificate chain.
 
-        This method validates if the URL is valid and loads and
-        validates the certificate chain, before returning it.
+        This method validates if the URL is valid, loads and
+        validates the certificate chain, loads and validates the
+        end certificate, before returning it.
+
+        The end certificate is read, using the
+        :py:func:`cryptography.x509.load_pem_x509_certificate` method.
+        The x509 backend is set as default to the
+        :py:class:`cryptography.hazmat.backends.default_backend`
+        instance.
 
         :param cert_url: URL for retrieving certificate chain
         :type cert_url: str
+        :param x509_backend: Backend to be used, for loading pem x509
+            certificate
+        :type x509_backend:
+            cryptography.hazmat.backends.interfaces.X509Backend
         :return The certificate chain loaded from the URL
         :rtype cryptography.x509.Certificate
         :raises: :py:class:`VerificationException` if the URL is invalid,
@@ -224,7 +239,11 @@ class RequestVerifier(AbstractVerifier):
 
         cert_chain = self._load_cert_chain(cert_url)
         self._validate_cert_chain(cert_chain)
-        return cert_chain
+
+        end_cert = load_pem_x509_certificate(
+                data=cert_chain, backend=x509_backend)
+        self._validate_end_certificate(x509_cert=end_cert)
+        return end_cert
 
     def _validate_certificate_url(self, cert_url):
         # type: (str) -> None
@@ -266,29 +285,22 @@ class RequestVerifier(AbstractVerifier):
                 "Signature Certificate URL has invalid port: {}. "
                 "Expecting {}".format(str(port), str(CERT_CHAIN_URL_PORT)))
 
-    def _load_cert_chain(self, cert_url, x509_backend=default_backend()):
-        # type: (str, X509Backend) -> Certificate
+    def _load_cert_chain(self, cert_url):
+        # type: (str) -> bytes
         """Loads the certificate chain from the URL.
 
         This method loads the certificate chain from the certificate
         cache. If there is a cache miss, the certificate chain is
-        loaded from the certificate URL using the
-        :py:func:`cryptography.x509.load_pem_x509_certificate` method.
-        The x509 backend is set as default to the
-        :py:class:`cryptography.hazmat.backends.default_backend`
-        instance. A :py:class:`VerificationException` is raised if the
-        certificate cannot be loaded.
+        loaded from the certificate URL.
+        A :py:class:`VerificationException` is raised if the
+        certificate chain cannot be loaded.
 
         :param cert_url: URL for retrieving certificate chain
         :type cert_url: str
-        :param x509_backend: Backend to be used, for loading pem x509
-            certificate
-        :type x509_backend:
-            cryptography.hazmat.backends.interfaces.X509Backend
         :return: Certificate chain loaded from cache or URL
-        :rtype cryptography.x509.Certificate
+        :rtype bytes
         :raises: :py:class:`VerificationException` if unable to load the
-            certificate
+            certificate chain
         """
         try:
             if cert_url in self._cert_cache:
@@ -296,40 +308,75 @@ class RequestVerifier(AbstractVerifier):
             else:
                 if six.PY2:
                     with closing(urlopen(cert_url)) as cert_response:
-                        cert_data = cert_response.read()
+                        cert_data = cert_response.read()  # type: bytes
                 else:
                     with urlopen(cert_url) as cert_response:
-                        cert_data = cert_response.read()
-                x509_certificate = load_pem_x509_certificate(
-                    cert_data, x509_backend)
-                self._cert_cache[cert_url] = x509_certificate
-                return x509_certificate
+                        cert_data = cert_response.read()  # type: bytes
+                self._cert_cache[cert_url] = cert_data
+                return cert_data
         except ValueError as e:
             raise VerificationException(
                 "Unable to load certificate from URL", e)
 
     def _validate_cert_chain(self, cert_chain):
-        # type: (Certificate) -> None
+        # type: (bytes) -> None
         """Validate the certificate chain.
 
-        This method checks if the passed in certificate chain is valid,
-        i.e it is not expired and the Alexa domain is present in the
-        SAN extensions of the certificate chain. A
-        :py:class:`VerificationException` is raised if the certificate
+        This method checks if the passed in certificate chain is valid.
+        A :py:class:`VerificationException` is raised if the certificate
         chain is not valid.
 
+        The end certificate is read, using the
+        :py:func:`cryptography.x509.load_pem_x509_certificate` method.
+        The x509 backend is set as default to the
+        :py:class:`cryptography.hazmat.backends.default_backend`
+        instance.
+
         :param cert_chain: Certificate chain to be validated
-        :type cert_chain: cryptography.x509.Certificate
+        :type cert_chain: bytes
         :return: None
-        :raises: :py:class:`VerificationException` if certificated is
+        :raises: :py:class:`VerificationException` if certificate chain is
+            not valid
+        """
+        try:
+            end_cert = None
+            intermediate_certs = []
+            for type_name, headers, der_bytes in pem.unarmor(
+                    cert_chain, multiple=True):
+                if end_cert is None:
+                    end_cert = der_bytes
+                else:
+                    intermediate_certs.append(der_bytes)
+
+            validator = CertificateValidator(end_cert, intermediate_certs)
+            validator.validate_usage(key_usage={'digital_signature'})
+        except PathValidationError as e:
+            raise VerificationException("Certificate chain is not valid", e)
+
+    def _validate_end_certificate(self, x509_cert):
+        # type: (Certificate) -> None
+        """Validate the end certificate.
+
+        This method checks if the passed in certificate is valid,
+        by doing the following checks :
+        - The end certificate is not expired
+        - The end certificate contains Alexa domain in it's SAN extensions
+
+        A :py:class:`VerificationException` is raised if the certificate
+        is not valid.
+
+        :param x509_cert: Certificate to be validated
+        :type x509_cert: cryptography.x509.Certificate
+        :return: None
+        :raises: :py:class:`VerificationException` if certificate is
             not valid
         """
         now = datetime.utcnow()
-        if not (cert_chain.not_valid_before <= now <=
-                cert_chain.not_valid_after):
+        if not (x509_cert.not_valid_before <= now <=
+                x509_cert.not_valid_after):
             raise VerificationException("Signing Certificate expired")
 
-        ext = cert_chain.extensions.get_extension_for_oid(
+        ext = x509_cert.extensions.get_extension_for_oid(
             ExtensionOID.SUBJECT_ALTERNATIVE_NAME)
         ext_value = typing.cast(SubjectAlternativeName, ext.value)
         if CERT_CHAIN_DOMAIN not in ext_value.get_values_for_type(
