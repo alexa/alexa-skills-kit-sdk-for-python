@@ -17,6 +17,8 @@
 #
 import base64
 import unittest
+import os
+import six
 
 from datetime import datetime, timedelta
 from dateutil.tz import tzutc, tzlocal
@@ -34,6 +36,8 @@ from ask_sdk_webservice_support.verifier_constants import (
     SIGNATURE_CERT_CHAIN_URL_HEADER, SIGNATURE_HEADER,
     CERT_CHAIN_DOMAIN, CHARACTER_ENCODING, MAX_TIMESTAMP_TOLERANCE_IN_MILLIS,
     DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS)
+from cryptography.x509 import load_pem_x509_certificate, Certificate
+from freezegun import freeze_time
 
 try:
     import mock
@@ -42,7 +46,7 @@ except ImportError:
 
 
 class TestRequestVerifier(unittest.TestCase):
-    PREPOPULATED_CERT_URL = "https://s3.amazonaws.com/echo.api/doesnotexist"
+    PREPOPULATED_CERT_URL = "https://s3.amazonaws.com/echo.api/echo-api-cert-8.pem"
     VALID_URL = "https://s3.amazonaws.com/echo.api/cert"
     VALID_URL_WITH_PORT = "https://s3.amazonaws.com:443/echo.api/cert"
     VALID_URL_WITH_PATH_TRAVERSAL = (
@@ -72,9 +76,8 @@ class TestRequestVerifier(unittest.TestCase):
             backend=default_backend()
         )
 
-    def create_certificate(self):
+    def create_self_signed_certificate(self):
         self.private_key = self.generate_private_key()
-
         subject = issuer = x509.Name([
             x509.NameAttribute(NameOID.COUNTRY_NAME, u"US"),
             x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, u"WA"),
@@ -97,10 +100,23 @@ class TestRequestVerifier(unittest.TestCase):
             private_key=self.private_key,
             algorithm=SHA1(),
             backend=default_backend()
-        )
+        )  # type: Certificate
 
         self.request_verifier._cert_cache[
             self.PREPOPULATED_CERT_URL] = self.mock_certificate
+
+    def load_valid_certificate(self):
+        with open(os.path.join(
+                os.path.dirname(os.path.realpath(__file__)),
+                'data',
+                'echo-api-cert-7.pem'), 'rb') as cert_response:
+            self.cert_bytes = cert_response.read()
+
+        self.mock_certificate = load_pem_x509_certificate(
+            data=self.cert_bytes, backend=default_backend())
+
+        self.request_verifier._cert_cache[
+            self.PREPOPULATED_CERT_URL] = self.cert_bytes
 
     def sign_data(
             self, data, private_key=None,
@@ -225,21 +241,6 @@ class TestRequestVerifier(unittest.TestCase):
         self.assertIn(
             "Unable to load certificate from URL", str(exc.exception))
 
-    def test_load_cert_chain_invalid_cert_throw_exception(self):
-        with mock.patch(
-                "ask_sdk_webservice_support.verifier.urlopen"
-        ) as mock_url_open:
-            with mock.patch(
-                    "ask_sdk_webservice_support.verifier."
-                    "load_pem_x509_certificate", side_effect=ValueError):
-                mock_url_open.read.return_value = "test"
-
-                with self.assertRaises(VerificationException) as exc:
-                    self.request_verifier._load_cert_chain(self.MALFORMED_URL)
-
-        self.assertIn(
-            "Unable to load certificate from URL", str(exc.exception))
-
     def test_load_cert_chain_load_and_cache_cert(self):
         self.assertIsNone(
             self.request_verifier._cert_cache.get(
@@ -247,45 +248,58 @@ class TestRequestVerifier(unittest.TestCase):
             "Invalid Certificate cached in Request Verifier Certificate "
             "Cache")
         with mock.patch(
-                "ask_sdk_webservice_support.verifier.urlopen"
+                "ask_sdk_webservice_support.verifier.urlopen", autospec=True
         ) as mock_url_open:
-            mock_url_open.read.return_value = "test"
-            mock_x509_cert = "Test_Certificate"
+            if six.PY2:
+                # Because of the way mocks work with context manager in py2.7
+                mock_url_open.return_value.read.return_value = "test"
+            else:
+                mock_url_open.return_value.__enter__.return_value.read.return_value = "test"
+            self.request_verifier._load_cert_chain(self.PREPOPULATED_CERT_URL)
 
-            with mock.patch(
-                    "ask_sdk_webservice_support."
-                    "verifier.load_pem_x509_certificate",
-                    return_value=mock_x509_cert
-            ):
-                self.request_verifier._load_cert_chain(
-                    self.PREPOPULATED_CERT_URL)
+            self.assertEqual(
+                self.request_verifier._cert_cache.get(self.PREPOPULATED_CERT_URL),
+                "test",
+                "Request Verifier loaded invalid certificate in certificate cache"
+            )
 
-                self.assertEqual(
-                    self.request_verifier._cert_cache.get(
-                        self.PREPOPULATED_CERT_URL), mock_x509_cert, (
-                        "Request Verifier loaded invalid certificate in "
-                        "certificate cache"))
+    @freeze_time('2001-01-01')
+    def test_validate_cert_chain_invalid_path(self):
+        self.load_valid_certificate()
+        with self.assertRaises(VerificationException) as exc:
+            self.request_verifier._validate_cert_chain(cert_chain=self.cert_bytes)
 
-    def test_validate_cert_chain_expired_before_cert_throw_exception(self):
+        self.assertIn("Certificate chain is not valid", str(exc.exception))
+
+    @freeze_time('2020-01-01')
+    def test_validate_cert_chain_valid_path(self):
+        self.load_valid_certificate()
+        try:
+            self.request_verifier._validate_cert_chain(cert_chain=self.cert_bytes)
+        except:
+            # Should never reach here
+            self.fail("Request verifier couldn't validate a valid certificate chain")
+
+    def test_validate_end_cert_expired_before_cert_throw_exception(self):
         test_certificate = mock.MagicMock(spec=x509.Certificate)
         test_certificate.not_valid_before = datetime.utcnow() + timedelta(days=1)
 
         with self.assertRaises(VerificationException) as exc:
-            self.request_verifier._validate_cert_chain(test_certificate)
+            self.request_verifier._validate_end_certificate(test_certificate)
 
         self.assertIn("Signing Certificate expired", str(exc.exception))
 
-    def test_validate_cert_chain_expired_after_cert_throw_exception(self):
+    def test_validate_end_cert_expired_after_cert_throw_exception(self):
         test_certificate = mock.MagicMock(spec=x509.Certificate)
         test_certificate.not_valid_before = datetime.utcnow()
         test_certificate.not_valid_after = datetime.now() - timedelta(days=1)
 
         with self.assertRaises(VerificationException) as exc:
-            self.request_verifier._validate_cert_chain(test_certificate)
+            self.request_verifier._validate_end_certificate(test_certificate)
 
         self.assertIn("Signing Certificate expired", str(exc.exception))
 
-    def test_validate_cert_chain_domain_missing_throw_exception(self):
+    def test_validate_end_cert_domain_missing_throw_exception(self):
         test_certificate = mock.MagicMock(spec=x509.Certificate)
         test_certificate.not_valid_before = datetime.utcnow() - timedelta(
             minutes=1)
@@ -293,61 +307,89 @@ class TestRequestVerifier(unittest.TestCase):
             minutes=1)
 
         with self.assertRaises(VerificationException) as exc:
-            self.request_verifier._validate_cert_chain(test_certificate)
+            self.request_verifier._validate_end_certificate(test_certificate)
 
         self.assertIn(
             "domain missing in Signature Certificate Chain",
             str(exc.exception))
 
-    def test_validate_cert_chain_valid_cert(self):
-        self.create_certificate()
+    def test_validate_end_cert_valid_cert(self):
+        self.create_self_signed_certificate()
         try:
-            self.request_verifier._validate_cert_chain(self.mock_certificate)
+            self.request_verifier._validate_end_certificate(self.mock_certificate)
         except:
             # Should never reach here
             self.fail(
                 "Request Verifier certificate validation failed for a "
                 "valid certificate chain")
 
-    def test_request_verification_for_valid_request(self):
+    def test_validate_request_body_for_valid_request(self):
         test_content = "This is some test content"
-        self.create_certificate()
+        self.create_self_signed_certificate()
         signature = self.sign_data(data=test_content)
 
-        self.headers[
-            SIGNATURE_CERT_CHAIN_URL_HEADER] = self.PREPOPULATED_CERT_URL
-        self.headers[SIGNATURE_HEADER] = base64.b64encode(signature)
-
         try:
-            self.request_verifier.verify(
-                headers=self.headers,
-                serialized_request_env=test_content,
-                deserialized_request_env=RequestEnvelope())
+            self.request_verifier._valid_request_body(
+                cert_chain=self.mock_certificate,
+                signature=base64.b64encode(signature),
+                serialized_request_env=test_content)
         except:
             # Should never reach here
             self.fail(
-                "Request verifier couldn't verify a valid signed request")
+                "Request verifier validate request body failed for a valid "
+                "signed request")
 
-    def test_request_verification_for_invalid_request(self):
+    def test_validate_request_body_for_invalid_request(self):
         test_content = "This is some test content"
-        self.create_certificate()
+        self.create_self_signed_certificate()
 
         different_private_key = self.generate_private_key()
         signature = self.sign_data(
             data=test_content, private_key=different_private_key)
 
-        self.headers[
-            SIGNATURE_CERT_CHAIN_URL_HEADER] = self.PREPOPULATED_CERT_URL
-        self.headers[SIGNATURE_HEADER] = base64.b64encode(signature)
-
         with self.assertRaises(VerificationException) as exc:
-            self.request_verifier.verify(
-                headers=self.headers,
-                serialized_request_env=test_content,
-                deserialized_request_env=RequestEnvelope())
+            self.request_verifier._valid_request_body(
+                cert_chain=self.mock_certificate,
+                signature=base64.b64encode(signature),
+                serialized_request_env=test_content)
 
         self.assertIn("Request body is not valid", str(exc.exception))
 
+    def test_request_verification_for_valid_request(self):
+        with mock.patch.object(
+                RequestVerifier, '_retrieve_and_validate_certificate_chain'):
+            with mock.patch.object(
+                    RequestVerifier, '_valid_request_body'):
+                self.headers[
+                    SIGNATURE_CERT_CHAIN_URL_HEADER] = self.PREPOPULATED_CERT_URL
+                self.headers[SIGNATURE_HEADER] = self.generate_private_key()
+                try:
+                    RequestVerifier().verify(
+                        headers=self.headers,
+                        serialized_request_env="test",
+                        deserialized_request_env=RequestEnvelope())
+                except:
+                    # Should never reach here
+                    self.fail("Request verifier couldn't verify a valid signed request")
+
+    def test_request_verification_for_invalid_request(self):
+        with mock.patch.object(
+                RequestVerifier, '_retrieve_and_validate_certificate_chain'):
+            with mock.patch.object(
+                    RequestVerifier, '_valid_request_body',
+                    side_effect=VerificationException(
+                        'Request body is not valid')):
+                self.headers[
+                    SIGNATURE_CERT_CHAIN_URL_HEADER] = self.PREPOPULATED_CERT_URL
+                self.headers[SIGNATURE_HEADER] = self.generate_private_key()
+
+                with self.assertRaises(VerificationException) as exc:
+                    RequestVerifier().verify(
+                        headers=self.headers,
+                        serialized_request_env="test",
+                        deserialized_request_env=RequestEnvelope())
+
+                self.assertIn("Request body is not valid", str(exc.exception))
 
 class TestTimestampVerifier(unittest.TestCase):
     def setUp(self):
