@@ -40,3 +40,11 @@ This release contains the following changes :
 This release contains the following changes : 
 
 - Case-insensitive header value retrieval for request verification. `136 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues/136>`__
+
+
+1.3.0
+~~~~~
+
+This release contains the following changes :
+
+- Certificate chain validation in request verification, to check the certificate chain validates to a trusted root CA.
