@@ -48,3 +48,12 @@ This release contains the following changes :
 This release contains the following changes :
 
 - Certificate chain validation in request verification, to check the certificate chain validates to a trusted root CA.
+
+
+1.3.1
+~~~~~
+
+This release contains the following changes :
+
+- Fix the dependencies in the setup file, for cert validation.
+
