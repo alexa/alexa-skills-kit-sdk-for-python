@@ -35,7 +35,7 @@ from NPM as follows:
 Generate Login with Amazon Keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Create a new security profile for your Amazon Developer account by following the instructions
-  provided `here <https://developer.amazon.com/docs/smapi/ask-cli-command-reference.html#generate-lwa-tokens>`__.
+  provided `here <https://developer.amazon.com/en-US/docs/alexa/smapi/get-access-token-smapi.html#configure-lwa-security-profile>`__.
 - This will generate ``Client ID`` and ``Client Secret`` keys.
 - Using the ASK CLI, run: ``ask util generate-lwa-tokens``. You will be asked to provide the ``Client ID``
   and ``Client Secret`` keys from the previous step. This will return the following JSON with a ``Refresh Token``:
