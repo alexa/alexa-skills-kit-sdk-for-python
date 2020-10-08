@@ -19,6 +19,7 @@ import base64
 import unittest
 import os
 import six
+import warnings
 
 from datetime import datetime, timedelta
 from dateutil.tz import tzutc, tzlocal
@@ -30,12 +31,13 @@ from cryptography import x509
 from cryptography.hazmat.primitives.hashes import SHA1
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
 from ask_sdk_model import RequestEnvelope, IntentRequest
+from ask_sdk_model.events.skillevents import SkillEnabledRequest
 from ask_sdk_webservice_support.verifier import (
     RequestVerifier, TimestampVerifier, VerificationException)
 from ask_sdk_webservice_support.verifier_constants import (
     SIGNATURE_CERT_CHAIN_URL_HEADER, SIGNATURE_HEADER,
-    CERT_CHAIN_DOMAIN, CHARACTER_ENCODING, MAX_TIMESTAMP_TOLERANCE_IN_MILLIS,
-    DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS)
+    CERT_CHAIN_DOMAIN, CHARACTER_ENCODING, MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS,
+    MAX_SKILL_EVENT_TOLERANCE_IN_MILLIS)
 from cryptography.x509 import load_pem_x509_certificate, Certificate
 from freezegun import freeze_time
 
@@ -395,15 +397,29 @@ class TestTimestampVerifier(unittest.TestCase):
     def setUp(self):
         self.timestamp_verifier = None
 
-    def test_tolerance_value_more_than_max_throw_exception(self):
-        test_tolerance_millis = MAX_TIMESTAMP_TOLERANCE_IN_MILLIS + 1
-        with self.assertRaises(VerificationException) as exc:
+    def test_tolerance_value_more_than_max_throw_warning(self):
+        test_tolerance_millis = MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS + 1
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
             self.timestamp_verifier = TimestampVerifier(
                 tolerance_in_millis=test_tolerance_millis)
 
-        self.assertIn(
-            "Provided tolerance value {} exceeds the maximum allowed "
-            "value".format(test_tolerance_millis), str(exc.exception))
+            self.assertTrue(
+                len(w) == 1, "Timestamp verifier fails throwing warning when "
+                             "tolerance values exceeds maximum supported "
+                             "tolerance value")
+            self.assertIn(
+                "Provided tolerance value {} exceeds the maximum allowed value".format(
+                    test_tolerance_millis),
+                str(w[0].message),
+                "Timestamp verifier throws unexpected warning when tolerance "
+                "value exceeds maximum supported tolerance value")
+            self.assertEqual(
+                self.timestamp_verifier._tolerance_in_millis,
+                MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS,
+                "Timestamp verifier initialized incorrect tolerance value "
+                "when provided tolerance value exceeds maximum supported "
+                "tolerance value")
 
     def test_tolerance_value_negative_throw_exception(self):
         test_tolerance_millis = -1
@@ -415,7 +431,7 @@ class TestTimestampVerifier(unittest.TestCase):
             "Negative tolerance values not supported", str(exc.exception))
 
     def test_tolerance_value_within_range_valid(self):
-        test_tolerance_millis = DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS + 1
+        test_tolerance_millis = MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS + 1
         try:
             self.timestamp_verifier = TimestampVerifier(
                 tolerance_in_millis=test_tolerance_millis)
@@ -439,7 +455,7 @@ class TestTimestampVerifier(unittest.TestCase):
         self.assertIn("Timestamp verification failed", str(exc.exception))
 
     def test_timestamp_verification_with_valid_future_server_timestamp(self):
-        valid_tolerance = int(DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS / 2 / 1000)
+        valid_tolerance = int(MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS / 2 / 1000)
         valid_future_datetime = datetime.now(tzutc()) + timedelta(seconds=valid_tolerance)
         test_request_envelope = RequestEnvelope(
             request=IntentRequest(
@@ -469,3 +485,37 @@ class TestTimestampVerifier(unittest.TestCase):
             # Should never reach here
             raise self.fail(
                 "Timestamp verification failed for a valid input request")
+
+    @freeze_time('2020-01-01 01:00:00')
+    def test_timestamp_verification_with_valid_timestamp_skill_event(self):
+        test_request_envelope = RequestEnvelope(
+            request=SkillEnabledRequest(
+                timestamp=datetime(
+                    year=2020, month=1, day=1, hour=0, minute=0, second=0,
+                    tzinfo=tzutc())))
+        self.timestamp_verifier = TimestampVerifier()
+        try:
+            self.timestamp_verifier.verify(
+                headers={},
+                serialized_request_env="",
+                deserialized_request_env=test_request_envelope)
+        except:
+            # Should never reach here
+            raise self.fail(
+                "Timestamp verification failed for a valid skill event input request")
+
+    @freeze_time('2020-01-01 01:01:00')
+    def test_timestamp_verification_with_expired_timestamp_skill_event(self):
+        test_request_envelope = RequestEnvelope(
+            request=SkillEnabledRequest(
+                timestamp=datetime(
+                    year=2020, month=1, day=1, hour=0, minute=0, second=0,
+                    tzinfo=tzutc())))
+        self.timestamp_verifier = TimestampVerifier()
+        with self.assertRaises(VerificationException) as exc:
+            self.timestamp_verifier.verify(
+                headers={},
+                serialized_request_env="",
+                deserialized_request_env=test_request_envelope)
+
+        self.assertIn("Timestamp verification failed", str(exc.exception))
