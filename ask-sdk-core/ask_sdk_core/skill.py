@@ -23,6 +23,7 @@ from ask_sdk_model import ResponseEnvelope
 from ask_sdk_runtime.skill import AbstractSkill, RuntimeConfiguration
 from ask_sdk_runtime.dispatch import GenericRequestDispatcher
 from ask_sdk_runtime.exceptions import AskSdkException
+from ask_sdk_runtime.utils import UserAgentManager
 
 from .serialize import DefaultSerializer
 from .handler_input import HandlerInput
@@ -145,6 +146,12 @@ class CustomSkill(AbstractSkill):
             options=skill_configuration
         )
 
+        UserAgentManager.register_component(
+            user_agent_info(sdk_version=__version__))
+        if skill_configuration.custom_user_agent is not None:
+            UserAgentManager.register_component(
+                component_name=skill_configuration.custom_user_agent)
+
     def supports(self, request_envelope, context):
         # type: (Dict[str, Any], Any) -> bool
         """Check if request envelope is of the expected skill format.
@@ -214,6 +221,4 @@ class CustomSkill(AbstractSkill):
         return ResponseEnvelope(
             response=response, version=RESPONSE_FORMAT_VERSION,
             session_attributes=session_attributes,
-            user_agent=user_agent_info(
-                sdk_version=__version__,
-                custom_user_agent=self.custom_user_agent))
+            user_agent=UserAgentManager.get_user_agent())
