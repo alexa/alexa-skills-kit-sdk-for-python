@@ -173,3 +173,11 @@ This release contains the following changes :
 This release contains the following changes : 
 
 - general bug fixes and updates
+
+
+1.15.0
+~~~~~~
+
+This release contains the following changes : 
+
+- A new class UserAgentManager, to help set user agents for higher level frameworks using the SDK
