@@ -16,8 +16,9 @@
 # License.
 #
 import sys
+import unittest
 
-from ask_sdk_runtime.utils import user_agent_info
+from ask_sdk_runtime.utils import user_agent_info, UserAgentManager
 from ask_sdk_runtime.__version__ import __version__
 
 
@@ -48,3 +49,39 @@ def test_user_agent_info_with_custom_user_agent():
         custom_user_agent=custom_user_agent) == expected_user_agent, (
         "Incorrect User Agent info for custom user agent")
 
+
+class TestUserAgentManager(unittest.TestCase):
+    def tearDown(self):
+        UserAgentManager.clear()
+
+    def test_user_agent_initialized(self):
+        self.assertEqual(
+            '', UserAgentManager.get_user_agent(),
+            "UserAgent Manager didn't initialize user agent as empty string")
+
+    def test_single_component_registered(self):
+        test_component = "foo"
+        UserAgentManager.register_component(test_component)
+        self.assertEqual(
+            test_component, UserAgentManager.get_user_agent(),
+            "UserAgent Manager didn't register single component to "
+            "user agent")
+
+    def test_multi_component_registered(self):
+        test_component_1 = "foo"
+        test_component_2 = "bar"
+        UserAgentManager.register_component(test_component_1)
+        UserAgentManager.register_component(test_component_2)
+        self.assertEqual(
+            '{} {}'.format(test_component_1, test_component_2),
+            UserAgentManager.get_user_agent(),
+            "UserAgent Manager didn't register single component to "
+            "user agent")
+
+    def test_components_user_agent_cleared(self):
+        UserAgentManager.register_component('foo')
+        UserAgentManager.register_component('bar')
+        UserAgentManager.clear()
+        self.assertEqual(
+            '', UserAgentManager.get_user_agent(),
+            "UserAgent Manager didn't clear user agent")
