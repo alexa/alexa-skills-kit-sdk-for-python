@@ -20,6 +20,7 @@ import os
 import base64
 import typing
 import six
+import warnings
 
 from dateutil import tz
 from datetime import datetime
@@ -44,8 +45,8 @@ from .verifier_constants import (
     CERT_CHAIN_URL_PROTOCOL, CERT_CHAIN_URL_HOSTNAME,
     CERT_CHAIN_URL_PORT, CERT_CHAIN_URL_STARTPATH,
     CERT_CHAIN_DOMAIN, CHARACTER_ENCODING,
-    MAX_TIMESTAMP_TOLERANCE_IN_MILLIS,
-    DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS)
+    MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS,
+    MAX_SKILL_EVENT_TOLERANCE_IN_MILLIS, ALEXA_SKILL_EVENT_LIST)
 
 if typing.TYPE_CHECKING:
     from typing import Dict, Any, Optional
@@ -434,7 +435,7 @@ class TimestampVerifier(AbstractVerifier):
 
     """
     def __init__(
-            self, tolerance_in_millis=DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS):
+            self, tolerance_in_millis=MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS):
         # type: (float) -> None
         """Verifier that performs request timestamp verification.
 
@@ -457,11 +458,12 @@ class TimestampVerifier(AbstractVerifier):
         :raises: :py:class:`VerificationException` if tolerance value is
             invalid
         """
-        if tolerance_in_millis > MAX_TIMESTAMP_TOLERANCE_IN_MILLIS:
-            raise VerificationException(
+        if tolerance_in_millis > MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS:
+            warnings.warn(
                 "Provided tolerance value {} exceeds the maximum allowed "
-                "value {}".format(
-                    tolerance_in_millis, MAX_TIMESTAMP_TOLERANCE_IN_MILLIS))
+                "value {}. Maximum value will be used instead".format(
+                    tolerance_in_millis, MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS))
+            tolerance_in_millis = MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS
 
         if tolerance_in_millis < 0:
             raise VerificationException(
@@ -497,6 +499,13 @@ class TimestampVerifier(AbstractVerifier):
             raise VerificationException("Timestamp verification failed")
         else:
             request_timestamp = deserialized_request_env.request.timestamp
-            if (abs((local_now - request_timestamp).total_seconds()) >
-                    (self._tolerance_in_millis / 1000)):
+            timestamp_diff = abs((local_now - request_timestamp).total_seconds())
+            if timestamp_diff > (self._tolerance_in_millis / 1000):
+                # For skill events, need to check if timestamp difference in
+                # max skill event timestamp tolerance limit
+                request_type = deserialized_request_env.request.object_type
+                if (request_type in ALEXA_SKILL_EVENT_LIST and
+                        timestamp_diff <= (MAX_SKILL_EVENT_TOLERANCE_IN_MILLIS / 1000)):
+                    return
+
                 raise VerificationException("Timestamp verification failed")

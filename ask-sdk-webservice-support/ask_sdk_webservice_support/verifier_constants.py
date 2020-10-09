@@ -51,10 +51,17 @@ CERT_CHAIN_DOMAIN = "echo-api.amazon.com"
 #: Character encoding used in the request.
 CHARACTER_ENCODING = "utf-8"
 
-#: Default allowable tolerance in request timestamp.
-#: For more info, check `link <https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-timestamp>`__.
-DEFAULT_TIMESTAMP_TOLERANCE_IN_MILLIS = 150000
-
 #: Maximum allowable tolerance in request timestamp.
+#: For more info, check `link <https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-timestamp>`__.
+MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS = 150000
+
+#: Maximum allowable tolerance for skill events in request timestamp.
 #: For more info, check `link <https://developer.amazon.com/docs/smapi/skill-events-in-alexa-skills.html#delivery-of-events-to-the-skill>`__.
-MAX_TIMESTAMP_TOLERANCE_IN_MILLIS = 3600000
+MAX_SKILL_EVENT_TOLERANCE_IN_MILLIS = 3600000
+
+#: Skill events that can have max timestamp tolerance values of an hour
+ALEXA_SKILL_EVENT_LIST = {'AlexaSkillEvent.SkillEnabled',
+                          'AlexaSkillEvent.SkillDisabled',
+                          'AlexaSkillEvent.SkillPermissionChanged',
+                          'AlexaSkillEvent.SkillPermissionAccepted',
+                          'AlexaSkillEvent.SkillAccountLinked'}
