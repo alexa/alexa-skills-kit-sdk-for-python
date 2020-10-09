@@ -72,14 +72,6 @@ class TestUserAgentManager(unittest.TestCase):
         test_component_2 = "bar"
         UserAgentManager.register_component(test_component_1)
         UserAgentManager.register_component(test_component_2)
-        # self.assertTrue(
-        #     test_component_1 in UserAgentManager.get_user_agent(),
-        #     "UserAgent Manager didn't register first component in the "
-        #     "user agent string")
-        # self.assertTrue(
-        #     test_component_2 in UserAgentManager.get_user_agent(),
-        #     "UserAgent Manager didn't register second component in the "
-        #     "user agent string")
         self.assertEqual(
             '{} {}'.format(test_component_1, test_component_2),
             UserAgentManager.get_user_agent(),

@@ -78,13 +78,11 @@ class UserAgentManager(object):
         """
         if component_name not in UserAgentManager._components:
             UserAgentManager._components.append(component_name)
-        updated_user_agent = ''
-        for component in UserAgentManager._components:
-            if updated_user_agent != '':
-                updated_user_agent = '{} {}'.format(updated_user_agent, component)
+            if UserAgentManager.get_user_agent() == '':
+                UserAgentManager._user_agent = component_name
             else:
-                updated_user_agent = component
-        UserAgentManager._user_agent = updated_user_agent
+                UserAgentManager._user_agent = '{} {}'.format(
+                    UserAgentManager.get_user_agent(), component_name)
 
     @staticmethod
     def clear():
