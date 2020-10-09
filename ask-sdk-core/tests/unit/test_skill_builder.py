@@ -21,6 +21,7 @@ import inspect
 from ask_sdk_model import Response
 from ask_sdk_runtime.dispatch_components import (
     GenericHandlerAdapter, GenericExceptionMapper)
+from ask_sdk_runtime.utils import UserAgentManager
 
 from ask_sdk_core.skill import CustomSkill
 from ask_sdk_core.skill_builder import SkillBuilder, CustomSkillBuilder
@@ -231,6 +232,73 @@ class TestSkillBuilder(unittest.TestCase):
         assert response_envelope["response"]["outputSpeech"] == "test output speech", (
             "Response Envelope from lambda handler invocation has incorrect "
             "response than built by skill")
+
+    def test_should_append_additional_user_agent(self):
+        additional_user_agent = "test_string"
+        sdk_user_agent = user_agent_info(sdk_version=__version__)
+        mock_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
+        mock_request_handler.can_handle.return_value = True
+        mock_response = Response()
+        mock_request_handler.handle.return_value = mock_response
+        self.sb.add_request_handler(request_handler=mock_request_handler)
+        self.sb.add_custom_user_agent(user_agent=additional_user_agent)
+
+        mock_request_envelope_payload = {
+            "context": {
+                "System": {
+                    "application": {
+                        "applicationId": "test"
+                    }
+                }
+            }
+        }
+
+        self.sb.skill_id = "test"
+        lambda_handler = self.sb.lambda_handler()
+
+        response_envelope = lambda_handler(
+            event=mock_request_envelope_payload, context=None)
+
+        self.assertEqual(
+            "{} {}".format(additional_user_agent, sdk_user_agent),
+            response_envelope["userAgent"],
+            "Response envelope doesn't have correct user agent")
+
+    def test_should_append_additional_user_agent_using_userAgentManager(self):
+        additional_user_agent = "test_string"
+        sdk_user_agent = user_agent_info(sdk_version=__version__)
+        mock_request_handler = mock.MagicMock(spec=AbstractRequestHandler)
+        mock_request_handler.can_handle.return_value = True
+        mock_response = Response()
+        mock_request_handler.handle.return_value = mock_response
+        self.sb.add_request_handler(request_handler=mock_request_handler)
+
+        mock_request_envelope_payload = {
+            "context": {
+                "System": {
+                    "application": {
+                        "applicationId": "test"
+                    }
+                }
+            }
+        }
+
+        self.sb.skill_id = "test"
+        lambda_handler = self.sb.lambda_handler()
+
+        UserAgentManager.register_component(component_name=additional_user_agent)
+
+        response_envelope = lambda_handler(
+            event=mock_request_envelope_payload, context=None)
+
+        self.assertEqual(
+            "{} {}".format(additional_user_agent, sdk_user_agent),
+            response_envelope["userAgent"],
+            "Response envelope doesn't have correct user agent when adding "
+            "using UserAgentManager")
+
+    def tearDown(self):
+        UserAgentManager.clear()
 
 
 class TestCustomSkillBuilder(unittest.TestCase):

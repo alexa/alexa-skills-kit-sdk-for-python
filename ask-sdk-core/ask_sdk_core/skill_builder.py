@@ -21,6 +21,7 @@ import typing
 from ask_sdk_model import RequestEnvelope
 
 from ask_sdk_runtime.skill_builder import AbstractSkillBuilder
+from ask_sdk_runtime.utils import UserAgentManager
 
 from .skill import CustomSkill, SkillConfiguration
 
@@ -124,10 +125,7 @@ class SkillBuilder(AbstractSkillBuilder):
         :type user_agent: str
         :rtype: None
         """
-        if self.custom_user_agent is None:
-            self.custom_user_agent = user_agent
-        else:
-            self.custom_user_agent += " {}".format(user_agent)
+        UserAgentManager.register_component(component_name=user_agent)
 
     def add_renderer(self, renderer):
         # type: (AbstractTemplateRenderer) -> None
