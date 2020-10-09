@@ -57,3 +57,12 @@ This release contains the following changes :
 
 - Fix the dependencies in the setup file, for cert validation.
 
+
+1.3.2
+~~~~~
+
+This release contains the following changes :
+
+- Fix timestamp verifier maximum tolerance value for skill events and normal skill requests.
+
+
