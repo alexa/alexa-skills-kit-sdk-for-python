@@ -1,4 +1,4 @@
 requests
 python_dateutil
 ask-sdk-model>=1.0.0
-ask-sdk-runtime>=1.1.0
+ask-sdk-runtime>=1.15.0
