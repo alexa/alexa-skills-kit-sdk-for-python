@@ -25,5 +25,5 @@ __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
 __keywords__ = ['ASK SDK', 'Alexa Skills Kit', 'Alexa', 'Core']
 __install_requires__ = ["requests", "python_dateutil",
-                        "ask-sdk-model>=1.0.0", "ask-sdk-runtime>=1.1.0"]
+                        "ask-sdk-model>=1.0.0", "ask-sdk-runtime>=1.15.0"]
 
