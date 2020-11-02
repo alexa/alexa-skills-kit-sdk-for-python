@@ -38,7 +38,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 4
       matrix:
         os: [macos-latest]
         tox-env: [py37-mymacos, py38-mymacos]
@@ -65,7 +64,6 @@ jobs:
     continue-on-error: true
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 4
       matrix:
         os: [windows-latest]
         tox-env: [py37-mywin, py38-mywin]
@@ -79,11 +77,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set certificates needed
-        run: |
-          Invoke-WebRequest https://www.amazontrust.com/repository/SFSRootCAG2.pem -OutFile sfroot-g2.crt
-          Import-Certificate -FilePath sfroot-g2.crt -CertStoreLocation Cert:\LocalMachine\Root
-        shell: powershell
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
