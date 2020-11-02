@@ -6,8 +6,7 @@
           <br/>
           <h1 align="center">Alexa Skills Kit SDK for Python</h1>
           <p align="center">
-            <a href="https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python"><img src="https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat"></a>
-            <a href="https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html">Docs</a>
+            <a href="https://github.com/alexa/alexa-skills-kit-sdk-for-python/workflows/"><img src="https://github.com/alexa/alexa-skills-kit-sdk-for-python/workflows/Tox%20tests%20on%20SDK%20packages/badge.svg?style=flat"></a>
             <a href="https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"></a>
             <a href="https://pypi.python.org/pypi/ask-sdk/"><img src="http://img.shields.io/pypi/v/ask-sdk.svg?style=flat"></a>
             <a href="https://pypi.org/project/ask-sdk-core/"><img src="https://pepy.tech/badge/ask-sdk-core"></a>
@@ -26,12 +25,9 @@ The **ASK SMAPI SDK for Python** provides developers a library for easily intera
 with all Skill Management APIs (SMAPI), including interaction model, intent request
 history, and in-skill purchasing APIs.
 
-.. |Build Status| image:: https://img.shields.io/travis/alexa-labs/alexa-skills-kit-sdk-for-python/master.svg?style=flat
-    :target: https://travis-ci.org/alexa-labs/alexa-skills-kit-sdk-for-python
+.. |Build Status| image:: https://github.com/alexa/alexa-skills-kit-sdk-for-python/workflows/Tox%20tests%20on%20SDK%20packages/badge.svg?style=flat
+    :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/workflows/
     :alt: Build Status
-.. |Docs|
-    :target: https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html
-    :alt: Technical documentation
 .. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-runtime/
     :alt: Version
