@@ -38,7 +38,7 @@ from cryptography.exceptions import InvalidSignature
 from contextlib import closing
 from asn1crypto import pem
 from certvalidator import CertificateValidator
-from certvalidator.errors import ValidationError, PathError
+from certvalidator.errors import PathValidationError
 
 from .verifier_constants import (
     SIGNATURE_CERT_CHAIN_URL_HEADER, SIGNATURE_HEADER,
@@ -351,7 +351,7 @@ class RequestVerifier(AbstractVerifier):
 
             validator = CertificateValidator(end_cert, intermediate_certs)
             validator.validate_usage(key_usage={'digital_signature'})
-        except (PathError, ValidationError) as e:
+        except PathValidationError as e:
             raise VerificationException("Certificate chain is not valid", e)
 
     def _validate_end_certificate(self, x509_cert):

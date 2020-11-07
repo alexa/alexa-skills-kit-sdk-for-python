@@ -19,7 +19,7 @@ import sys
 import typing
 
 if typing.TYPE_CHECKING:
-    from typing import Optional, List
+    from typing import Optional
 
 
 def user_agent_info(sdk_version, custom_user_agent=None):
@@ -50,7 +50,7 @@ class UserAgentManager(object):
     Higher level frameworks using the SDK, but not building up on skill builder,
     can use this static class and register their user agents.
     """
-    _components = []  # type: List[str]
+    _components = []
     _user_agent = ''
 
     @staticmethod
