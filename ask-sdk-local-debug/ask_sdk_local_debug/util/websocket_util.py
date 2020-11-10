@@ -15,13 +15,18 @@
 # specific language governing permissions and limitations under the
 # License.
 #
+
 import typing
+import logging
 
 from ask_sdk_local_debug.config.skill_invoker_config import SkillInvokerConfiguration
 from ask_sdk_local_debug.config.client_config import ClientConfiguration
 from ask_sdk_local_debug.config.websocket_config import WebSocketConfiguration
 from ask_sdk_local_debug.client.autobahn_client import AutobahnClient
+from ask_sdk_local_debug.config.region import Region
+from ask_sdk_local_debug.exception import LocalDebugSdkException
 
+logger = logging.getLogger(__name__)
 
 if typing.TYPE_CHECKING:
     import argparse
@@ -38,7 +43,7 @@ CONNECTION_HEADER_VALUE = "upgrade"
 AUTHORIZATION_HEADER_NAME = "authorization"
 # Web socket connection uri skeleton.
 # TODO: Update to prod endpoint URL.
-DEBUG_ENDPOINT_URI = "wss://bob-dispatch-prod-na.amazon.com/v1/skills/{}/stages/development/connectCustomDebugEndpoint"
+DEBUG_ENDPOINT_URI = "wss://{}/v1/skills/{}/stages/development/connectCustomDebugEndpoint"
 
 
 def create_web_socket_client(parsed_args):
@@ -74,7 +79,13 @@ def create_web_socket_configuration(parsed_args):
     """
     client_config = create_client_configuration(parsed_args)
     access_token = parsed_args.access_token
-    debug_endpoint_uri = DEBUG_ENDPOINT_URI.format(client_config.skill_id)
+    if parsed_args.region not in list(Region.__members__):
+        error_message = "Invalid region - {}. Please ensure that the region value is one of " \
+                        "{}".format(parsed_args.region, list(Region.__members__))
+        logger.error(error_message)
+        raise LocalDebugSdkException(error_message)
+    logger.info("Region chosen: " + parsed_args.region)
+    debug_endpoint_uri = DEBUG_ENDPOINT_URI.format(Region[parsed_args.region].value, client_config.skill_id)
 
     headers = {AUTHORIZATION_HEADER_NAME: access_token,
                UPGRADE_HEADER_NAME: UPGRADE_HEADER_VALUE,

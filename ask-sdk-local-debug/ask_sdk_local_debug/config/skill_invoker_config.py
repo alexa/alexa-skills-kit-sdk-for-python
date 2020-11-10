@@ -45,7 +45,7 @@ class SkillInvokerConfiguration(object):
         self.skill_file_path = skill_file_path
         self.skill_handler = skill_handler
         self._spec = None  # type: ModuleSpec
-        self.skill_invoker = self.__initialize_skill_invoker()
+        self.skill_builder_func = self.__get_skill_builder_func()
 
     @property
     def spec(self):
@@ -81,3 +81,12 @@ class SkillInvokerConfiguration(object):
                 "Failed to load the module from {} : {}".format(
                     self.skill_file_path, str(e)))
         return skill_invoker
+
+    def __get_skill_builder_func(self):
+        try:
+            return getattr(self.__initialize_skill_invoker(), self.skill_handler)
+        except Exception as e:
+            raise LocalDebugSdkException(
+                "Handler function does not exist. Make sure that the skill file path:{} and "
+                "the handler name:{} are correct. Exception:{}".format(
+                    self.skill_file_path, self.skill_handler, str(e)))

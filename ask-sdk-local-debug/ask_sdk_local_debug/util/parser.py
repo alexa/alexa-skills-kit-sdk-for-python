@@ -62,5 +62,7 @@ def argument_parser(args):
                         required=True, dest='skill_file_path')
     parser.add_argument("--skillHandler", help='Skill Handler Name',
                         required=True, dest='skill_handler')
+    parser.add_argument("--region", help='Region of the developer account',
+                        required=False, dest='region', default="NA")
 
     return parser.parse_args(args)

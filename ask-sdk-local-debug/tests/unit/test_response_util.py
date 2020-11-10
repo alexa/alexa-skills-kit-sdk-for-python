@@ -110,9 +110,7 @@ class TestRequestResponseUtils(unittest.TestCase):
             "get_local_debug_failure_response didn't raise "
             "LocalDebugSdkException for invalid arguments")
 
-    @patch('ask_sdk_local_debug.util.response_util.getattr',
-           side_effect=mock_failure_skill_builder)
-    def test_failure_get_skill_response(self, _mock_attr):
+    def test_failure_get_skill_response(self):
         failure_response = FailureResponse(version=self.TEST_VERSION,
                                            original_request_id=self.TEST_REQUEST_ID,
                                            error_code='500',
@@ -120,16 +118,16 @@ class TestRequestResponseUtils(unittest.TestCase):
         test_response = json.dumps(
             self.default_serializer.serialize(failure_response))
 
+        mock_skill_invoker_config = mock.MagicMock()
+        mock_skill_invoker_config.skill_builder_func.side_effect = Exception("Exception msg")
         response = get_skill_response(
             local_debug_request=self.test_local_debug_request,
-            skill_invoker_config=mock.MagicMock())
+            skill_invoker_config=mock_skill_invoker_config)
 
         self.assertEqual(response, test_response,
                          "Not a valid Failure Response")
 
-    @patch('ask_sdk_local_debug.util.response_util.getattr',
-           return_value=mock_success_skill_builder)
-    def test_success_get_skill_response(self, _mock_attr):
+    def test_success_get_skill_response(self):
         success_response = SuccessResponse(version=self.TEST_VERSION,
                                            original_request_id=self.TEST_REQUEST_ID,
                                            response_payload=json.dumps(
@@ -137,25 +135,31 @@ class TestRequestResponseUtils(unittest.TestCase):
         test_response = json.dumps(
             self.default_serializer.serialize(success_response))
 
+        mock_skill_invoker_config = mock.MagicMock()
+        mock_skill_invoker_config.skill_builder_func.return_value = TEST_RESPONSE_PAYLOAD
         response = get_skill_response(
             local_debug_request=self.test_local_debug_request,
-            skill_invoker_config=mock.MagicMock())
+            skill_invoker_config=mock_skill_invoker_config)
 
         self.assertEqual(response, test_response,
                          "Not a valid Success Response")
 
-    @patch('ask_sdk_local_debug.util.response_util.getattr',
-           side_effect=Exception('Test Exception'))
-    def test_get_skill_response_exception_raised(self, mock_get_attr):
-        with self.assertRaises(LocalDebugSdkException) as exc:
-            response = get_skill_response(
-                local_debug_request=self.test_local_debug_request,
-                skill_invoker_config=mock.MagicMock())
-        self.assertIn(
-            "Error in get_skill_response : {}".format(self.TEST_EXCEPTION),
-            str(exc.exception),
-            "get_skill_response didn't raise LocalDebugSdkException for "
-            "invalid skill invoker config.")
+    def test_get_skill_response_exception_raised(self):
+        with patch('ask_sdk_local_debug.util.response_util.Serializer') as mock_serializer:
+            mock_serializer.get_instance.return_value = mock_serializer
+            mock_serializer.serialize.side_effect = Exception('Test Exception')
+            with self.assertRaises(LocalDebugSdkException) as exc:
+                mock_skill_invoker_config = mock.MagicMock()
+                mock_skill_invoker_config.skill_builder_func.return_value = TEST_RESPONSE_PAYLOAD
+                response = get_skill_response(
+                    local_debug_request=self.test_local_debug_request,
+                    skill_invoker_config=mock_skill_invoker_config)
+
+            self.assertIn(
+                "Error in get_skill_response : {}".format(self.TEST_EXCEPTION),
+                str(exc.exception),
+                "get_skill_response didn't raise LocalDebugSdkException for "
+                "invalid skill invoker config.")
 
     def test_deserialize_request(self):
         valid_sample_data = ("{\n    \"version\": \"fooversion\",\n"

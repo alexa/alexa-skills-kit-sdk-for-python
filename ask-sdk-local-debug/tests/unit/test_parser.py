@@ -26,8 +26,10 @@ class TestArgParse(unittest.TestCase):
     TEST_SKILL_FILE_PATH = "test/py/lambda.py"
     TEST_SKILL_HANDLER = "TestSkillHandler"
     TEST_SKILL_ID = "Skill ID 123234"
+    DEFAULT_REGION = "NA"
+    TEST_REGION = "EU"
 
-    def test_argument_parser_valid_args_with_access_token(self):
+    def test_argument_parser_valid_args_with_access_token_default_region(self):
         test_args = list()
         test_args.extend(["--accessToken", self.TEST_ACCESS_TOKEN])
         test_args.extend(["--skillId", self.TEST_SKILL_ID])
@@ -39,6 +41,22 @@ class TestArgParse(unittest.TestCase):
         self.assertEqual(args.skill_id, self.TEST_SKILL_ID)
         self.assertEqual(args.skill_file_path, self.TEST_SKILL_FILE_PATH)
         self.assertEqual(args.skill_handler, self.TEST_SKILL_HANDLER)
+        self.assertEqual(args.region, self.DEFAULT_REGION)
+
+    def test_argument_parser_valid_args_with_access_token_provided_region(self):
+        test_args = list()
+        test_args.extend(["--accessToken", self.TEST_ACCESS_TOKEN])
+        test_args.extend(["--skillId", self.TEST_SKILL_ID])
+        test_args.extend(["--skillFilePath", self.TEST_SKILL_FILE_PATH])
+        test_args.extend(["--skillHandler", self.TEST_SKILL_HANDLER])
+        test_args.extend(["--region", self.TEST_REGION])
+
+        args = argument_parser(test_args)
+        self.assertEqual(args.access_token, self.TEST_ACCESS_TOKEN)
+        self.assertEqual(args.skill_id, self.TEST_SKILL_ID)
+        self.assertEqual(args.skill_file_path, self.TEST_SKILL_FILE_PATH)
+        self.assertEqual(args.skill_handler, self.TEST_SKILL_HANDLER)
+        self.assertEqual(args.region, self.TEST_REGION)
 
     def test_argument_parser_with_no_skill_id_and_no_access_token(self):
         test_args = list()
