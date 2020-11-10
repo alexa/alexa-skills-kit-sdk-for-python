@@ -19,7 +19,7 @@ __pip_package_name__ = 'ask-sdk-local-debug'
 __description__ = ('The ASK SDK Local Debug package provides Alexa Skills Kit '
                    'debugger functionality')
 __url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'
