@@ -1,0 +1,87 @@
+name: Tox tests on SDK packages
+
+on: [push, pull_request]
+
+jobs:
+  linux-tests:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 4
+      matrix:
+        os: [ubuntu-latest]
+        tox-env: [py27-mylinux, py36-mylinux, py37-mylinux, py38-mylinux]
+        include:
+          - tox-env: py27-mylinux
+            python-version: 2.7
+          - tox-env: py36-mylinux
+            python-version: 3.6
+          - tox-env: py37-mylinux
+            python-version: 3.7
+          - tox-env: py38-mylinux
+            python-version: 3.8
+    env:
+      TOXENV: ${{ matrix.tox-env }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Tox and any other packages
+      run: python -m pip install --upgrade pip setuptools tox
+    - name: Test with tox ${{ matrix.tox-env }}
+      run: python -m tox
+
+  mac-tests:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+        tox-env: [py37-mymacos, py38-mymacos]
+        include:
+          - tox-env: py37-mymacos
+            python-version: 3.7
+          - tox-env: py38-mymacos
+            python-version: 3.8
+    env:
+      TOXENV: ${{ matrix.tox-env }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Tox and any other packages
+        run: python -m pip install --upgrade pip setuptools tox
+      - name: Test with tox ${{ matrix.tox-env }}
+        run: python -m tox
+
+  windows-tests:
+    continue-on-error: true
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+        tox-env: [py37-mywin, py38-mywin]
+        include:
+          - tox-env: py37-mywin
+            python-version: 3.7
+          - tox-env: py38-mywin
+            python-version: 3.8
+    env:
+      TOXENV: ${{ matrix.tox-env }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Tox and any other packages
+        run: python -m pip install --upgrade pip setuptools tox
+      - name: Test with tox ${{ matrix.tox-env }}
+        run: python -m tox
