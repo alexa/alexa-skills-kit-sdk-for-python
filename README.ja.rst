@@ -2,16 +2,13 @@ ASK SDK for Python
 ===============================
 `English <README.rst>`_ |  `日本語 <README.ja.rst>`_
 
-|Build Status| |Japanese Docs| |License|
+|Build Status| |License|
 
 **ASK SDK for Python**\ を使うと、ボイラープレートコード（毎回書かなければならないお決まりのコード）を書く手間が不要になります。これにより空いた時間をさまざまな機能の実装に充てることができ、人気のスキルをより簡単に作成できるようになります。
 
-.. |Build Status| image:: https://img.shields.io/travis/alexa/alexa-skills-kit-sdk-for-python/master.svg?style=flat
-    :target: https://travis-ci.org/alexa/alexa-skills-kit-sdk-for-python
+.. |Build Status| image:: https://github.com/alexa/alexa-skills-kit-sdk-for-python/workflows/Tox%20tests%20on%20SDK%20packages/badge.svg?style=flat
+    :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/actions?query=workflow%3A%22Tox+tests+on+SDK+packages%22
     :alt: Build Status
-.. |Docs|
-    :target: https://developer.amazon.com/docs/alexa-skills-kit-sdk-for-python/overview.html
-    :alt: Technical documentation
 .. |Runtime Version| image:: http://img.shields.io/pypi/v/ask-sdk-runtime.svg?style=flat
     :target: https://pypi.python.org/pypi/ask-sdk-runtime/
     :alt: Version
@@ -54,6 +51,24 @@ ASK SDK for Python
 .. |Django Sdk Downloads| image:: https://pepy.tech/badge/django-ask-sdk
     :target: https://pepy.tech/project/django-ask-sdk
     :alt: Downloads
+.. |Jinja Renderer SDK Version| image:: http://img.shields.io/pypi/v/ask-sdk-jinja-renderer.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-jinja-renderer/
+    :alt: Version
+.. |Jinja Renderer SDK Downloads| image:: https://pepy.tech/badge/ask-sdk-jinja-renderer
+    :target: https://pepy.tech/project/ask-sdk-jinja-renderer
+    :alt: Downloads
+.. |Smapi Sdk Version| image:: http://img.shields.io/pypi/v/ask-smapi-sdk.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-smapi-sdk/
+    :alt: Version
+.. |Smapi Sdk Downloads| image:: https://pepy.tech/badge/ask-smapi-sdk
+    :target: https://pepy.tech/project/ask-smapi-sdk
+    :alt: Downloads
+.. |Ask Sdk Local Debug Version| image:: http://img.shields.io/pypi/v/ask-sdk-local-debug.svg?style=flat
+    :target: https://pypi.python.org/pypi/ask-sdk-local-debug/
+    :alt: Version
+.. |Ask Sdk Local Debug Downloads| image:: https://pepy.tech/badge/ask-sdk-local-debug
+    :target: https://pepy.tech/project/ask-sdk-local-debug
+    :alt: Downloads
 .. |License| image:: http://img.shields.io/pypi/l/ask-sdk-core.svg?style=flat
     :target: https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/LICENSE
     :alt: License
@@ -67,9 +82,12 @@ ask-sdk-runtime                        |Runtime Version| |Runtime Downloads|
 ask-sdk-core                           |Core Version| |Core Downloads|
 ask-sdk-dynamodb-persistence-adapter   |DynamoDb Version| |DynamoDb Downloads|
 ask-sdk                                |Standard Version| |Standard Downloads|
+ask-sdk-local-debug                    |Ask Sdk Local Debug Version| |Ask Sdk Local Debug Downloads|
 ask-sdk-webservice-support             |Webservice Version| |Webservice Downloads|
 flask-ask-sdk                          |Flask Sdk Version| |Flask Sdk Downloads|
 django-ask-sdk                         |Django Sdk Version| |Django Sdk Downloads|
+ask-sdk-jinja-renderer                 |Jinja Renderer Sdk Version| |Jinja Renderer Sdk Downloads|
+ask-smapi-sdk                          |Smapi Sdk Version| |Smapi Sdk Downloads|
 ====================================   ==================
 
 
@@ -89,70 +107,70 @@ SDKはネイティブのAlexa JSONリクエストおよびレスポンスでは�
 モデルクラスのドキュメントは `here <https://alexa-skills-kit-python-sdk.readthedocs.io/en/latest/models/ask_sdk_model.html>` __にあります。
 
 サンプル
-----
+--------
 
 このセクションでは、ASK SDK for
 Pythonを使って魅力的なAlexaスキルを開発する方法を説明するスキルサンプルを紹介します。
 
 `Hello World（クラス使用） <https://github.com/alexa/skill-sample-python-helloworld-classes>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 このコードサンプルでは、サンプルがトリガーされたときのAlexaの応答を聞くことができます。Alexa
 Skills KitやAWS
 Lambdaに慣れるための最小限のサンプルです。このサンプルでは、リクエストハンドラーのクラスを使用してスキルを作成する方法を説明します。詳細については、 `リクエスト処理 <REQUEST_PROCESSING.html>`__ を参照してください。
 
 `Hello World（デコレーター使用） <https://github.com/alexa/skill-sample-python-helloworld-decorators>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 このコードサンプルでは、サンプルがトリガーされたときのAlexaの応答を聞くことができます。Alexa
 Skills KitやAWS
 Lambdaに慣れるための最小限のサンプルです。このサンプルでは、リクエストハンドラーのデコレーターを使用してスキルを作成する方法を説明します。詳細については、 `リクエスト処理 <REQUEST_PROCESSING.html>`__ を参照してください。
 
 `カラーピッカー <https://github.com/alexa/skill-sample-python-colorpicker>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Hello
 Worldから機能を一歩進めて、ユーザーが好きな色を指定したら、Alexaが覚えてユーザーに知らせるようにします。ユーザーからの入力をキャプチャーできるようにします。スロットの使い方についても説明します。さらに、セッションアトリビュートと、リクエスト、応答のインターセプターの使い方も説明します。
 
 `ファクト <https://github.com/alexa/skill-sample-python-fact>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 基本的な豆知識スキルのテンプレートです。トピックについての豆知識のリストを提供すると、ユーザーがスキルを呼び出したときに、Alexaがリストから豆知識をランダムに選んでユーザーに伝えます。スキルで複数のロケールを使用し国際化する方法を説明します。
 
 `クイズゲーム <https://github.com/alexa/skill-sample-python-quiz-game>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 基本的なクイズゲームスキルのテンプレートです。あらかじめ提供しておいた豆知識のリストの中から、Alexaがユーザーにクイズを出します。画面付きのAlexa搭載デバイスでの表示をサポートする、テンプレートレンダリングディレクティブの使い方について説明します。
 
 `デバイスのアドレス <https://github.com/alexa/alexa-skills-kit-sdk-for-python/tree/master/samples/GetDeviceAddress>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ユーザーのデバイス設定で設定したアドレスをリクエストし、設定されたアドレスにアクセスするサンプルスキルです。SDKを使用したAlexa
 APIの使い方について説明します。詳細については、\ `Alexaサービスクライアント <SERVICE_CLIENTS.html>`__\ を参照してください。
 
 `スキル内課金を使用した豆知識 <https://github.com/alexa/skill-sample-python-fact-in-skill-purchases>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `スキル内課金 <https://developer.amazon.com/docs/in-skill-purchase/isp-overview.html>`__ 機能を使用した豆知識スキルのサンプルです。購入を促進するさまざまなパックや、パックを一括でロック解除するサブスクリプションを提供します。収益化Alexaサービスの呼び出し方とASK
 CLIを使ってスキル内課金を有効にする方法を説明します。
 
 `シティガイド <https://github.com/alexa/skill-sample-python-city-guide>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 周辺地域のお勧め情報スキルのテンプレートです。Alexaはユーザーのリクエストに従って、開発者が提供したデータからお勧め情報をユーザーに知らせます。スキルから外部APIを呼び出す方法を説明します。
 
 `ペットマッチ <https://github.com/alexa/skill-sample-python-petmatch>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ユーザーとペットをマッチングするサンプルスキルです。Alexaは一致するペットを見つけるのに必要な情報をユーザーにたずねます。必要な情報をすべて収集できたら、スキルはデータを外部のウェブサービスに送信し、そこでデータが処理されてマッチングデータが返されます。ダイアログ管理と `エンティティ解決 <https://developer.amazon.com/docs/custom-skills/define-synonyms-and-ids-for-slot-type-values-entity-resolution.html>`__ を使って、プロンプトを出してユーザーから複数の値を受け取り解析する方法を説明します。
 
 `ハイ＆ローゲーム <https://github.com/alexa/skill-sample-python-highlowgame>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 基本的なハイ＆ローゲームスキルのテンプレートです。ユーザーが数字を推測し、Alexaがその数字が正解より大きいか小さいかを答えます。SDKの永続アトリビュートと永続アダプターの使い方について説明します。
 
 `AudioPlayer SingleStreamおよびMultiStream <https://github.com/alexa/skill-sample-python-audio-player>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Alexaの `AudioPlayerインターフェース <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-audioplayer-interface-reference>`__ と `PlaybackControllerインターフェース <https://developer.amazon.com/public/solutions/alexa/alexa-skills-kit/docs/custom-playbackcontroller-interface-reference>`__ を使ってAudioPlayerスキルを開発する方法を説明するスキルサンプルです。SingleStreamスキルサンプルでは、ローカリゼーションのサポート付きでライブラジオスキルを作成する方法を説明します。MultiStreamスキルサンプルでは、録音済みの複数のオーディオストリームを再生できる基本的なポッドキャストスキルを作成する方法を説明します。
 
@@ -164,7 +182,7 @@ Alexaの `AudioPlayerインターフェース <https://developer.amazon.com/publ
 ------------
 
 SDKでサポートされているAlexaの機能
-=======================
+==================================
 
 このセクションでは、現在SDKでサポートされているAlexaのすべての機能を紹介します。
 
@@ -212,8 +230,9 @@ SDKでサポートされているAlexaの機能
 -  `スキルメッセージ <https://developer.amazon.com/docs/smapi/skill-messaging-api-reference.html>`__
 
 -  `Connections <https://developer.amazon.com/blogs/alexa/post/7b332b32-893e-4cad-be07-a5877efcbbb4/skill-connections-preview-now-skills-can-work-together-to-help-customers-get-more-done>`__
+
 プレビュー版
--------
+------------
 
 ..警告::
 
@@ -224,7 +243,7 @@ SDKでサポートされているAlexaの機能
 -  `無指名対話 <https://developer.amazon.com/docs/custom-skills/understand-name-free-interaction-for-custom-skills.html>`__
 
 Lambda以外のリソースでのスキルのホスティング
---------------------------------------
+--------------------------------------------
 
 SDKはホスティングを可能にする `` ask-sdk-webservice-support``パッケージを提供します
 カスタムWebサービスとしてのスキルフレームワーク固有のアダプタも提供します。
@@ -236,17 +255,17 @@ SDKはホスティングを可能にする `` ask-sdk-webservice-support``パッ
 
 
 フィードバック
--------
+---------------
 
 -  バグ、機能のリクエスト、ご質問、簡単なフィードバックがあればぜひお聞かせください。新しく問題を提起する前に\ `既存の問題 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues>`__\ を検索してください。また、問題やプルリクエストはテンプレートに従って作成してください。プルリクエストの場合は\ `投稿のガイドライン <https://github.com/alexa/alexa-skills-kit-sdk-for-python/blob/master/CONTRIBUTING.md>`__\ に従ってください。
 
 -  Alexaの機能に関するリクエストや投票は、\ `こちら <https://alexa.uservoice.com/forums/906892-alexa-skills-developer-voice-and-vote>`__\ をご覧ください。
 
 その他のリソース
---------------
+-----------------
 
 その他の言語AlexaスキルキットSDK
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
 
@@ -258,7 +277,7 @@ SDKはホスティングを可能にする `` ask-sdk-webservice-support``パッ
     </embed>
 
 コミュニティ
-~~~~~~
+~~~~~~~~~~~~~
 
 -  `Amazon開発者フォーラム <https://forums.developer.amazon.com/spaces/165/index.html>`__\ ：
    ぜひ会話に参加してください。
@@ -267,7 +286,7 @@ SDKはホスティングを可能にする `` ask-sdk-webservice-support``パッ
    他の人がAlexaでどんなものをビルドしているか見てみましょう。
 
 チュートリアルとガイド
-~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
 
 -  `音声デザインガイド <https://developer.amazon.com/designing-for-voice/>`__
    ー
