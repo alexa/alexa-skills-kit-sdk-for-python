@@ -96,13 +96,11 @@ def get_skill_response(local_debug_request, skill_invoker_config):
     """
     try:
         request_envelope = json.loads(local_debug_request.request_payload)
-        skill_builder_func = getattr(skill_invoker_config.skill_invoker,
-                                     skill_invoker_config.skill_handler)
         default_serializer = Serializer.get_instance()  # type: ignore
         response_payload = None  # type: BaseResponse
 
         try:
-            skill_response = skill_builder_func(request_envelope, None)
+            skill_response = skill_invoker_config.skill_builder_func(request_envelope, None)
         except Exception as ex:
             logger.error(
                 "Failed to retrieve skill response : {}".format(str(ex)))

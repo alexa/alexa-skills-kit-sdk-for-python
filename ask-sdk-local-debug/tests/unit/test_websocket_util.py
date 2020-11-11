@@ -24,10 +24,12 @@ from ask_sdk_local_debug.config.skill_invoker_config import \
     SkillInvokerConfiguration
 from ask_sdk_local_debug.config.client_config import ClientConfiguration
 from ask_sdk_local_debug.config.websocket_config import WebSocketConfiguration
+from ask_sdk_local_debug.exception import LocalDebugSdkException
 from ask_sdk_local_debug.util import websocket_util
 from ask_sdk_local_debug.util.websocket_util import (
     create_client_configuration, create_skill_invoker_config,
     create_web_socket_client, create_web_socket_configuration)
+from ask_sdk_local_debug.config.region import Region
 
 
 class Namespace:
@@ -46,7 +48,8 @@ class TestWebSocketUtils(unittest.TestCase):
         self.test_parsed_args = Namespace(access_token=self.TEST_ACCESS_TOKEN,
                                           skill_id=self.TEST_SKILL_ID,
                                           skill_file_path=self.TEST_SKILL_FILE_PATH,
-                                          skill_handler=self.TEST_SKILL_HANDLER)
+                                          skill_handler=self.TEST_SKILL_HANDLER,
+                                          region='NA')
 
         self.test_headers = dict(authorization=self.TEST_ACCESS_TOKEN,
                                  upgrade='websocket', connection='upgrade')
@@ -73,7 +76,7 @@ class TestWebSocketUtils(unittest.TestCase):
                                                                mock_client):
         mock_client.return_value.skill_id = self.TEST_SKILL_ID
 
-        test_uri = websocket_util.DEBUG_ENDPOINT_URI.format(self.TEST_SKILL_ID)
+        test_uri = websocket_util.DEBUG_ENDPOINT_URI.format(Region.NA.value, self.TEST_SKILL_ID)
 
         web_socket_config = create_web_socket_configuration(
             parsed_args=self.test_parsed_args)
@@ -104,3 +107,14 @@ class TestWebSocketUtils(unittest.TestCase):
         self.assertEqual(skill_invoker.skill_handler, self.TEST_SKILL_HANDLER)
         self.assertEqual(skill_invoker.skill_file_path,
                          self.TEST_SKILL_FILE_PATH)
+
+    def test_invalid_region_throws_exception(self):
+        with self.assertRaises(LocalDebugSdkException) as exc:
+            self.test_parsed_args.region = "Foo"
+            create_web_socket_client(parsed_args=self.test_parsed_args)
+        self.assertEqual(
+            "Invalid region - {}. Please ensure that the region value is one of ['NA', 'FE', 'EU']"
+                .format(self.test_parsed_args.region),
+            str(exc.exception))
+
+

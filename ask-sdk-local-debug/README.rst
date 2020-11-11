@@ -77,6 +77,7 @@ Using with other IDEs and Debuggers
     - **SKILL_ID** : The ID of the skill you are trying to debug. Ensure that the developer account you used to login to obtain the access token has access to this skill.
     - **HANDLER_NAME** : The exported handler method (typically `lambda_handler` or `handler`). For example, please see the `Hello world example <https://github.com/alexa/skill-sample-python-helloworld-classes/blob/master/lambda/py/hello_world.py#L198>`__.
     - **FILE_NAME** : The path to your skill code's main file (typically `lambda_function.py`). This file or module contains the skill's handler function.
+    - **REGION** : The region of the developer account. The accepted values are NA(North America), FE(Far East), EU(Europe). Defaults to NA. Instructions on finding out your region can be found `here <https://developer.amazon.com/en-US/docs/alexa/ask-toolkit/vs-code-testing-simulator.html#test>`__.
 
 - Create a `local_debug.py` file in your skill's lambda directory and add the following code :
 
@@ -88,8 +89,9 @@ Using with other IDEs and Debuggers
             LocalDebuggerInvoker([
                 '--accessToken', '<ACCESS_TOKEN>',
                 '--skillId', '<SKILL_ID>',
-                '--skillHandler', 'HANDLER_NAME',
-                '--skillFilePath', '<FILE_NAME>']
+                '--skillHandler', '<HANDLER_NAME>',
+                '--skillFilePath', '<FILE_NAME>'
+                "--region", "<REGION>" # Optional argument. Region defaults to NA.]
             ).invoke()
 
 - Configure your preferred IDE or other debugging tool to attach to the above process or execute directly from your preferred IDE. For example, in VS Code, this would be included in the launch.json:
@@ -102,10 +104,11 @@ Using with other IDEs and Debuggers
            "name": "Skill Debug",
            "program": "<Absolute file path to local_debug.py>",
            "args": [
-                "--accessToken", "<AccessToken>",
-                "--skillId", "<SkillId>",
-                "--skillHandler", "<HandlerName>",
-                "--skillFilePath", "<SkillFilePath>"
+                "--accessToken", "<ACCESS_TOKEN>",
+                "--skillId", "<SKILL_ID>",
+                "--skillHandler", "<HANDLER_NAME>",
+                "--skillFilePath", "<FILE_NAME>",
+                "--region", "<REGION>" # Optional argument. Region defaults to NA.
             ]
         }
 
