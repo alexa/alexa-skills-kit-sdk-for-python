@@ -6,11 +6,6 @@ ASK SDK Local debug - Debugger for Python ASK SDK
 by routing requests to your developer machine. This enables you to verify changes quickly to skill code as you
 can test without needing to deploy skill code to Lambda.
 
-.. note::
-
-    This feature is currently only available to customers in the `NA region <https://developer.amazon.com/en-US/docs/alexa/custom-skills/develop-skills-in-multiple-languages.html#h2-multiple-endpoints>`__.
-
-
 Quick Start
 -----------
 
