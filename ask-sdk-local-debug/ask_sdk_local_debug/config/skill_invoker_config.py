@@ -15,6 +15,8 @@
 # specific language governing permissions and limitations under the
 # License.
 #
+import os
+import sys
 import typing
 import importlib.util
 
@@ -82,8 +84,22 @@ class SkillInvokerConfiguration(object):
                     self.skill_file_path, str(e)))
         return skill_invoker
 
+    def __load_skill_handler_dir_path(self):
+        # type: () -> None
+        """Loads skill handler directory path into PYTHONPATH.
+
+        For local module/package resolution, this method loads the
+        directory containing the skill handler file into the
+        python path, so that the interpreter will be able to resolve
+        the needed imports during runtime.
+        """
+        skill_dir = os.path.dirname(self.skill_file_path)
+        if skill_dir not in sys.path:
+            sys.path.append(skill_dir)
+
     def __get_skill_builder_func(self):
         try:
+            self.__load_skill_handler_dir_path()
             return getattr(self.__initialize_skill_invoker(), self.skill_handler)
         except Exception as e:
             raise LocalDebugSdkException(
