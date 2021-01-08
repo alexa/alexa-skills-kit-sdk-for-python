@@ -22,13 +22,13 @@ sdk_packages = [
 if sys.version_info.major == 3:
     sdk_packages.extend(["django-ask-sdk", "ask-sdk-local-debug"])
 
-run("pip install coverage")
+run("python -m pip install coverage")
 
 for pkg in sdk_packages:
     os.chdir(os.path.join(REPO_ROOT, pkg))
-    run("pip install -r requirements.txt")
+    run("python -m pip install -r requirements.txt")
     if os.path.isdir('dist') and os.listdir('dist'):
         shutil.rmtree('dist')
     run('python setup.py bdist_wheel')
     wheel_dist = os.listdir('dist')[0]
-    run('pip install %s' % (os.path.join('dist', wheel_dist)))
+    run('python -m pip install %s' % (os.path.join('dist', wheel_dist)))
