@@ -89,7 +89,7 @@ class AutobahnClientProtocol(WebSocketClientProtocol):
         :type reason: str or None
         """
         logger.info("WebSocket connection closed: {} ".format(reason))
-        reactor.stop()
+        reactor.stop()  # type: ignore
 
     def send_skill_response(self, local_debug_ask_response):
         # type: (str) -> None
