@@ -16,30 +16,32 @@
 # License.
 #
 import base64
-import unittest
 import os
-import six
+import unittest
 import warnings
-
 from datetime import datetime, timedelta
-from dateutil.tz import tzutc, tzlocal
-from six.moves.urllib.parse import ParseResult
+
+import six
+from ask_sdk_model import IntentRequest, RequestEnvelope
+from ask_sdk_model.events.skillevents import SkillEnabledRequest
+from ask_sdk_webservice_support.verifier import (RequestVerifier,
+                                                 TimestampVerifier,
+                                                 VerificationException)
+from ask_sdk_webservice_support.verifier_constants import (
+    CERT_CHAIN_DOMAIN, CHARACTER_ENCODING,
+    MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS,
+    MAX_SKILL_EVENT_TOLERANCE_IN_MILLIS, SIGNATURE_CERT_CHAIN_URL_HEADER,
+    SIGNATURE_HEADER)
+from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.x509.oid import NameOID
-from cryptography import x509
-from cryptography.hazmat.primitives.hashes import SHA1
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
-from ask_sdk_model import RequestEnvelope, IntentRequest
-from ask_sdk_model.events.skillevents import SkillEnabledRequest
-from ask_sdk_webservice_support.verifier import (
-    RequestVerifier, TimestampVerifier, VerificationException)
-from ask_sdk_webservice_support.verifier_constants import (
-    SIGNATURE_CERT_CHAIN_URL_HEADER, SIGNATURE_HEADER,
-    CERT_CHAIN_DOMAIN, CHARACTER_ENCODING, MAX_NORMAL_REQUEST_TOLERANCE_IN_MILLIS,
-    MAX_SKILL_EVENT_TOLERANCE_IN_MILLIS)
-from cryptography.x509 import load_pem_x509_certificate, Certificate
+from cryptography.hazmat.primitives.hashes import SHA1
+from cryptography.x509 import Certificate, load_pem_x509_certificate
+from cryptography.x509.oid import NameOID
+from dateutil.tz import tzlocal, tzutc
 from freezegun import freeze_time
+from six.moves.urllib.parse import ParseResult
 
 try:
     import mock
@@ -96,8 +98,8 @@ class TestRequestVerifier(unittest.TestCase):
             number=x509.random_serial_number()).not_valid_before(
             time=datetime.utcnow() - timedelta(minutes=1)).not_valid_after(
             time=datetime.utcnow() + timedelta(minutes=1)).add_extension(
-            extension=x509.SubjectAlternativeName(
-                [x509.DNSName(u"{}".format(CERT_CHAIN_DOMAIN))]),
+                x509.SubjectAlternativeName(
+                    [x509.DNSName(u"{}".format(CERT_CHAIN_DOMAIN))]),
             critical=False).sign(
             private_key=self.private_key,
             algorithm=SHA1(),

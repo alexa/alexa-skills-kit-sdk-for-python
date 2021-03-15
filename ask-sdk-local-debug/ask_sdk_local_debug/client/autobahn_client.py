@@ -79,7 +79,7 @@ class AutobahnClient(AbstractWebSocketClient):
         """
         try:
             connectWS(self.factory, contextFactory=None, timeout=CONNECTION_TIMEOUT_SECONDS)
-            reactor.run()
+            reactor.run()  # type: ignore
         except Exception as e:
             logger.error(
                 'Unable to initiate a socket client connection : {}'.format(

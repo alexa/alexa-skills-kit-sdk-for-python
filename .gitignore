@@ -71,3 +71,5 @@ target/
 # mypy cache
 .mypy_cache/
 
+# VSCode configs
+.vscode/

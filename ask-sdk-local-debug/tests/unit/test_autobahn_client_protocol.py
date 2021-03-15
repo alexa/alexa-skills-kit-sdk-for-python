@@ -15,40 +15,11 @@
 # specific language governing permissions and limitations under the
 # License.
 #
-import unittest
 import json
-from mock import patch, Mock
+import unittest
 
 from ask_sdk_local_debug.client.autobahn_client_protocol import AutobahnClientProtocol
-
-TEST_REQUEST_DATA = ("{\n    \"version\": \"fooversion\",\n"
-                     "    \"type\": \"SkillRequestMessage\",\n"
-                     "    \"requestId\": \"foorequestid\",\n"
-                     "    \"requestPayload\": \"foorequestpayload\"\n}")
-
-TEST_SUCCESS_RESPONSE = ("{\n    \"version\": \"fooversion\",\n"
-                         "    \"type\": \"SkillResponseSuccessMessage\",\n"
-                         "    \"originalRequestId\": \"foorequestid\",\n"
-                         "    \"responsePayload\": \"TestPayload\"\n}")
-
-TEST_FAILURE_RESPONSE = ("{\n   \"version\": \"fooversion\",\n"
-                         "    \"type\": \"SkillResponseFailureMessage\",\n"
-                         "    \"originalRequestId\": \"foorequestid\",\n"
-                         "   \"errorCode\": \"500\",\n"
-                         "    \"errorMessage\": \"mock error\"\n}")
-
-TEST_DESERIALIZE_DATA = ("{\"version\": \"fooversion\", "
-                         "\"object_type\": \"SkillRequestMessage\", "
-                         "\"request_id\": \"foorequestid\", "
-                         "\"request_payload\": \"foorequestpayload\"}")
-
-
-def mock_skill_response(local_debug_request, skill_invoker):
-    test_request = json.dumps(local_debug_request.to_dict())
-    if test_request == TEST_DESERIALIZE_DATA:
-        return TEST_SUCCESS_RESPONSE
-    return TEST_FAILURE_RESPONSE
-
+from mock import Mock, patch
 
 TEST_REQUEST_DATA = ("{\n    \"version\": \"fooversion\",\n"
                      "    \"type\": \"SkillRequestMessage\",\n"
