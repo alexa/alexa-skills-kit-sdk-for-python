@@ -27,6 +27,8 @@ from ask_sdk_model import directive
 from ask_sdk_model.canfulfill import (CanFulfillIntent, CanFulfillIntentValues,
                                       CanFulfillSlot, CanFulfillSlotValues,
                                       CanUnderstandSlotValues)
+from ask_sdk_model.interfaces.alexa.presentation.apla.render_document_directive import \
+    RenderDocumentDirective
 from ask_sdk_model.interfaces.display import PlainText, RichText, TextContent
 from ask_sdk_model.interfaces.videoapp import (LaunchDirective, Metadata,
                                                VideoItem)
@@ -130,13 +132,14 @@ class TestResponseFactory(unittest.TestCase):
         )
 
     def test_response_with_reprompt_directive(self):
+        directive = RenderDocumentDirective()
         expected_response = Response(
             output_speech=SsmlOutputSpeech(ssml="<speak>Hello World</speak>"),
-            reprompt=Reprompt(directives=['Alexa.Presentation.APLA.RenderDocument']),
+            reprompt=Reprompt(directives=[directive]),
             should_end_session=False)
 
         response_factory = self.response_factory.set_should_end_session(True).add_directive_to_reprompt(
-            directive='Alexa.Presentation.APLA.RenderDocument').speak('Hello World')
+            directive=directive).speak('Hello World')
         assert response_factory.response == expected_response, (
             "The add_directive_to_reprompt method of ResponseFactory fails to add directive")
 
