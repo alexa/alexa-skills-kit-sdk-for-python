@@ -181,3 +181,11 @@ This release contains the following changes :
 This release contains the following changes : 
 
 - A new class UserAgentManager, to help set user agents for higher level frameworks using the SDK
+
+
+1.16.0
+~~~~~~
+
+This release includes the following : 
+
+- Added directive support on reprompt by creating utils on Response helper
