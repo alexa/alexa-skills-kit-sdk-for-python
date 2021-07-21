@@ -189,3 +189,12 @@ This release contains the following changes :
 This release includes the following : 
 
 - Added directive support on reprompt by creating utils on Response helper
+
+
+1.16.1
+^^^^^^^
+
+This release contains the following changes : 
+
+- general bug fixes and updates
+
