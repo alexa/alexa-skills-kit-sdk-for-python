@@ -18,19 +18,22 @@
 
 import unittest
 
-from ask_sdk_model.interfaces.videoapp import LaunchDirective, VideoItem, Metadata
-from ask_sdk_model.ui import SsmlOutputSpeech, Reprompt
-from ask_sdk_model.interfaces.display import TextContent
-from ask_sdk_model.interfaces.display import PlainText
-from ask_sdk_model.interfaces.display import RichText
-from ask_sdk_model.canfulfill import (
-    CanFulfillIntent, CanFulfillIntentValues, CanFulfillSlot,
-    CanFulfillSlotValues, CanUnderstandSlotValues)
+from ask_sdk_core.response_helper import (PLAIN_TEXT_TYPE, RICH_TEXT_TYPE,
+                                          ResponseFactory,
+                                          get_plain_text_content,
+                                          get_rich_text_content,
+                                          get_text_content)
+from ask_sdk_model import directive
+from ask_sdk_model.canfulfill import (CanFulfillIntent, CanFulfillIntentValues,
+                                      CanFulfillSlot, CanFulfillSlotValues,
+                                      CanUnderstandSlotValues)
+from ask_sdk_model.interfaces.display import PlainText, RichText, TextContent
+from ask_sdk_model.interfaces.videoapp import (LaunchDirective, Metadata,
+                                               VideoItem)
+from ask_sdk_model.response import Response
+from ask_sdk_model.ui import (Reprompt, SsmlOutputSpeech, output_speech,
+                              reprompt, ssml_output_speech)
 from ask_sdk_model.ui.play_behavior import PlayBehavior
-
-from ask_sdk_core.response_helper import (
-    ResponseFactory, get_text_content, get_plain_text_content,
-    get_rich_text_content, PLAIN_TEXT_TYPE, RICH_TEXT_TYPE)
 
 
 class TestResponseFactory(unittest.TestCase):
@@ -117,6 +120,25 @@ class TestResponseFactory(unittest.TestCase):
         assert len(response_factory.response.directives) == 2, (
             "The add_directive method of ResponseFactory fails to add "
             "multiple directives")
+
+    def test_add_reprompt_directive(self):
+        response_factory = self.response_factory.add_directive_to_reprompt(directive=None)
+
+        assert len(response_factory.response.reprompt.directives) == 1, (
+            "The add_directive_to_reprompt method of ResponseFactory fails "
+            "to add directive"
+        )
+
+    def test_response_with_reprompt_directive(self):
+        expected_response = Response(
+            output_speech=SsmlOutputSpeech(ssml="<speak>Hello World</speak>"),
+            reprompt=Reprompt(directives=['Alexa.Presentation.APLA.RenderDocument']),
+            should_end_session=False)
+
+        response_factory = self.response_factory.set_should_end_session(True).add_directive_to_reprompt(
+            directive='Alexa.Presentation.APLA.RenderDocument').speak('Hello World')
+        assert response_factory.response == expected_response, (
+            "The add_directive_to_reprompt method of ResponseFactory fails to add directive")
 
     def test_add_video_app_launch_directive(self):
         directive = LaunchDirective(video_item=VideoItem(

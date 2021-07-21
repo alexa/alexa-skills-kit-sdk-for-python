@@ -17,16 +17,17 @@
 #
 
 import typing
+
 from ask_sdk_model import Response
-from ask_sdk_model.ui import SsmlOutputSpeech, Reprompt
-from ask_sdk_model.interfaces.display import (
-    TextContent, PlainText, RichText)
+from ask_sdk_model.interfaces.display import PlainText, RichText, TextContent
+from ask_sdk_model.ui import Reprompt, SsmlOutputSpeech
 
 if typing.TYPE_CHECKING:
     from typing import Union
+
     from ask_sdk_model import Directive
-    from ask_sdk_model.ui import Card
     from ask_sdk_model.canfulfill import CanFulfillIntent
+    from ask_sdk_model.ui import Card
     from ask_sdk_model.ui.play_behavior import PlayBehavior
 
 
@@ -130,6 +131,25 @@ class ResponseFactory(object):
                 directive.object_type == "VideoApp.Launch"):
             self.response.should_end_session = None
         self.response.directives.append(directive)
+        return self
+
+    def add_directive_to_reprompt(self, directive):
+        # type: (Directive) -> 'ResponseFactory'
+        """Adds directive to reprompts.
+
+        :param directive: the directive sent back to Alexa device.
+        :type directive: ask_sdk_model.directive.Directive
+        :return: response factory with partial response being built and
+            access from self.response.
+        :rtype: ResponseFactory
+        """
+        if self.response.reprompt is None:
+            self.response.reprompt = Reprompt(directives=[])
+
+        if self.response.reprompt.directives is not None:
+            self.response.reprompt.directives.append(directive)
+
+        self.set_should_end_session(False)
         return self
 
     def set_should_end_session(self, should_end_session):
