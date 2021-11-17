@@ -23,10 +23,10 @@ ask\_sdk\_model.services.reminder\_management.alert\_info module
    :undoc-members:
    :show-inheritance:
 
-ask\_sdk\_model.services.reminder\_management.alert\_info\_spoken\_info module
+ask\_sdk\_model.services.reminder\_management.spoken\_info module
 ------------------------------------------------------------------------------
 
-.. automodule:: ask_sdk_model.services.reminder_management.alert_info_spoken_info
+.. automodule:: ask_sdk_model.services.reminder_management.spoken_info
    :members:
    :undoc-members:
    :show-inheritance:
