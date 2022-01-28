@@ -29,6 +29,8 @@ from ask_sdk_model.canfulfill import (CanFulfillIntent, CanFulfillIntentValues,
                                       CanUnderstandSlotValues)
 from ask_sdk_model.interfaces.alexa.presentation.apla.render_document_directive import \
     RenderDocumentDirective
+from ask_sdk_model.interfaces.alexa.experimentation.experiment_trigger_response import \
+    ExperimentTriggerResponse
 from ask_sdk_model.interfaces.display import PlainText, RichText, TextContent
 from ask_sdk_model.interfaces.videoapp import (LaunchDirective, Metadata,
                                                VideoItem)
@@ -130,6 +132,15 @@ class TestResponseFactory(unittest.TestCase):
             "The add_directive_to_reprompt method of ResponseFactory fails "
             "to add directive"
         )
+
+    def test_add_experiment_trigger_response(self):
+        test_experiment_triggers = ["experimentId"]
+        response_factory = self.response_factory.add_experiment_trigger(
+            experiment_id="experimentId")
+
+        assert response_factory.response.experimentation.triggered_experiments == test_experiment_triggers, (
+            "The add_experiment_trigger method of ResponseFactory fails to "
+            "add experiment_trigger_response value")
 
     def test_response_with_reprompt_directive(self):
         directive = RenderDocumentDirective()
