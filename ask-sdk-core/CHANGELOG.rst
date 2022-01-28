@@ -198,3 +198,9 @@ This release contains the following changes :
 
 - general bug fixes and updates
 
+1.17.1
+^^^^^^^
+
+This release includes the following : 
+
+- Added A/B testing SPIs support on response by creating utils on Response helper
