@@ -19,6 +19,8 @@
 import typing
 
 from ask_sdk_model import Response
+from ask_sdk_model.interfaces.alexa.experimentation.experiment_trigger_response import \
+    ExperimentTriggerResponse
 from ask_sdk_model.interfaces.display import PlainText, RichText, TextContent
 from ask_sdk_model.ui import Reprompt, SsmlOutputSpeech
 
@@ -51,7 +53,8 @@ class ResponseFactory(object):
         self.response = Response(
             output_speech=None, card=None, reprompt=None,
             directives=None, should_end_session=None,
-            can_fulfill_intent=None, api_response=None)
+            can_fulfill_intent=None, api_response=None,
+            experimentation=None)
 
     def speak(self, speech, play_behavior=None):
         # type: (str, PlayBehavior) -> 'ResponseFactory'
@@ -150,6 +153,22 @@ class ResponseFactory(object):
             self.response.reprompt.directives.append(directive)
 
         self.set_should_end_session(False)
+        return self
+
+    def add_experiment_trigger(self, experiment_id):
+        # type: (str) -> 'ResponseFactory'
+        """Adds experiment id to response.
+        :param experiment_id: the identifier of the experiment.
+        :type experiment_id: str
+        :return: response factory with partial response being built and
+            access from self.response.
+        :rtype: ResponseFactory
+        """
+        if self.response.experimentation is None:
+           triggered_experiments = []  # type: ignore
+           self.response.experimentation = ExperimentTriggerResponse(triggered_experiments=triggered_experiments)
+
+        self.response.experimentation.triggered_experiments.append(experiment_id)
         return self
 
     def set_should_end_session(self, should_end_session):
