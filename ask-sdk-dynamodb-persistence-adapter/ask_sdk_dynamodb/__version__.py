@@ -20,7 +20,7 @@ __description__ = (
     'The ASK SDK DynamoDB Persistence Adapter package provides DynamoDB '
     'Adapter, that can be used with ASK SDK Core, for persistence management.')
 __url__ = 'https://github.com/alexa/alexa-skills-kit-sdk-for-python'
-__version__ = '1.16.1'
+__version__ = '1.17.1'
 __author__ = 'Alexa Skills Kit'
 __author_email__ = 'ask-sdk-dynamic@amazon.com'
 __license__ = 'Apache 2.0'

@@ -175,3 +175,9 @@ This release contains the following changes :
 
 - general bug fixes and updates
 
+1.17.1
+^^^^^^
+
+This release contains the following changes : 
+
+- general bug fixes and updates
