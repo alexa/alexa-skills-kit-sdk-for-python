@@ -48,7 +48,7 @@ class LocaleTemplateEnumerator(AbstractTemplateEnumerator):
         """
         if LocaleTemplateEnumerator.__instance is None:
             LocaleTemplateEnumerator.__instance = object.__new__(cls)
-        return LocaleTemplateEnumerator.__instance
+        return LocaleTemplateEnumerator.__instance  # type: ignore
 
     def __init__(self):
         # type: () -> None
