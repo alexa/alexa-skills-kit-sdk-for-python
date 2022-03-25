@@ -33,7 +33,7 @@ from cryptography.x509 import (
     SubjectAlternativeName)
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
-from cryptography.hazmat.primitives.hashes import SHA1
+from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.exceptions import InvalidSignature
 from contextlib import closing
 from asn1crypto import pem
@@ -121,7 +121,7 @@ class RequestVerifier(AbstractVerifier):
             self,
             signature_cert_chain_url_key=SIGNATURE_CERT_CHAIN_URL_HEADER,
             signature_key=SIGNATURE_HEADER,
-            padding=PKCS1v15(), hash_algorithm=SHA1()):
+            padding=PKCS1v15(), hash_algorithm=SHA256()):
         # type: (str, str, AsymmetricPadding, HashAlgorithm) -> None
         """Verifier that performs request signature verification.
 
@@ -140,7 +140,7 @@ class RequestVerifier(AbstractVerifier):
         can also provide the Padding and the Hash Algorithm functions
         that is used to verify the input body. These are defaulted as
         :py:class:`cryptography.hazmat.primitives.asymmetric.padding.PKCS1v15`
-        and :py:class:`cryptography.hazmat.primitives.hashes.SHA1`
+        and :py:class:`cryptography.hazmat.primitives.hashes.SHA256`
         instances respectively.
 
         A certificate cache is initialized, to store certificate chains
@@ -160,7 +160,7 @@ class RequestVerifier(AbstractVerifier):
             cryptography.hazmat.primitives.asymmetric.padding.AsymmetricPadding
         :param hash_algorithm: Hash algorithm instance to be used
             to verify the hash value of the request body with the
-            decrypted signature. Defaulted to `SHA1`
+            decrypted signature. Defaulted to `SHA256`
         :type hash_algorithm:
             cryptography.hazmat.primitives.hashes.HashAlgorithm
         """

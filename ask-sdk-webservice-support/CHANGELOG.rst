@@ -65,4 +65,9 @@ This release contains the following changes :
 
 - Fix timestamp verifier maximum tolerance value for skill events and normal skill requests.
 
+1.4.0
+~~~~~
 
+This release contains the following changes :
+
+ - Updates the HTTP request validation signature algorithm logic to use SHA-256
