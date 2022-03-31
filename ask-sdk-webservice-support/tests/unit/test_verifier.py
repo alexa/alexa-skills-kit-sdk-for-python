@@ -36,7 +36,7 @@ from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.asymmetric.padding import PKCS1v15
-from cryptography.hazmat.primitives.hashes import SHA1
+from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.x509 import Certificate, load_pem_x509_certificate
 from cryptography.x509.oid import NameOID
 from dateutil.tz import tzlocal, tzutc
@@ -102,7 +102,7 @@ class TestRequestVerifier(unittest.TestCase):
                     [x509.DNSName(u"{}".format(CERT_CHAIN_DOMAIN))]),
             critical=False).sign(
             private_key=self.private_key,
-            algorithm=SHA1(),
+            algorithm=SHA256(),
             backend=default_backend()
         )  # type: Certificate
 
@@ -124,7 +124,7 @@ class TestRequestVerifier(unittest.TestCase):
 
     def sign_data(
             self, data, private_key=None,
-            padding=PKCS1v15(), hash_algorithm=SHA1()):
+            padding=PKCS1v15(), hash_algorithm=SHA256()):
         if private_key is None:
             private_key = self.private_key
 
