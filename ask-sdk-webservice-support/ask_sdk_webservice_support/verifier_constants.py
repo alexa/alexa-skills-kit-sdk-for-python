@@ -25,7 +25,7 @@ SIGNATURE_CERT_CHAIN_URL_HEADER = "SignatureCertChainUrl"
 #: Header key to be used, to retrieve request header that contains the
 #: request signature.
 #: For more info, check `link <https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-signature>`__.
-SIGNATURE_HEADER = "Signature"
+SIGNATURE_HEADER = "Signature-256"
 
 #: Case insensitive protocol to be checked on signature certificate url.
 #: For more info, check `link <https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-signature>`__.
