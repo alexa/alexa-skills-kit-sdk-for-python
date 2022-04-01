@@ -66,3 +66,10 @@ This release contains the following changes :
 - Fix timestamp verifier maximum tolerance value for skill events and normal skill requests.
 
 
+1.3.3
+~~~~~
+
+This release contains the following changes :
+
+- Updated signature algorithm validation
+- Updated cryptography dependency `197 <https://github.com/alexa/alexa-skills-kit-sdk-for-python/issues/197>`__
