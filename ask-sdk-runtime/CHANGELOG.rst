@@ -181,3 +181,9 @@ This release contains the following changes :
 This release contains the following changes : 
 
 - general bug fixes and updates
+
+
+1.18.0
+~~~~~~
+
+General bug fixes and updates
