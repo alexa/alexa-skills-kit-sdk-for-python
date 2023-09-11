@@ -47,7 +47,7 @@ SIGNATURE_CERT_CHAIN_URL_KEY = "HTTP_SIGNATURECERTCHAINURL"
 #: the `header key <https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-a-web-service.html#checking-the-signature-of-the-request>`__
 #: provided by Alexa, because of Django's HTTP
 #: `Meta headers <https://docs.djangoproject.com/en/2.1/ref/request-response/#django.http.HttpRequest.META>`__.
-SIGNATURE_KEY = "HTTP_SIGNATURE"
+SIGNATURE_KEY = "HTTP_SIGNATURE_256"
 
 logger = logging.getLogger("django.ask-sdk")
 
